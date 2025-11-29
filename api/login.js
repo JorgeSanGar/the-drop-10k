@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
         const snapshot = await usersRef.where('email', '==', email).get();
 
         if (snapshot.empty) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
         const userDoc = snapshot.docs[0];
