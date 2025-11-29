@@ -548,9 +548,15 @@
                     <!-- NOMBRE -->
                     <div class="group">
                         <label
-                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">ID
-                            CORREDOR / NOMBRE</label>
-                        <input type="text" name="name" placeholder="EJ. ALEX_RUNNER" required class="input-brutal">
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">NOMBRE</label>
+                        <input type="text" name="firstName" placeholder="EJ. ALEX" required class="input-brutal">
+                    </div>
+
+                    <!-- APELLIDOS -->
+                    <div class="group">
+                        <label
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">APELLIDOS</label>
+                        <input type="text" name="lastName" placeholder="EJ. RUNNER" required class="input-brutal">
                     </div>
 
                     <!-- EMAIL -->
@@ -1721,10 +1727,9 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // Split name for backend compatibility
-            const nameParts = data.name.trim().split(' ');
-            data.firstName = nameParts[0];
-            data.lastName = nameParts.slice(1).join(' ') || '';
+            // Ensure firstName and lastName are trimmed
+            if (data.firstName) data.firstName = data.firstName.trim().toUpperCase();
+            if (data.lastName) data.lastName = data.lastName.trim().toUpperCase();
 
             try {
                 const response = await fetch('/api/register', {
