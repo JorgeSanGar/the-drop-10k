@@ -82,7 +82,7 @@
             }
         }
 
-        
+
         .char-drop {
             display: inline-block;
             opacity: 0;
@@ -105,7 +105,7 @@
             }
         }
 
-        
+
         .hero-glitch {
             position: relative;
             animation: text-shudder 2s infinite;
@@ -375,7 +375,7 @@
             background-size: 1em;
         }
 
-        
+
         .terminal-slide {
             transform: translateY(-100%);
             transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
@@ -385,7 +385,7 @@
             transform: translateY(0);
         }
 
-        
+
         .input-terminal {
             background-color: #111;
             border: 1px solid #333;
@@ -406,7 +406,7 @@
             color: #444;
         }
 
-        
+
 
         .modal-enter-success {
             animation: modalSnap 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -424,7 +424,7 @@
             }
         }
 
-        
+
         .terminal-overlay {
             position: fixed;
             inset: 0;
@@ -439,12 +439,12 @@
             flex-direction: column;
         }
 
-        
+
         .terminal-overlay.open {
             clip-path: circle(150% at 100% 0%);
         }
 
-        
+
         .input-brutal {
             background: transparent;
             border-bottom: 2px solid #333;
@@ -660,7 +660,7 @@
 <body class="antialiased selection:bg-[#CCFF00] selection:text-black">
 
     <div class="noise-overlay"></div>
-    
+
     <div id="accessTerminal" class="terminal-overlay">
 
         <!-- Botón de Cerrar (Flotante y fijo) -->
@@ -977,7 +977,7 @@
             <a href="#tickets" class="hover:line-through decoration-2">Join List</a>
         </div>
 
-        
+
         <button onclick="toggleTerminal()"
             class="font-mono text-xs bg-black text-white px-4 py-2 hover:bg-[#CCFF00] hover:text-black transition-colors uppercase flex items-center gap-2">
             <span>Menu / Access</span>
@@ -1016,7 +1016,7 @@
                     </span>
                 </h1>
 
-               
+
                 <div class="mt-6 px-4 text-center">
                     <h2
                         class="font-mono text-[10px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold">
@@ -1036,7 +1036,9 @@
         <div class="absolute bottom-0 w-full bg-[#CCFF00] border-y border-black py-2 overflow-hidden z-20">
             <div class="marquee-container font-bold text-lg md:text-xl uppercase tracking-tight">
                 <div class="marquee-content">
-                    TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • RITMO GUIADO POR DATOS • LABORATORIO DE MEJOR MARCA* • THE DROP10K • TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • DESCONOCIDA HASTA EL DÍA DE CARRERA • THE DROP10K •
+                    TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • RITMO GUIADO POR DATOS • LABORATORIO DE
+                    MEJOR MARCA* • THE DROP10K • TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • DESCONOCIDA
+                    HASTA EL DÍA DE CARRERA • THE DROP10K •
 
                 </div>
             </div>
@@ -1118,7 +1120,7 @@
         </div>
     </section>
 
- 
+
     <section
         class="relative h-[50vh] md:h-[60vh] bg-black overflow-hidden border-b border-[#CCFF00] flex items-center justify-center group">
         <!-- Canvas Background -->
@@ -1141,7 +1143,7 @@
             </h2>
         </div>
 
-        
+
         <div class="absolute inset-0 z-20 flex items-center justify-center mt-20 md:mt-32">
             <button id="vortexBtn"
                 class="group/btn relative px-6 md:px-8 py-3 md:py-4 bg-[#CCFF00] text-black font-black uppercase tracking-tighter text-sm md:text-xl hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(204,255,0,0.4)] border-2 border-transparent hover:border-white">
@@ -1156,7 +1158,7 @@
         </div>
     </section>
 
-    
+
     <section id="oracle" class="py-20 md:py-24 px-4 md:px-8 border-b border-black bg-[#CCFF00] text-black">
         <div class="max-w-4xl mx-auto">
             <div
@@ -1282,14 +1284,14 @@
 
         <!-- Call to Action Final -->
         <div class="max-w-7xl mx-auto px-4 mt-12 flex justify-center">
-            <button
+            <button onclick="toggleTerminal(); switchView('register')"
                 class="group relative px-8 py-4 bg-transparent overflow-hidden border border-white/30 hover:border-[#CCFF00] transition-colors duration-300">
                 <!-- El fondo amarillo aparece al hacer hover -->
                 <div
                     class="absolute inset-0 w-0 bg-yellow transition-all duration-[250ms] ease-out group-hover:w-full opacity-10">
                 </div>
                 <span
-                    class="relative font-mono text-sm font-bold tracking-widest uppercase flex items-center gap-2 group-hover:text-yellow transition-colors">
+                    class="relative font-mono text-sm font-bold tracking-widest uppercase flex items-center gap-2 text-white group-hover:text-yellow transition-colors">
                     Secure Your Spot <span class="text-yellow group-hover:translate-x-1 transition-transform">-></span>
                 </span>
             </button>
@@ -1696,7 +1698,7 @@
 
 
 
-        
+
         const canvas = document.getElementById('speedCanvas');
         const ctx = canvas.getContext('2d');
         const vortexBtn = document.getElementById('vortexBtn');
