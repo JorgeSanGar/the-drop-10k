@@ -608,6 +608,52 @@
                 transform: translateX(0) skewX(0);
             }
         }
+
+        /* --- ROSTER SECTION STYLES --- */
+        .text-yellow {
+            color: var(--color-accent);
+        }
+
+        .bg-yellow {
+            background-color: var(--color-accent);
+        }
+
+        @keyframes marquee-reverse {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+
+        .ticker-content-reverse {
+            display: inline-block;
+            animation: marquee-reverse 30s linear infinite;
+        }
+
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+        }
+
+        .ticker-wrap:hover .ticker-content,
+        .ticker-wrap:hover .ticker-content-reverse {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 
@@ -1171,33 +1217,84 @@
     </section>
 
     <!-- THE BIB -->
-    <section class="py-20 md:py-24 border-b border-black bg-[#111] text-[#F2F2F2] overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center px-4">
-            <h2 class="text-4xl sm:text-5xl md:text-8xl font-black mb-12 uppercase tracking-tighter reveal-on-scroll">
-                Fast Looks.<br>Faster Times.
-            </h2>
-            <div
-                class="reveal-on-scroll mx-auto w-[280px] md:w-[350px] aspect-[3/2] bg-[#F2F2F2] text-black p-6 flex flex-col justify-between relative shadow-[0_0_50px_rgba(204,255,0,0.3)] rotate-3 hover:rotate-0 transition-transform duration-500 cursor-pointer group">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#111] rounded-full"></div>
-                <div class="absolute -top-3 left-4 w-4 h-4 bg-[#111] rounded-full"></div>
-                <div class="absolute -top-3 right-4 w-4 h-4 bg-[#111] rounded-full"></div>
-                <div class="flex justify-between items-start border-b border-black pb-2">
-                    <div class="font-bold tracking-tighter text-xl">
-                        THE DROP<span class="logo-slope">10K</span>
-                    </div>
-                    <i data-lucide="qr-code" class="w-8 h-8 group-hover:scale-110 transition-transform"></i>
-                </div>
-                <div class="text-center">
-                    <span class="text-7xl md:text-8xl font-black tracking-tighter leading-none">091</span>
-                </div>
-                <div class="flex justify-between items-end font-mono text-[9px] uppercase border-t border-black pt-2">
-                    <span class="text-left">Ávila<br>Division</span>
-                    <span class="text-right">Wash Cold.<br>Run Fast.</span>
-                </div>
+    <!-- ============================================== -->
+    <!-- SECCIÓN 5: THE ROSTER (Versión Dark + Volt Yellow)  -->
+    <!-- ============================================== -->
+    <section class="w-full py-20 border-t border-b border-[#222] bg-black overflow-hidden relative">
+
+        <!-- Detalle Amarillo: Línea fina superior de advertencia -->
+        <div class="absolute top-0 left-0 w-24 h-1 bg-yellow"></div>
+
+        <!-- Header de la sección -->
+        <div class="max-w-7xl mx-auto px-4 mb-12 flex items-end justify-between">
+            <div>
+                <!-- El amarillo aquí indica "Acceso al sistema" -->
+                <p class="font-mono text-xs text-gray-500 mb-2 tracking-widest">
+                    <span class="text-yellow">///</span> DATABASE_ACCESS
+                </p>
+                <h3 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
+                    Confirmed<br>Agents
+                </h3>
             </div>
-            <p class="mt-12 font-mono text-[10px] md:text-xs text-gray-400">*Visual is more important than the product.
-                But the product is fast.</p>
+            <div class="hidden md:block text-right font-mono text-xs text-gray-400">
+                <p>SERVER: <span class="text-green-500">ONLINE</span></p>
+                <!-- El amarillo aquí indica "Escasez" -->
+                <p>CAPACITY: <span class="text-yellow font-bold bg-yellow/10 px-1">LIMITED_WARNING</span></p>
+            </div>
         </div>
+
+        <!-- Ticker 1: Texto blanco normal -->
+        <div class="ticker-wrap border-y border-[#222] py-4 bg-black">
+            <div class="ticker-content font-mono text-lg text-gray-300">
+                <!-- El amarillo aquí resalta el ÉXITO/STATUS -->
+                <span class="mx-6">AGENT_042 [MADRID] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_088 [ÁVILA] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_104 [SOLOSANCHO] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_019 [ARÉVALO] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_220 [BRIEVA] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_007 [MADRID] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <!-- Repetición -->
+                <span class="mx-6">AGENT_042 [MADRID] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_088 [ÁVILA] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_104 [SOLOSANCHO] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_019 [ARÉVALO] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+                <span class="mx-6">AGENT_220 [BRIEVA] <span class="text-yellow font-bold">CONFIRMED</span></span> +
+            </div>
+        </div>
+
+        <!-- Ticker 2: Estilo "Ghost" / Outline -->
+        <div class="ticker-wrap border-b border-[#222] py-6 bg-black">
+            <div class="ticker-content-reverse font-black text-4xl tracking-tighter uppercase italic">
+                <span class="mx-8 text-outline">Waiting for assignment</span>
+                <!-- El amarillo aquí es la LLAMADA A LA ACCIÓN -->
+                <span class="mx-8 text-white"><span class="text-yellow">///</span> JOIN THE LIST</span>
+
+                <span class="mx-8 text-outline">Waiting for assignment</span>
+                <span class="mx-8 text-white"><span class="text-yellow">///</span> JOIN THE LIST</span>
+
+                <span class="mx-8 text-outline">Waiting for assignment</span>
+                <span class="mx-8 text-white"><span class="text-yellow">///</span> JOIN THE LIST</span>
+
+                <span class="mx-8 text-outline">Waiting for assignment</span>
+                <span class="mx-8 text-white"><span class="text-yellow">///</span> JOIN THE LIST</span>
+            </div>
+        </div>
+
+        <!-- Call to Action Final -->
+        <div class="max-w-7xl mx-auto px-4 mt-12 flex justify-center">
+            <button
+                class="group relative px-8 py-4 bg-transparent overflow-hidden border border-white/30 hover:border-[#CCFF00] transition-colors duration-300">
+                <!-- El fondo amarillo aparece al hacer hover -->
+                <div
+                    class="absolute inset-0 w-0 bg-yellow transition-all duration-[250ms] ease-out group-hover:w-full opacity-10">
+                </div>
+                <span
+                    class="relative font-mono text-sm font-bold tracking-widest uppercase flex items-center gap-2 group-hover:text-yellow transition-colors">
+                    Secure Your Spot <span class="text-yellow group-hover:translate-x-1 transition-transform">-></span>
+                </span>
+            </button>
+        </div>
+
     </section>
 
     <!-- PRICING -->
