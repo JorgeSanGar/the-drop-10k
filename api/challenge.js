@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
         }
 
         const apiInstance = new brevo.TransactionalEmailsApi();
-        apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey);
+        apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey.trim());
 
         const sendSmtpEmail = new brevo.SendSmtpEmail();
 
