@@ -1,10 +1,6 @@
 const admin = require('firebase-admin');
 const brevo = require('@getbrevo/brevo');
 
-// Initialize Brevo Client
-const defaultClient = brevo.ApiClient.instance;
-const apiKey = defaultClient.authentications['api-key'];
-
 module.exports = async (req, res) => {
     // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,9 +27,10 @@ module.exports = async (req, res) => {
         if (!brevoKey) {
             throw new Error('BREVO_API_KEY is not configured');
         }
-        apiKey.apiKey = brevoKey;
 
         const apiInstance = new brevo.TransactionalEmailsApi();
+        apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey);
+
         const sendSmtpEmail = new brevo.SendSmtpEmail();
 
         sendSmtpEmail.subject = `¿Vas a dejar que ${senderName} gane tan fácil?`;
