@@ -67,6 +67,9 @@ app.post('/api/register', require('./api/register'));
 // LOGIN
 app.post('/api/login', require('./api/login'));
 
+// UPDATE PROFILE
+app.post('/api/update-profile', require('./api/update-profile'));
+
 // ------------------------------------------------
 // 4. START SERVER
 // ------------------------------------------------

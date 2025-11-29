@@ -1683,15 +1683,8 @@
         window.addEventListener('load', () => {
             const savedUser = localStorage.getItem('drop_user');
             if (savedUser) {
-                try {
-                    const user = JSON.parse(savedUser);
-                    updateProfileView(user);
-                    // If user is logged in, show profile view by default when terminal opens
-                    switchView('profile');
-                } catch (e) {
-                    console.error("Error parsing saved user", e);
-                    localStorage.removeItem('drop_user');
-                }
+                // Redirect to profile page if logged in
+                window.location.href = 'profile.html';
             } else {
                 switchView('register'); // Default to register
             }
@@ -1745,10 +1738,7 @@
                 if (response.ok) {
                     // Success
                     localStorage.setItem('drop_user', JSON.stringify(result.user));
-                    updateProfileView(result.user);
-                    switchView('profile');
-                    // Reset form only on success
-                    form.reset();
+                    window.location.href = 'profile.html';
                 } else if (response.status === 409) {
                     // Duplicate Email -> Show Custom Modal (Persist = true)
                     openModal('emailExistsModal', true);
@@ -1795,8 +1785,7 @@
                 if (response.ok) {
                     // Success
                     localStorage.setItem('drop_user', JSON.stringify(result.user));
-                    updateProfileView(result.user);
-                    switchView('profile');
+                    window.location.href = 'profile.html';
                 } else {
                     alert(result.error || 'ACCESO DENEGADO');
                 }
