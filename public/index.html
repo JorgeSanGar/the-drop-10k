@@ -105,6 +105,124 @@
             }
         }
 
+        /* HERO TITLE GLITCH ANIMATION */
+        .hero-glitch {
+            position: relative;
+            animation: text-shudder 2s infinite;
+        }
+
+        .hero-glitch::before,
+        .hero-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+        }
+
+        .hero-glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip-path: inset(0 0 0 0);
+            animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+        }
+
+        .hero-glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip-path: inset(0 0 0 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes text-shudder {
+
+            0%,
+            100% {
+                transform: skew(0deg);
+            }
+
+            20% {
+                transform: skew(-2deg);
+            }
+
+            40% {
+                transform: skew(2deg);
+            }
+
+            60% {
+                transform: skew(-1deg);
+            }
+
+            80% {
+                transform: skew(1deg);
+            }
+        }
+
+        @keyframes glitch-anim-1 {
+            0% {
+                clip-path: inset(20% 0 80% 0);
+            }
+
+            20% {
+                clip-path: inset(60% 0 10% 0);
+            }
+
+            40% {
+                clip-path: inset(40% 0 50% 0);
+            }
+
+            60% {
+                clip-path: inset(80% 0 5% 0);
+            }
+
+            80% {
+                clip-path: inset(10% 0 60% 0);
+            }
+
+            100% {
+                clip-path: inset(30% 0 30% 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip-path: inset(10% 0 60% 0);
+            }
+
+            20% {
+                clip-path: inset(30% 0 20% 0);
+            }
+
+            40% {
+                clip-path: inset(70% 0 10% 0);
+            }
+
+            60% {
+                clip-path: inset(20% 0 50% 0);
+            }
+
+            80% {
+                clip-path: inset(50% 0 30% 0);
+            }
+
+            100% {
+                clip-path: inset(5% 0 80% 0);
+            }
+        }
+
+        /* Canvas Styles */
+        #windCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
         /* Marquee */
         .marquee-container {
             overflow: hidden;
@@ -825,38 +943,44 @@
     </nav>
 
     <!-- HERO SECTION -->
+    <!-- ============================================== -->
+    <!-- HERO SECTION (WIND EFFECT) -->
+    <!-- ============================================== -->
     <header
         class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center items-center pt-20 border-b border-black overflow-hidden"
         id="hero">
 
-        <!-- Video Background Simulation -->
-        <div class="absolute inset-0 z-0 opacity-10 flex justify-center items-center parallax-layer" data-speed="0.05">
-            <div class="w-[80vw] h-[80vw] border-[1px] border-black rounded-full animate-[spin_30s_linear_infinite]">
-            </div>
-            <div
-                class="w-[60vw] h-[60vw] border-[1px] border-black rounded-full absolute animate-[spin_20s_linear_infinite_reverse]">
-            </div>
-        </div>
+        <!-- NUEVO FONDO: WIND CANVAS -->
+        <canvas id="windCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
-        <div class="z-10 text-center px-4 relative w-full max-w-7xl mx-auto flex flex-col items-center">
+        <div class="z-10 text-center px-2 relative w-full max-w-7xl mx-auto flex flex-col items-center">
             <div
-                class="font-mono text-[10px] md:text-sm mb-4 uppercase tracking-[0.2em] md:tracking-[0.3em] reveal-on-scroll">
+                class="font-mono text-[10px] md:text-sm mb-4 uppercase tracking-[0.2em] md:tracking-[0.3em] reveal-on-scroll bg-[#F2F2F2] px-2 py-1">
                 Ávila, Spain — Date: [REDACTED]
             </div>
 
-            <!-- FIXED TYPOGRAPHY RESPONSIVENESS -->
-            <h1 class="display-text font-black uppercase flex flex-col items-center">
-                <!-- Ajuste en text-sizes para evitar roturas en desktop y mobile -->
-                <div id="gravity-text"
-                    class="flex justify-center overflow-hidden pb-2 flex-wrap text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.85]">
-                    GRAVITY
+            <!-- TITULO GLITCH + USP INTEGRADA -->
+            <div class="flex flex-col items-center">
+                <h1
+                    class="display-text font-black uppercase flex flex-col items-center relative mix-blend-multiply leading-none">
+                    <div class="flex justify-center overflow-hidden pb-2 flex-wrap text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.8] hero-glitch"
+                        data-text="GRAVITY">
+                        GRAVITY
+                    </div>
+                    <span
+                        class="stroke-text cursor-pointer block mt-[-1vw] md:mt-[-1vw] hover:text-[#CCFF00] transition-colors duration-300 text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.8]">
+                        OPTIMIZED
+                    </span>
+                </h1>
+
+                <!-- LA USP PROMETIDA (7 PALABRAS, NEGRITA, PEQUEÑA COMO ARRIBA) -->
+                <div class="mt-6 px-4 text-center">
+                    <h2
+                        class="font-mono text-[10px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold">
+                        THE FASTEST TEN KILOMETERS OF YOUR LIFE
+                    </h2>
                 </div>
-                <!-- Ajuste del span para que se integre mejor en diferentes tamaños -->
-                <span
-                    class="stroke-text glitch-hover cursor-pointer block mt-[-2vw] md:mt-[-1.5vw] hover:text-[#CCFF00] transition-colors duration-300 text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.85]">
-                    Optimized
-                </span>
-            </h1>
+            </div>
         </div>
 
         <div
@@ -866,12 +990,11 @@
             <div><del>END</del>: 1.050m</div>
         </div>
 
-        <!-- Marquee -->
         <div class="absolute bottom-0 w-full bg-[#CCFF00] border-y border-black py-2 overflow-hidden z-20">
             <div class="marquee-container font-bold text-lg md:text-xl uppercase tracking-tight">
                 <div class="marquee-content">
                     TOP SECRET ROUTE • PURE GRAVITY • UNKNOWN PATH • PERSONAL BEST GUARANTEED* • THE DROP10K • TOP
-                    SECRET ROUTE • PURE GRAVITY • UNKNOWN PATH • PERSONAL BEST GUARANTEED* • THE DROP10K •
+                    SECRET ROUTE • PURE GRAVITY • UNKNOWN PATH • THE DROP10K •
                 </div>
             </div>
         </div>
@@ -1390,6 +1513,71 @@
         lucide.createIcons();
 
         // ------------------------------------------------
+        // NEW HERO BACKGROUND ANIMATION (WIND EFFECT)
+        // ------------------------------------------------
+        const windCanvas = document.getElementById('windCanvas');
+        const wCtx = windCanvas.getContext('2d');
+        let wW, wH;
+        let windLines = [];
+
+        const resizeWind = () => {
+            wW = windCanvas.width = windCanvas.parentElement.offsetWidth;
+            wH = windCanvas.height = windCanvas.parentElement.offsetHeight;
+        };
+        window.addEventListener('resize', resizeWind);
+        resizeWind();
+
+        class WindLine {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * wW + wW; // Start off-screen right
+                this.y = Math.random() * wH;
+                this.speed = Math.random() * 15 + 10; // High speed
+                this.len = Math.random() * 100 + 50; // Long streaks
+                this.thickness = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random() * 0.2 + 0.05;
+            }
+            update(mouseX) {
+                // Parallax shift based on mouse Y
+                let driftY = 0;
+                if (mouseX !== undefined) {
+                    driftY = (mouseX - window.innerWidth / 2) * 0.01;
+                }
+                this.x -= this.speed;
+                this.y += driftY;
+                if (this.x < -this.len) this.reset();
+            }
+            draw() {
+                wCtx.beginPath();
+                // Gradient trail
+                let grad = wCtx.createLinearGradient(this.x, this.y, this.x + this.len, this.y);
+                grad.addColorStop(0, `rgba(0,0,0,${this.opacity})`);
+                grad.addColorStop(1, `rgba(0,0,0,0)`);
+                wCtx.strokeStyle = grad;
+                wCtx.lineWidth = this.thickness;
+                wCtx.moveTo(this.x, this.y);
+                wCtx.lineTo(this.x + this.len, this.y);
+                wCtx.stroke();
+            }
+        }
+
+        // Create Lines
+        for (let i = 0; i < 80; i++) windLines.push(new WindLine());
+
+        let mouseX = window.innerWidth / 2;
+        window.addEventListener('mousemove', e => mouseX = e.clientX);
+
+        const animateWind = () => {
+            wCtx.clearRect(0, 0, wW, wH);
+            windLines.forEach(l => {
+                l.update(mouseX);
+                l.draw();
+            });
+            requestAnimationFrame(animateWind);
+        };
+        animateWind();
+
+        // ------------------------------------------------
         // 1. DROP TRACKER (ALTÍMETRO)
         // ------------------------------------------------
         const dropRunner = document.getElementById('drop-runner');
@@ -1425,27 +1613,7 @@
         });
 
 
-        // ------------------------------------------------
-        // 3. PARALLAX EFFECT
-        // ------------------------------------------------
-        const heroSection = document.querySelector('#hero');
-        const parallaxLayers = document.querySelectorAll('.parallax-layer');
 
-        const moveParallax = (x, y) => {
-            parallaxLayers.forEach(layer => {
-                const speed = layer.getAttribute('data-speed');
-                const xPos = x * speed * 50;
-                const yPos = y * speed * 50;
-                layer.style.transform = `translateX(${xPos}px) translateY(${yPos}px)`;
-            });
-        }
-
-        // Mouse Parallax (Desktop)
-        heroSection.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth - e.pageX * 2) / 100;
-            const y = (window.innerHeight - e.pageY * 2) / 100;
-            moveParallax(x, y);
-        });
 
         // ------------------------------------------------
         // 4. TUNNEL VISION (CANVAS ANIMATION)
