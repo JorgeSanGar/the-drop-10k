@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
 
     const { email, password, firstName, lastName, gender, target } = req.body;
 
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !firstName) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
