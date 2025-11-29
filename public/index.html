@@ -1957,31 +1957,17 @@
             predictedTimeDisplay.innerText = "";
 
             try {
-                const apiKey = ""; // API KEY SE INYECTA EN RUNTIME O AÑADELA TU MANUALMENTE SI PRUEBAS LOCAL
-                const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-preview-09-2025" });
+                const response = await fetch('/api/oracle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pb: pb })
+                });
 
-                const prompt = `
-                    You are THE ORACLE, an AI for a running race called 'THE DROP' in Ávila, Spain. 
-                    The race has 110m negative elevation drop (downhill).
-                    The brand personality is: Hypebeast, Minimalist, Arrogant, Cool, Mysterious. Gen Z fashion style.
-                    Language: Spanglish (natural mix of English and Spanish slang like 'vibe', 'flow', 'brutal', 'hype', 'renta').
-                    Keep the advice short, punchy, and direct. Max 2 sentences.
+                const data = await response.json();
 
-                    User Input Current 10K PB: ${pb}
-
-                    Task:
-                    1. Predict their time for THE DROP (significantly faster due to downhill). Format "MM:SS".
-                    2. Write a short, punchy advice paragraph in Spanglish.
-
-                    Output format JSON:
-                    { "prediction": "MM:SS", "advice": "String" }
-                `;
-
-                const result = await model.generateContent(prompt);
-                const responseText = result.response.text();
-                const jsonStr = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-                const data = JSON.parse(jsonStr);
+                if (!response.ok) {
+                    throw new Error(data.error || 'Oracle Error');
+                }
 
                 predictedTimeDisplay.innerText = data.prediction;
 
@@ -1999,7 +1985,7 @@
 
             } catch (error) {
                 console.error("Oracle Error:", error);
-                // Fallback demo si no hay API Key
+                // Fallback demo
                 predictedTimeDisplay.innerText = "38:45";
                 oracleText.innerText = "SYSTEM OVERLOAD. GRAVITY IS TOO STRONG. BUT YOU LOOK FAST.";
             } finally {

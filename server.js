@@ -73,6 +73,9 @@ app.post('/api/update-profile', require('./api/update-profile'));
 // CHALLENGE FRIEND
 app.post('/api/challenge', require('./api/challenge'));
 
+// ORACLE AI
+app.post('/api/oracle', require('./api/oracle'));
+
 // ------------------------------------------------
 // 4. START SERVER
 // ------------------------------------------------
