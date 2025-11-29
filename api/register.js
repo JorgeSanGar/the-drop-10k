@@ -19,7 +19,10 @@ const db = admin.firestore();
 
 // Initialize Brevo
 const apiInstance = new brevo.TransactionalEmailsApi();
-apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+const brevoKey = process.env.BREVO_API_KEY;
+if (brevoKey) {
+    apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey.trim());
+}
 
 module.exports = async (req, res) => {
     // CORS Headers
@@ -90,19 +93,26 @@ module.exports = async (req, res) => {
 
         await usersRef.add(newUser);
 
-        // Send Welcome Email
-        const sendSmtpEmail = new brevo.SendSmtpEmail();
-        sendSmtpEmail.subject = "THE DROP: ACCESS GRANTED";
-        sendSmtpEmail.htmlContent = `
-            <h1>WELCOME TO THE SYSTEM, ${firstName ? firstName.toUpperCase() : 'RUNNER'}.</h1>
-            <p>Your profile has been created.</p>
-            <p><strong>ID:</strong> DROP-${Math.floor(1000 + Math.random() * 9000)}</p>
-            <p>Awaiting mission instructions.</p>
-        `;
-        sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "no-reply@thedrop10k.com" };
-        sendSmtpEmail.to = [{ "email": email }];
+        // Send Welcome Email (Non-blocking / Graceful Failure)
+        if (brevoKey) {
+            try {
+                const sendSmtpEmail = new brevo.SendSmtpEmail();
+                sendSmtpEmail.subject = "THE DROP: ACCESS GRANTED";
+                sendSmtpEmail.htmlContent = `
+                    <h1>WELCOME TO THE SYSTEM, ${firstName ? firstName.toUpperCase() : 'RUNNER'}.</h1>
+                    <p>Your profile has been created.</p>
+                    <p><strong>ID:</strong> DROP-${bib}</p>
+                    <p>Awaiting mission instructions.</p>
+                `;
+                sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "no-reply@thedrop10k.com" };
+                sendSmtpEmail.to = [{ "email": email }];
 
-        await apiInstance.sendTransacEmail(sendSmtpEmail);
+                await apiInstance.sendTransacEmail(sendSmtpEmail);
+            } catch (emailError) {
+                console.error('Failed to send welcome email:', emailError.message);
+                // Continue execution, do not fail registration
+            }
+        }
 
         // Return user data (excluding password)
         const { password: _, ...userWithoutPassword } = newUser;
