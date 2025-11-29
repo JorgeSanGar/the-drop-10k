@@ -95,6 +95,7 @@ module.exports = async (req, res) => {
 
         // Send Welcome Email (Non-blocking / Graceful Failure)
         if (brevoKey) {
+            console.log(`[Brevo] Attempting to send email to ${email} with key length: ${brevoKey.length}`);
             try {
                 const sendSmtpEmail = new brevo.SendSmtpEmail();
                 sendSmtpEmail.subject = "THE DROP: PROFILE ACTIVATED";
@@ -286,11 +287,17 @@ module.exports = async (req, res) => {
                 sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "race@thedrop10k.space" };
                 sendSmtpEmail.to = [{ "email": email }];
 
-                await apiInstance.sendTransacEmail(sendSmtpEmail);
+                const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+                console.log('[Brevo] Email sent successfully. Message ID:', data.messageId);
             } catch (emailError) {
-                console.error('Failed to send welcome email:', emailError.message);
+                console.error('Failed to send welcome email:', emailError);
+                if (emailError.response && emailError.response.body) {
+                    console.error('[Brevo] API Response Body:', JSON.stringify(emailError.response.body, null, 2));
+                }
                 // Continue execution, do not fail registration
             }
+        } else {
+            console.warn('[Brevo] No API Key configured. Skipping email.');
         }
 
         // Return user data (excluding password)
