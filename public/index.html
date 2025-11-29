@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE DROP 10K - Ávila (Classified)</title>
+    <meta name="description" content="10 Kilómetros. 110m Desnivel Negativo. Ávila. La carrera secreta.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --color-bg: #F2F2F2;
+            --color-text: #111111;
+            --color-accent: #CCFF00;
+            --grain-url: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .logo-slope {
+            transform: skewX(12deg);
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        del {
+            text-decoration-thickness: 2px;
+            text-decoration-color: currentColor;
+            opacity: 0.5;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--grain-url);
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .display-text {
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+        }
+
+        .stroke-text {
+            -webkit-text-stroke: 1px black;
+            color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .stroke-text {
+                -webkit-text-stroke: 2px black;
+            }
+        }
+
+        .char-drop {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-150px) scaleY(1.5);
+            filter: blur(10px);
+            animation: dropSlam 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes dropSlam {
+            0% {
+                opacity: 0;
+                transform: translateY(-150px) scaleY(2);
+                filter: blur(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scaleY(1);
+                filter: blur(0);
+            }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .btn-hype {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .btn-hype:hover,
+        .btn-hype:active {
+            background-color: var(--color-accent);
+            color: var(--color-text);
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #111;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--color-accent);
+            -webkit-text-stroke: 0px;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        .gravity-accelerate {
+            offset-path: path('M 0 20 L 100 80');
+            animation: accelerate 3s cubic-bezier(0.5, 0, 0.75, 0) infinite;
+            opacity: 0;
+        }
+
+        @keyframes accelerate {
+            0% {
+                offset-distance: 0%;
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            80% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            100% {
+                offset-distance: 100%;
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        .blink-price {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        input,
+        select,
+        textarea {
+            font-size: 16px !important;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        #profile-overlay {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        #profile-overlay.active {
+            clip-path: circle(150% at 100% 0%);
+        }
+
+        .card-3d-wrapper {
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+        }
+
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background: #CCFF00;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: scan 3s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #CCFF00;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #CCFF00;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-[#CCFF00] selection:text-black">
+    <div class="noise-overlay"></div>
+
+    <!-- DROP TRACKER (Lateral - Oculto en móvil para ganar espacio) -->
+    <div
+        class="fixed right-2 md:right-6 top-1/2 -translate-y-1/2 h-[60vh] w-12 z-50 hidden md:flex flex-col items-center pointer-events-none mix-blend-difference">
+        <div class="absolute right-1/2 translate-x-1/2 w-[1px] h-full bg-gray-400 opacity-30"></div>
+        <div class="absolute -top-4 font-mono text-[9px] text-gray-400">1160m</div>
+        <div id="drop-runner"
+            class="absolute w-3 h-3 bg-[#CCFF00] border border-black shadow-[0_0_10px_#CCFF00] top-0 transition-all duration-75 ease-linear flex items-center justify-center">
+            <div class="absolute right-6 font-mono text-xs font-bold text-[#CCFF00] bg-black px-1 tabular-nums tracking-tighter"
+                id="altitude-display">1160m</div>
+        </div>
+        <div class="absolute -bottom-4 font-mono text-[9px] text-gray-400">1050m</div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 w-full z-50 bg-[#F2F2F2]/90 backdrop-blur-sm border-b border-black flex justify-between items-center px-4 py-3 md:px-8 transition-transform duration-300"
+        id="main-nav">
+        <div class="font-black tracking-tighter text-xl md:text-2xl cursor-pointer" onclick="window.scrollTo(0,0)">
+            THE DROP<span class="logo-slope">10K</span>™
+        </div>
+
+        <div class="hidden md:flex space-x-8 font-mono text-xs uppercase tracking-widest items-center">
+            <a href="#manifesto" class="hover:line-through decoration-2">Manifesto</a>
+            <a href="#oracle" class="hover:line-through decoration-2">The Oracle</a>
+            <a href="#tickets" class="hover:line-through decoration-2">Join List</a>
+            <!-- NEW LOGIN BUTTON -->
+            <button id="access-btn"
+                class="bg-black text-[#CCFF00] px-4 py-1 border border-transparent hover:border-[#CCFF00] transition-all flex items-center gap-2 cursor-pointer">
+                <i data-lucide="terminal" class="w-3 h-3"></i> ACCESS
+            </button>
+        </div>
+
+        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+            class="md:hidden font-mono text-xs bg-black text-white px-4 py-2 uppercase">
+            Menu
+        </button>
+        <button
+            class="hidden md:block font-mono text-xs bg-black text-white px-4 py-2 hover:bg-[#CCFF00] hover:text-black transition-colors uppercase cursor-pointer"
+            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            Menu
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU (Simple Overlay) -->
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 z-40 bg-[#F2F2F2] pt-24 px-4 flex flex-col gap-8 font-black text-4xl uppercase tracking-tighter">
+        <a href="#manifesto" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+            class="hover:text-[#CCFF00]">Manifesto</a>
+        <a href="#oracle" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+            class="hover:text-[#CCFF00]">Oracle AI</a>
+        <a href="#tickets" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+            class="hover:text-[#CCFF00]">Join List</a>
+        <!-- MOBILE ACCESS BUTTON -->
+        <button id="mobile-access-btn" onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+            class="text-left hover:text-[#CCFF00] flex items-center gap-4">
+            > ACCESS PROFILE
+        </button>
+        <button onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+            class="font-mono text-sm font-normal mt-8 text-left border border-black w-fit px-4 py-2">X Close</button>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- PROFILE OVERLAY (THE DASHBOARD) -->
+    <!-- ============================================== -->
+    <div id="profile-overlay" class="fixed inset-0 z-[60] bg-[#0a0a0a] text-[#F2F2F2] overflow-y-auto">
+        <div class="min-h-screen relative p-4 md:p-8">
+            <!-- Close Button -->
+            <button id="close-profile"
+                class="absolute top-6 right-6 md:top-8 md:right-10 z-50 text-[#CCFF00] hover:text-white transition-colors cursor-pointer">
+                <i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10"></i>
+            </button>
+
+            <div class="max-w-7xl mx-auto mt-16 md:mt-12">
+                <!-- Header del Perfil -->
+                <div class="flex flex-col md:flex-row justify-between items-end border-b border-[#333] pb-6 mb-12">
+                    <div>
+                        <div class="font-mono text-xs text-[#CCFF00] mb-2">[ OPERATIVE STATUS: ACTIVE ]</div>
+                        <h2 class="text-5xl md:text-8xl font-black uppercase leading-none tracking-tighter">
+                            RUNNER<br>DASHBOARD
+                        </h2>
+                    </div>
+                    <div class="font-mono text-right text-xs text-gray-500 mt-4 md:mt-0">
+                        ID: #091-AV-X<br>
+                        LAST LOGIN: TODAY
+                    </div>
+                </div>
+
+                <!-- Grid Principal -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                    <!-- COL 1: IDENTITY CARD (3D Effect) -->
+                    <div class="lg:col-span-5 perspective-container card-3d-wrapper">
+                        <div id="id-card"
+                            class="card-3d bg-[#F2F2F2] text-black p-6 relative shadow-[0_0_40px_rgba(204,255,0,0.1)] h-full min-h-[400px] flex flex-col justify-between overflow-hidden group">
+                            <!-- Scanning Effect -->
+                            <div class="scan-line"></div>
+
+                            <!-- Holes -->
+                            <div class="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#0a0a0a] rounded-full">
+                            </div>
+
+                            <div class="flex justify-between items-start border-b-2 border-black pb-4">
+                                <div class="font-bold text-2xl tracking-tighter">THE DROP<span
+                                        class="logo-slope">10K</span></div>
+                                <div class="bg-black text-[#CCFF00] px-2 py-1 font-mono text-xs font-bold">2025</div>
+                            </div>
+
+                            <div class="flex-grow flex flex-col justify-center items-center py-8">
+                                <div
+                                    class="w-32 h-32 bg-black rounded-full mb-4 flex items-center justify-center overflow-hidden border-2 border-black">
+                                    <i data-lucide="user" class="w-16 h-16 text-[#CCFF00]"></i>
+                                </div>
+                                <h3 class="text-3xl font-black uppercase text-center leading-none mb-1">RUNNER ONE</h3>
+                                <div class="font-mono text-xs bg-[#CCFF00] text-black px-2">LEVEL: ROOKIE</div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 border-t-2 border-black pt-4 font-mono text-xs">
+                                <div>
+                                    <span class="block text-gray-500">CATEGORY</span>
+                                    <span class="font-bold">M / SENIOR</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="block text-gray-500">BIB NUMBER</span>
+                                    <span class="font-black text-xl">--</span>
+                                </div>
+                            </div>
+
+                            <!-- Glitch deco -->
+                            <div class="absolute bottom-2 left-2 text-[8px] font-mono opacity-50">VERIFIED BY GRAVITY
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COL 2: STATS & CONFIG -->
+                    <div class="lg:col-span-7 flex flex-col gap-8">
+
+                        <!-- Stats Row -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="border border-[#333] p-6 hover:border-[#CCFF00] transition-colors group">
+                                <div class="font-mono text-xs text-gray-500 mb-2 group-hover:text-[#CCFF00]">TOTAL DROP
+                                </div>
+                                <div class="text-4xl md:text-6xl font-black">0<span class="text-lg text-[#333]">m</span>
+                                </div>
+                            </div>
+                            <div class="border border-[#333] p-6 hover:border-[#CCFF00] transition-colors group">
+                                <div class="font-mono text-xs text-gray-500 mb-2 group-hover:text-[#CCFF00]">NEXT RACE
+                                </div>
+                                <div class="text-xl md:text-3xl font-black text-[#CCFF00] animate-pulse">PENDING...
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Parameters (Form) -->
+                        <div class="border border-[#333] p-6 md:p-8 bg-[#111]">
+                            <h4 class="font-mono text-xs text-[#CCFF00] mb-6 uppercase border-b border-[#333] pb-2">
+                                // System Configuration
+                            </h4>
+
+                            <form class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block font-mono text-[10px] text-gray-500 uppercase mb-2">Operative
+                                            Name</label>
+                                        <input type="text" value="Runner One"
+                                            class="w-full bg-black border border-[#333] text-white p-3 font-mono text-sm focus:border-[#CCFF00] outline-none transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block font-mono text-[10px] text-gray-500 uppercase mb-2">T-Shirt
+                                            Size</label>
+                                        <select
+                                            class="w-full bg-black border border-[#333] text-white p-3 font-mono text-sm focus:border-[#CCFF00] outline-none transition-colors">
+                                            <option>SIZE: S</option>
+                                            <option selected>SIZE: M</option>
+                                            <option>SIZE: L</option>
+                                            <option>SIZE: XL</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block font-mono text-[10px] text-gray-500 uppercase mb-2">Estimated
+                                        10K Time</label>
+                                    <div class="flex items-center gap-4">
+                                        <input type="range" min="30" max="90" value="50"
+                                            class="w-full h-1 bg-[#333] rounded-lg appearance-none cursor-pointer accent-[#CCFF00]">
+                                        <span class="font-mono text-[#CCFF00]">50:00</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between border-t border-[#333] pt-6">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                            <input type="checkbox" name="toggle" id="toggle"
+                                                class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-[#333]" />
+                                            <label for="toggle"
+                                                class="toggle-label block overflow-hidden h-5 rounded-full bg-[#333] cursor-pointer"></label>
+                                        </div>
+                                        <span class="font-mono text-xs text-gray-400">GHOST MODE (Private
+                                            Profile)</span>
+                                    </div>
+
+                                    <button type="button"
+                                        class="bg-[#CCFF00] text-black px-6 py-2 font-bold uppercase text-sm hover:bg-white transition-colors cursor-pointer">
+                                        SAVE DATA
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Loot / Artifacts -->
+                        <div class="border border-[#333] p-6">
+                            <h4 class="font-mono text-xs text-gray-500 mb-4 uppercase">
+                                // Artifacts (NFT)
+                            </h4>
+                            <div class="flex gap-4 opacity-50">
+                                <div
+                                    class="w-16 h-16 border border-dashed border-gray-600 flex items-center justify-center">
+                                    <i data-lucide="lock" class="w-4 h-4 text-gray-600"></i>
+                                </div>
+                                <div
+                                    class="w-16 h-16 border border-dashed border-gray-600 flex items-center justify-center">
+                                    <i data-lucide="lock" class="w-4 h-4 text-gray-600"></i>
+                                </div>
+                                <div
+                                    class="w-16 h-16 border border-dashed border-gray-600 flex items-center justify-center">
+                                    <i data-lucide="lock" class="w-4 h-4 text-gray-600"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT (LANDING) -->
+    <div id="main-content">
+        <!-- HERO SECTION -->
+        <header
+            class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center items-center pt-20 border-b border-black overflow-hidden"
+            id="hero">
+
+            <!-- Video Background Simulation -->
+            <div class="absolute inset-0 z-0 opacity-10 flex justify-center items-center parallax-layer"
+                data-speed="0.05">
+                <div
+                    class="w-[80vw] h-[80vw] border-[1px] border-black rounded-full animate-[spin_30s_linear_infinite]">
+                </div>
+                <div
+                    class="w-[60vw] h-[60vw] border-[1px] border-black rounded-full absolute animate-[spin_20s_linear_infinite_reverse]">
+                </div>
+            </div>
+
+            <div class="z-10 text-center px-2 relative w-full max-w-7xl mx-auto flex flex-col items-center">
+                <div
+                    class="font-mono text-[10px] md:text-sm mb-4 uppercase tracking-[0.2em] md:tracking-[0.3em] reveal-on-scroll">
+                    Ávila, Spain — Date: [REDACTED]
+                </div>
+
+                <!-- FIXED TYPOGRAPHY RESPONSIVENESS -->
+                <h1 class="display-text font-black uppercase flex flex-col items-center">
+                    <!-- Ajuste en text-sizes para evitar roturas en desktop y mobile -->
+                    <div id="gravity-text"
+                        class="flex justify-center overflow-hidden pb-2 flex-wrap text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.85]">
+                        GRAVITY
+                    </div>
+                    <!-- Ajuste del span para que se integre mejor en diferentes tamaños -->
+                    <span
+                        class="stroke-text glitch-hover cursor-pointer block mt-[-2vw] md:mt-[-1.5vw] hover:text-[#CCFF00] transition-colors duration-300 text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.85]">
+                        Optimized
+                    </span>
+                </h1>
+            </div>
+
+            <div
+                class="absolute bottom-12 md:bottom-10 w-full flex justify-between px-4 md:px-8 font-mono text-[10px] md:text-xs uppercase z-20">
+                <div><del>ORIGIN</del>: [REDACTED]</div>
+                <div class="animate-bounce text-[#CCFF00] bg-black px-1">↓ SCROLL</div>
+                <div><del>END</del>: 1.050m</div>
+            </div>
+
+            <!-- Marquee -->
+            <div class="absolute bottom-0 w-full bg-[#CCFF00] border-y border-black py-2 overflow-hidden z-20">
+                <div class="marquee-container font-bold text-lg md:text-xl uppercase tracking-tight">
+                    <div class="marquee-content">
+                        TOP SECRET ROUTE • PURE GRAVITY • UNKNOWN PATH • PERSONAL BEST GUARANTEED* • THE DROP10K • TOP
+                        SECRET ROUTE • PURE GRAVITY • UNKNOWN PATH • PERSONAL BEST GUARANTEED* • THE DROP10K •
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MANIFESTO SECTION -->
+        <section id="manifesto" class="py-20 md:py-24 px-4 md:px-8 border-b border-black">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+                <div
+                    class="md:col-span-4 font-mono text-xs text-gray-500 uppercase md:sticky md:top-24 h-fit mb-4 md:mb-0">
+                    [ 01 — The Concept ]
+                    <br class="hidden md:block"><br class="hidden md:block">
+                    <span class="md:block mt-2">We hacked the topography.</span>
+                </div>
+                <div class="md:col-span-8">
+                    <h2
+                        class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 md:mb-8 reveal-on-scroll">
+                        OLVIDA EL SUFRIMIENTO.<br>
+                        EL RECORRIDO ES SECRETO.
+                    </h2>
+                    <p
+                        class="text-base md:text-xl font-mono leading-relaxed max-w-2xl reveal-on-scroll text-justify md:text-left">
+                        10 Kilómetros. 110 Metros de desnivel negativo. <br><br>
+                        El punto de inicio es información clasificada. El final, una liberación. No preguntes dónde.
+                        Solo prepárate para caer. <br><br>
+                        Diseñada para los que buscan su <span class="bg-black text-white px-1">PB</span>
+                        y para los que solo quieren el <span class="bg-[#CCFF00] text-black px-1">VIBE</span>.
+                    </p>
+                    <br>
+                    <p class="text-2xl md:text-3xl font-bold italic reveal-on-scroll mt-4">"THE UNKNOWN IS FASTER."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE ROUTE -->
+        <section id="route" class="py-20 md:py-24 px-4 md:px-8 border-b border-black bg-white relative overflow-hidden">
+            <div
+                class="absolute top-4 right-4 font-mono text-xs uppercase border border-black px-2 py-1 rounded-full bg-white z-10">
+                Net Drop: -110m
+            </div>
+
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="font-mono text-xs text-gray-500 uppercase mb-8 md:mb-12">
+                    [ 02 — The Descent Protocol ]
+                </div>
+
+                <!-- Abstract Graph -->
+                <div class="relative h-[50vh] md:h-[60vh] w-full flex items-center justify-center reveal-on-scroll">
+                    <svg class="absolute w-full h-full overflow-visible" preserveAspectRatio="none"
+                        viewBox="0 0 100 100">
+                        <line x1="0" y1="20" x2="100" y2="80" stroke="black" stroke-width="0.5"
+                            vector-effect="non-scaling-stroke" />
+                        <circle r="2" fill="#CCFF00" stroke="black" stroke-width="0.5" class="gravity-accelerate">
+                            <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"
+                                calcMode="spline" keySplines="0.5 0 1 1; 0 0 1 1" keyTimes="0;0.8;1" />
+                        </circle>
+                        <circle cx="0" cy="20" r="2" fill="black" />
+                        <circle cx="50" cy="50" r="1.5" fill="#CCFF00" stroke="black" stroke-width="0.5" />
+                        <circle cx="100" cy="80" r="2" fill="black" />
+                    </svg>
+
+                    <div class="absolute top-[10%] left-0 bg-white/80 p-2 backdrop-blur-sm rounded-sm max-w-[45%]">
+                        <h3 class="font-bold text-lg md:text-2xl uppercase leading-none">THE SUMMIT
+                            <del>(REDACTED)</del>
+                        </h3>
+                        <p class="font-mono text-[10px] md:text-xs text-gray-600">1.160 MASL</p>
+                    </div>
+
+                    <div
+                        class="absolute top-[45%] left-[50%] -translate-x-1/2 bg-white p-2 border border-black z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        <h3 class="font-bold text-sm md:text-lg uppercase leading-none">THE VOID</h3>
+                        <p class="font-mono text-[9px] md:text-[10px]">No return</p>
+                    </div>
+
+                    <div
+                        class="absolute bottom-[10%] right-0 text-right bg-white/80 p-2 backdrop-blur-sm rounded-sm max-w-[45%]">
+                        <h3 class="font-bold text-lg md:text-2xl uppercase leading-none">GROUND ZERO</h3>
+                        <p class="font-mono text-[10px] md:text-xs text-gray-600">1.050 MASL</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NUEVA SECCIÓN: THE TUNNEL VISION (CANVAS) -->
+        <section
+            class="relative h-[50vh] md:h-[60vh] bg-black overflow-hidden border-b border-[#CCFF00] flex items-center justify-center group">
+            <!-- Canvas Background -->
+            <canvas id="speedCanvas" class="absolute inset-0 w-full h-full z-0 opacity-60"></canvas>
+
+            <!-- Overlay de Ruido -->
+            <div
+                class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none">
+            </div>
+
+            <!-- Contenido Central -->
+            <div class="relative z-10 text-center pointer-events-none mix-blend-difference px-4">
+                <h3
+                    class="text-[#CCFF00] font-mono text-[10px] md:text-xs uppercase mb-2 tracking-[0.2em] md:tracking-[0.5em] animate-pulse">
+                    Warning: High Velocity
+                </h3>
+                <h2 class="text-5xl md:text-7xl lg:text-9xl font-black text-transparent uppercase leading-none"
+                    style="-webkit-text-stroke: 1px #CCFF00; opacity: 0.9;">
+                    TUNNEL<br>VISION
+                </h2>
+            </div>
+
+            <!-- Botón Central Interactivo (Magnetic CTA) -->
+            <div class="absolute inset-0 z-20 flex items-center justify-center mt-20 md:mt-32">
+                <button id="vortexBtn"
+                    class="group/btn relative px-6 md:px-8 py-3 md:py-4 bg-[#CCFF00] text-black font-black uppercase tracking-tighter text-sm md:text-xl hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(204,255,0,0.4)] border-2 border-transparent hover:border-white cursor-pointer">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Enter The Vortex <i data-lucide="zap" class="w-4 h-4 md:w-5 md:h-5 fill-black"></i>
+                    </span>
+                    <!-- Glitch hover effect bg -->
+                    <div
+                        class="absolute inset-0 bg-white translate-x-1 translate-y-1 -z-10 group-hover/btn:translate-x-2 group-hover/btn:translate-y-2 transition-transform">
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- GEMINI AI SECTION -->
+        <section id="oracle" class="py-20 md:py-24 px-4 md:px-8 border-b border-black bg-[#CCFF00] text-black">
+            <div class="max-w-4xl mx-auto">
+                <div
+                    class="font-mono text-xs text-black uppercase mb-8 md:mb-12 border border-black inline-block px-2 py-1">
+                    [ 03 — The Oracle AI ]
+                </div>
+
+                <h2
+                    class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 uppercase tracking-tighter leading-none reveal-on-scroll">
+                    Predict Your<br>Destiny.
+                </h2>
+
+                <p class="font-mono text-xs md:text-base mb-8 max-w-xl border-l-2 border-black pl-4">
+                    Enter your current 10K Personal Best. The Algorithm will calculate your gravity-optimized time on
+                    THE DROP.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Input Area -->
+                    <div class="bg-white p-6 md:p-8 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                        <label class="block font-mono text-xs uppercase mb-2">Your Current PB (MM:SS)</label>
+                        <!-- inputmode numeric para teclado de móvil más cómodo -->
+                        <input type="text" id="pbInput" inputmode="numeric" placeholder="45:00"
+                            class="w-full bg-[#F2F2F2] border-b-2 border-black py-4 text-3xl font-black outline-none placeholder-gray-400 font-mono uppercase focus:bg-[#CCFF00] transition-colors mb-8">
+
+                        <button id="generateBtn"
+                            class="w-full bg-black text-white py-4 font-bold uppercase btn-hype hover:bg-white hover:text-black border border-black flex justify-center items-center gap-2 cursor-pointer">
+                            <span>Consult The Oracle</span>
+                            <span>✨</span>
+                        </button>
+                    </div>
+
+                    <!-- Result Area -->
+                    <div id="oracleResult"
+                        class="hidden h-full min-h-[250px] border-2 border-black p-6 font-mono text-sm bg-black text-[#F2F2F2] flex flex-col justify-between relative overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                        <div
+                            class="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] pointer-events-none opacity-20">
+                        </div>
+
+                        <div class="relative z-10 w-full">
+                            <div class="uppercase text-[#CCFF00] text-xs mb-4 flex justify-between">
+                                <span>>> ANALYSIS COMPLETE</span>
+                            </div>
+                            <div id="predictedTimeDisplay"
+                                class="text-5xl md:text-6xl font-black mb-6 text-white tracking-tighter"></div>
+                            <div class="border-l-2 border-[#CCFF00] pl-3 py-1">
+                                <p id="oracleText"
+                                    class="leading-relaxed text-[#CCFF00] break-words whitespace-pre-wrap max-w-full text-xs md:text-sm">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-4 border-t border-[#333] text-[10px] uppercase text-gray-500 relative z-10">
+                            Generated by Gemini AI Model // Gravity v2.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE BIB -->
+        <section class="py-20 md:py-24 border-b border-black bg-[#111] text-[#F2F2F2] overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h2
+                    class="text-4xl sm:text-5xl md:text-8xl font-black mb-12 uppercase tracking-tighter reveal-on-scroll">
+                    Fast Looks.<br>Faster Times.
+                </h2>
+                <div
+                    class="reveal-on-scroll mx-auto w-[280px] md:w-[350px] aspect-[3/2] bg-[#F2F2F2] text-black p-6 flex flex-col justify-between relative shadow-[0_0_50px_rgba(204,255,0,0.3)] rotate-3 hover:rotate-0 transition-transform duration-500 cursor-pointer group">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#111] rounded-full"></div>
+                    <div class="absolute -top-3 left-4 w-4 h-4 bg-[#111] rounded-full"></div>
+                    <div class="absolute -top-3 right-4 w-4 h-4 bg-[#111] rounded-full"></div>
+                    <div class="flex justify-between items-start border-b border-black pb-2">
+                        <div class="font-bold tracking-tighter text-xl">
+                            THE DROP<span class="logo-slope">10K</span>
+                        </div>
+                        <i data-lucide="qr-code" class="w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-7xl md:text-8xl font-black tracking-tighter leading-none">091</span>
+                    </div>
+                    <div
+                        class="flex justify-between items-end font-mono text-[9px] uppercase border-t border-black pt-2">
+                        <span class="text-left">Ávila<br>Division</span>
+                        <span class="text-right">Wash Cold.<br>Run Fast.</span>
+                    </div>
+                </div>
+                <p class="mt-12 font-mono text-[10px] md:text-xs text-gray-400">*Visual is more important than the
+                    product. But the product is fast.</p>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section id="tickets" class="py-20 md:py-24 px-4 md:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16">
+                    <h2 class="text-5xl md:text-8xl font-black uppercase leading-none">Drop<br>Incoming</h2>
+                    <div class="font-mono text-left md:text-right mt-6 md:mt-0 text-sm">
+                        <p>Capacity: Very Limited</p>
+                        <p>Status: <span class="text-black bg-[#CCFF00] px-1 animate-pulse">LOADING...</span></p>
+                    </div>
+                </div>
+
+                <!-- Tiers Grid (Locked) -->
+                <div
+                    class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-black opacity-60 pointer-events-none select-none grayscale">
+                    <!-- TIER 1 -->
+                    <div
+                        class="border-r border-b border-black p-6 md:p-8 flex flex-col justify-between h-[250px] md:h-[300px]">
+                        <div>
+                            <div class="font-mono text-xs mb-2 text-gray-500">PHASE 01</div>
+                            <h3 class="text-2xl md:text-3xl font-bold uppercase mb-2">Early Bird</h3>
+                            <ul class="mt-4 font-mono text-xs md:text-sm space-y-2 text-gray-400">
+                                <li>[ ENTRY + BIB ]</li>
+                                <li>[ GOODIE BAG ]</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="text-3xl md:text-4xl font-black mb-4 blink-price">**.** €</div>
+                            <button
+                                class="w-full border border-black py-2 font-mono text-xs uppercase bg-[#F2F2F2]">WAITING</button>
+                        </div>
+                    </div>
+                    <!-- TIER 2 -->
+                    <div
+                        class="border-r border-b border-black p-6 md:p-8 flex flex-col justify-between h-[250px] md:h-[300px]">
+                        <div>
+                            <div class="font-mono text-xs mb-2 text-black">PHASE 02</div>
+                            <h3 class="text-3xl font-bold uppercase mb-2">Standard</h3>
+                            <ul class="mt-4 font-mono text-xs md:text-sm space-y-2 text-gray-400">
+                                <li>[ ENTRY + BIB ]</li>
+                                <li>[ GOODIE BAG ]</li>
+                                <li>[ FINISHER ]</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="text-3xl md:text-4xl font-black mb-4 blink-price">**.** €</div>
+                            <button
+                                class="w-full border border-black py-2 font-mono text-xs uppercase bg-[#F2F2F2]">WAITING</button>
+                        </div>
+                    </div>
+                    <!-- TIER 3 -->
+                    <div
+                        class="border-r border-b border-black p-6 md:p-8 flex flex-col justify-between h-[250px] md:h-[300px]">
+                        <div>
+                            <div class="font-mono text-xs mb-2 text-gray-500">PHASE 03</div>
+                            <h3 class="text-3xl font-bold uppercase mb-2">Late Call</h3>
+                            <ul class="mt-4 font-mono text-xs md:text-sm space-y-2 text-gray-400">
+                                <li>[ ENTRY + BIB ]</li>
+                                <li>[ REGRET ]</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="text-3xl md:text-4xl font-black mb-4 blink-price">**.** €</div>
+                            <button
+                                class="w-full border border-black py-2 font-mono text-xs uppercase bg-[#F2F2F2]">WAITING</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMAIL CAPTURE (VISUALLY ENHANCED) -->
+                <div id="signup-container"
+                    class="mt-12 bg-[#CCFF00] p-6 md:p-12 border-2 border-black shadow-[8px_8px_0px_0px_#000] md:shadow-[12px_12px_0px_0px_#000] relative overflow-hidden group hover:shadow-[16px_16px_0px_0px_#000] transition-shadow duration-300">
+
+                    <!-- Background Pulse Effect -->
+                    <div
+                        class="absolute inset-0 bg-white opacity-0 group-hover:animate-pulse pointer-events-none mix-blend-overlay">
+                    </div>
+
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <!-- Responsive Text Scaling -->
+                            <h3
+                                class="text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-none mb-4 tracking-tighter break-words">
+                                Don't Sleep.<br>Get Notified.
+                            </h3>
+                            <p class="font-mono text-xs md:text-sm border-l-4 border-black pl-4 mb-4 md:mb-0 font-bold">
+                                Join the priority list. You'll get the link 1 hour before the public drop.
+                            </p>
+                        </div>
+
+                        <form id="join-form" class="flex flex-col gap-4">
+                            <!-- ROW 1: NAME + SEX -->
+                            <div class="flex flex-col sm:flex-row gap-4 w-full">
+                                <!-- Name: Crece para ocupar espacio -->
+                                <input type="text" placeholder="NAME / AKA" required
+                                    class="w-full sm:w-[70%] bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all placeholder-gray-400">
+
+                                <!-- Sex: Tamaño fijo o porcentaje menor -->
+                                <select required
+                                    class="w-full sm:w-[30%] bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all text-gray-400 invalid:text-gray-400 focus:text-black rounded-none"
+                                    onchange="this.classList.remove('text-gray-400'); this.classList.add('text-black')">
+                                    <option value="" disabled selected>SEX</option>
+                                    <option value="M" class="text-black">MALE</option>
+                                    <option value="F" class="text-black">FEMALE</option>
+                                    <option value="X" class="text-black">OTHER</option>
+                                </select>
+                            </div>
+
+                            <!-- ROW 2: EMAIL -->
+                            <input id="emailInput" type="email" placeholder="YOUR@EMAIL.COM" required
+                                class="w-full bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all placeholder-gray-400 h-14 md:h-16">
+
+                            <!-- ROW 3: BUTTON -->
+                            <button type="submit"
+                                class="w-full bg-black text-white h-14 md:h-16 font-bold text-lg md:text-xl uppercase hover:bg-white hover:text-black border-2 border-black transition-colors flex justify-between items-center px-6 md:px-8 group-hover:scale-[1.01] cursor-pointer">
+                                <span>Join Waitlist</span>
+                                <span>→</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Dec Background -->
+                    <div
+                        class="absolute -bottom-10 -right-10 text-6xl sm:text-8xl md:text-9xl font-black text-black opacity-5 pointer-events-none select-none">
+                        LIST
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-black text-[#F2F2F2] border-t border-[#333]">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div
+                    class="p-8 md:p-16 border-b md:border-b-0 md:border-r border-[#333] flex flex-col justify-between h-full min-h-[250px]">
+                    <div class="text-[#CCFF00] font-mono text-xs uppercase mb-4">
+                        ● Stay in the loop
+                    </div>
+                    <h3 class="text-3xl md:text-5xl font-bold mb-8 leading-tight">
+                        Don't miss<br>the next drop.
+                    </h3>
+                    <div class="flex border-b border-[#F2F2F2]">
+                        <input type="email" placeholder="YOUR EMAIL"
+                            class="bg-transparent w-full py-4 text-xl outline-none placeholder-gray-600 font-mono uppercase">
+                        <button class="uppercase font-bold hover:text-[#CCFF00] transition-colors">→</button>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-16 flex flex-col justify-between">
+                    <div class="grid grid-cols-2 gap-8 mb-12">
+                        <div>
+                            <h4 class="font-mono text-xs text-gray-500 mb-4 uppercase">Info</h4>
+                            <ul class="space-y-2 font-bold uppercase text-xs md:text-sm">
+                                <li><a href="#" class="hover:text-[#CCFF00]">Rules</a></li>
+                                <li><a href="#" class="hover:text-[#CCFF00]">FAQ</a></li>
+                                <li><a href="#" class="hover:text-[#CCFF00]">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-mono text-xs text-gray-500 mb-4 uppercase">Socials</h4>
+                            <ul class="space-y-2 font-bold uppercase text-xs md:text-sm">
+                                <li><a href="#" class="hover:text-[#CCFF00]">Instagram</a></li>
+                                <li><a href="#" class="hover:text-[#CCFF00]">TikTok</a></li>
+                                <li><a href="#" class="hover:text-[#CCFF00]">Strava Club</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-end">
+                        <div
+                            class="text-[15vw] md:text-[10vw] leading-none font-black tracking-tighter text-[#333] select-none">
+                            10K
+                        </div>
+                        <div class="text-right font-mono text-[9px] md:text-[10px] text-gray-500">
+                            © 2025 THE DROP10K.<br>
+                            EST. ÁVILA.<br>
+                            ALL RIGHTS RESERVED.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div> <!-- END MAIN CONTENT -->
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // ------------------------------------------------
+        // 0. PROFILE TOGGLE LOGIC
+        // ------------------------------------------------
+        const profileOverlay = document.getElementById('profile-overlay');
+        const accessBtn = document.getElementById('access-btn');
+        const mobileAccessBtn = document.getElementById('mobile-access-btn');
+        const closeProfileBtn = document.getElementById('close-profile');
+        const mainContent = document.getElementById('main-content');
+
+        const toggleProfile = () => {
+            profileOverlay.classList.toggle('active');
+
+            if (profileOverlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden'; // Lock scroll on body
+            } else {
+                document.body.style.overflow = 'auto'; // Unlock
+            }
+        };
+
+        accessBtn.addEventListener('click', toggleProfile);
+        mobileAccessBtn.addEventListener('click', toggleProfile);
+        closeProfileBtn.addEventListener('click', toggleProfile);
+
+        // 3D Card Effect Logic
+        const cardWrapper = document.querySelector('.card-3d-wrapper');
+        const card3d = document.querySelector('.card-3d');
+
+        if (window.innerWidth > 1024) {
+            cardWrapper.addEventListener('mousemove', (e) => {
+                const rect = cardWrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            cardWrapper.addEventListener('mouseleave', () => {
+                card3d.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+
+        // ------------------------------------------------
+        // 1. DROP TRACKER (ALTÍMETRO)
+        // ------------------------------------------------
+        const dropRunner = document.getElementById('drop-runner');
+        const altDisplay = document.getElementById('altitude-display');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.min(scrollTop / docHeight, 1);
+
+            // Mover el corredor verticalmente
+            dropRunner.style.top = `${scrollPercent * 100}%`;
+
+            const startAlt = 1160;
+            const endAlt = 1050;
+            const currentAlt = Math.round(startAlt - (scrollPercent * (startAlt - endAlt)));
+
+            altDisplay.innerText = `${currentAlt}m`;
+        });
+
+        // ------------------------------------------------
+        // 2. GRAVITY TEXT ANIMATION
+        // ------------------------------------------------
+        const gravityContainer = document.getElementById('gravity-text');
+        const text = gravityContainer.innerText.trim();
+        gravityContainer.innerHTML = '';
+
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.innerText = char === ' ' ? '\u00A0' : char;
+            span.className = 'char-drop';
+            span.style.animationDelay = `${index * 0.1}s`;
+            gravityContainer.appendChild(span);
+        });
+
+
+        // ------------------------------------------------
+        // 3. PARALLAX EFFECT
+        // ------------------------------------------------
+        const heroSection = document.querySelector('#hero');
+        const parallaxLayers = document.querySelectorAll('.parallax-layer');
+
+        const moveParallax = (x, y) => {
+            parallaxLayers.forEach(layer => {
+                const speed = layer.getAttribute('data-speed');
+                const xPos = x * speed * 50;
+                const yPos = y * speed * 50;
+                layer.style.transform = `translateX(${xPos}px) translateY(${yPos}px)`;
+            });
+        }
+
+        // Mouse Parallax (Desktop)
+        heroSection.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+            moveParallax(x, y);
+        });
+
+        // ------------------------------------------------
+        // 4. TUNNEL VISION (CANVAS ANIMATION)
+        // ------------------------------------------------
+        const canvas = document.getElementById('speedCanvas');
+        const ctx = canvas.getContext('2d');
+        const vortexBtn = document.getElementById('vortexBtn');
+
+        let width, height;
+        let stars = [];
+        const baseSpeed = 4;
+        let speed = baseSpeed;
+
+        const resize = () => {
+            // Usar innerHeight para evitar saltos en móviles con barra de dirección
+            width = canvas.width = canvas.parentElement.offsetWidth;
+            height = canvas.height = canvas.parentElement.offsetHeight;
+        };
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Star {
+            constructor() {
+                this.reset(true);
+            }
+            reset(init = false) {
+                this.x = (Math.random() * width) - (width * 0.5);
+                this.y = (Math.random() * height) - (height * 0.5);
+                this.z = init ? Math.random() * width : width;
+            }
+            update() {
+                this.z = this.z - speed;
+                if (this.z < 1) {
+                    this.reset();
+                    this.x = (Math.random() * width) - (width * 0.5);
+                    this.y = (Math.random() * height) - (height * 0.5);
+                }
+            }
+            draw() {
+                const x = (this.x / this.z) * width * 0.5 + width * 0.5;
+                const y = (this.y / this.z) * height * 0.5 + height * 0.5;
+                const r = (width / this.z) * 0.5;
+                const px = (this.x / (this.z + speed * 4)) * width * 0.5 + width * 0.5;
+                const py = (this.y / (this.z + speed * 4)) * height * 0.5 + height * 0.5;
+
+                ctx.beginPath();
+                ctx.moveTo(px, py);
+                ctx.lineTo(x, y);
+                ctx.lineWidth = Math.min(r, 4); // Limitar grosor en móviles
+                const opacity = (1 - this.z / width) + 0.2;
+                ctx.strokeStyle = `rgba(204, 255, 0, ${opacity})`;
+                ctx.stroke();
+            }
+        }
+
+        const initStars = () => {
+            stars = [];
+            // Menos estrellas en móviles para rendimiento
+            const starCount = window.innerWidth < 768 ? 200 : 400;
+            for (let i = 0; i < starCount; i++) {
+                stars.push(new Star());
+            }
+        };
+        initStars();
+
+        const animateTunnel = () => {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+            ctx.fillRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animateTunnel);
+        };
+        animateTunnel();
+
+        // Aceleración interactiva
+        const tunnelSection = canvas.parentElement;
+
+        // Mouse Hover (Desktop)
+        tunnelSection.addEventListener('mouseenter', () => {
+            const acc = setInterval(() => { if (speed < 20) speed += 1; else clearInterval(acc); }, 50);
+            tunnelSection.addEventListener('mouseleave', () => {
+                const dec = setInterval(() => { if (speed > baseSpeed) speed -= 1; else { speed = baseSpeed; clearInterval(dec); } }, 50);
+            }, { once: true });
+        });
+
+        // Botón Vortex Scroll Suave
+        vortexBtn.addEventListener('click', () => {
+            const signup = document.getElementById('emailInput');
+            // Scroll suave manual para mejor control
+            signup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => signup.focus(), 800);
+        });
+
+        // ------------------------------------------------
+        // 5. REVEAL ON SCROLL
+        // ------------------------------------------------
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // ------------------------------------------------
+        // 6. GEMINI AI (ORACLE)
+        // ------------------------------------------------
+        const generateBtn = document.getElementById('generateBtn');
+        const oracleResult = document.getElementById('oracleResult');
+        const oracleText = document.getElementById('oracleText');
+        const predictedTimeDisplay = document.getElementById('predictedTimeDisplay');
+        const pbInput = document.getElementById('pbInput');
+
+        generateBtn.addEventListener('click', async () => {
+            const pb = pbInput.value;
+            if (!pb) return;
+
+            // UI State: Loading
+            generateBtn.innerHTML = '<span class="loader"></span> PROCESSING...';
+            generateBtn.disabled = true;
+            oracleResult.classList.remove('hidden');
+
+            // Scroll en móviles para ver resultado
+            if (window.innerWidth < 768) {
+                oracleResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            oracleText.innerText = "Analyzing biomechanics... Calculating gravity coefficient...";
+            predictedTimeDisplay.innerText = "";
+
+            try {
+                const apiKey = "AIzaSyDdfwY0rmw20V7ClUT9ptgjj7EV5VR943I"; // Tu API Key
+                const genAI = new GoogleGenerativeAI(apiKey);
+                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-preview-09-2025" });
+
+                const prompt = `
+                    You are THE ORACLE, an AI for a running race called 'THE DROP' in Ávila, Spain. 
+                    The race has 110m negative elevation drop (downhill).
+                    The brand personality is: Hypebeast, Minimalist, Arrogant, Cool, Mysterious. Gen Z fashion style.
+                    Language: Spanglish (natural mix of English and Spanish slang like 'vibe', 'flow', 'brutal', 'hype', 'renta').
+                    Keep the advice short, punchy, and direct. Max 2 sentences.
+
+                    User Input Current 10K PB: ${pb}
+
+                    Task:
+                    1. Predict their time for THE DROP (significantly faster due to downhill). Format "MM:SS".
+                    2. Write a short, punchy advice paragraph in Spanglish.
+
+                    Output format JSON:
+                    { "prediction": "MM:SS", "advice": "String" }
+                `;
+
+                const result = await model.generateContent(prompt);
+                const responseText = result.response.text();
+                const jsonStr = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+                const data = JSON.parse(jsonStr);
+
+                predictedTimeDisplay.innerText = data.prediction;
+
+                oracleText.innerText = "";
+                let i = 0;
+                const advice = data.advice;
+                const typeWriter = () => {
+                    if (i < advice.length) {
+                        oracleText.innerText += advice.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 30);
+                    }
+                };
+                typeWriter();
+
+            } catch (error) {
+                console.error("Oracle Error:", error);
+                // Fallback demo si no hay API Key
+                predictedTimeDisplay.innerText = "38:45";
+                oracleText.innerText = "SYSTEM OVERLOAD. GRAVITY IS TOO STRONG. BUT YOU LOOK FAST.";
+            } finally {
+                generateBtn.innerHTML = '<span>Consult The Oracle</span><span>✨</span>';
+                generateBtn.disabled = false;
+            }
+        });
+
+        // ------------------------------------------------
+        // 7. BACKEND INTEGRATION (ADDED)
+        // ------------------------------------------------
+        const joinForm = document.getElementById('join-form');
+        const emailInput = document.getElementById('emailInput');
+        const submitBtn = joinForm.querySelector('button[type="submit"]');
+
+        joinForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            const originalBtnText = submitBtn.innerHTML;
+
+            // Loading State
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>PROCESSING...</span><span>⌛</span>';
+
+            try {
+                const response = await fetch('/api/join', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                if (response.ok) {
+                    alert('YOU ARE ON THE LIST. PREPARE FOR GRAVITY.');
+                    submitBtn.innerHTML = '<span>YOU ARE IN</span><span>✓</span>';
+                    joinForm.reset();
+                } else if (response.status === 409) {
+                    alert('ALREADY REGISTERED. SEE YOU AT THE START LINE.');
+                    submitBtn.innerHTML = '<span>ALREADY IN</span><span>!</span>';
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('SYSTEM ERROR. TRY AGAIN.');
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
