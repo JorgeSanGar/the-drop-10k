@@ -70,6 +70,9 @@ app.post('/api/login', require('./api/login'));
 // UPDATE PROFILE
 app.post('/api/update-profile', require('./api/update-profile'));
 
+// CHALLENGE FRIEND
+app.post('/api/challenge', require('./api/challenge'));
+
 // ------------------------------------------------
 // 4. START SERVER
 // ------------------------------------------------

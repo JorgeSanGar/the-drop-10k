@@ -332,11 +332,11 @@
           Invita a un Rival
           <span class="text-[#CCFF00] text-xs font-mono ml-2">[ GANA PRIORIDAD ]</span>
         </h3>
-        <form onsubmit="event.preventDefault(); alert('Invitación enviada. Tu prioridad ha aumentado.');"
-          class="flex gap-0">
-          <input type="email" placeholder="RIVAL@EMAIL.COM"
+        <form onsubmit="sendChallenge(event)" class="flex gap-0">
+          <input type="email" id="rivalEmailInput" placeholder="RIVAL@EMAIL.COM" required
             class="bg-[#111] border border-[#333] text-white font-mono text-sm px-4 py-3 w-full outline-none focus:border-[#CCFF00] transition-colors uppercase placeholder-gray-400">
-          <button class="bg-[#CCFF00] text-black font-bold uppercase px-6 hover:bg-white transition-colors">
+          <button type="submit"
+            class="bg-[#CCFF00] text-black font-bold uppercase px-6 hover:bg-white transition-colors">
             <i data-lucide="send" class="w-4 h-4"></i>
           </button>
         </form>
@@ -599,6 +599,52 @@
     window.logout = () => {
       localStorage.removeItem('drop_user');
       window.location.href = 'index.html';
+    };
+
+    window.sendChallenge = async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const rivalInput = document.getElementById('rivalEmailInput');
+      const rivalEmail = rivalInput.value;
+      const btn = e.target.querySelector('button');
+      const originalContent = btn.innerHTML;
+
+      if (!rivalEmail) return;
+
+      // Loading State
+      btn.innerHTML = '<div class="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/challenge', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            senderEmail: currentUser.email,
+            senderName: currentUser.firstName || "Un Corredor",
+            senderSurname: currentUser.lastName || "",
+            rivalEmail: rivalEmail
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('🔥 RETO ENVIADO. TU RIVAL HA SIDO NOTIFICADO.');
+          rivalInput.value = ''; // Clear input
+        } else {
+          alert('Error: ' + (result.error || 'No se pudo enviar el reto.'));
+        }
+
+      } catch (error) {
+        console.error('Challenge Error:', error);
+        alert('Error de conexión. Inténtalo de nuevo.');
+      } finally {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
     };
 
     initSystem();
