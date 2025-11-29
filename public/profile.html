@@ -223,7 +223,10 @@
 
                     <!-- Número (Persistente) -->
                     <div class="flex-1 flex items-center justify-center relative">
-                        <span class="text-[10rem] font-black tracking-tighter leading-none" id="displayBib">---</span>
+                        <span
+                            id="displayBib"
+                            class="font-black tracking-tighter leading-none text-[clamp(5rem,32vw,8.5rem)]"
+                        >---</span>
                         <!-- Marca de agua sutil -->
                         <span
                             class="absolute text-[5rem] font-black text-gray-200 -rotate-45 opacity-50 z-[-1]">CLASSIFIED</span>
@@ -505,7 +508,7 @@
                 if (bibText) {
                     // Remove responsive classes
                     bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
-                    // Set fixed large size optimized for 1080p width (Reduced to 110px to prevent overlap)
+                    // Set fixed large size optimized for 1080p width
                     bibText.style.fontSize = '96px';
                     bibText.style.lineHeight = '1';
                     bibText.style.fontWeight = '900';
