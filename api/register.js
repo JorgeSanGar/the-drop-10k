@@ -4,11 +4,11 @@ const brevo = require('@getbrevo/brevo');
 
 // Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
-    const serviceAccount = JSON.parse(process.env.FIREBASE_PRIVATE_KEY || '{}');
-    // Fix for Vercel environment variable handling of newlines
-    if (serviceAccount.private_key) {
-        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
-    }
+    const serviceAccount = {
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined
+    };
 
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
