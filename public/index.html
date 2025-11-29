@@ -1657,10 +1657,20 @@
             lucide.createIcons();
         }
 
-        // Check for persisted session
+        // Check for persisted session & URL params
         window.addEventListener('load', () => {
-            // Just init icons, do NOT auto redirect
+            // Just init icons
             if (typeof lucide !== 'undefined') lucide.createIcons();
+
+            // Check URL params for deep linking
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'login') {
+                // Wait a bit for DOM to be fully ready
+                setTimeout(() => {
+                    window.toggleTerminal();
+                    window.switchView('login');
+                }, 500);
+            }
         });
 
         // Toggle Open/Close Terminal

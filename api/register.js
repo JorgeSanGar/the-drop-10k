@@ -112,54 +112,37 @@ module.exports = async (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE DROP - Profile Initialized</title>
+    <title>THE DROP - Waitlist Confirmation</title>
     <style>
         /* Reset básico */
         body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
         table { border-collapse: collapse !important; }
-        body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #050505; }
+        body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #000000; }
         
         /* Estilos */
-        .wrapper { width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; background-color: #050505; }
+        .wrapper { width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; background-color: #000000; }
         .webkit { max-width: 600px; margin: 0 auto; }
         .btn:hover { background-color: #ffffff !important; color: #000000 !important; }
-        
-        /* Clases de utilidad para el "ID Card" */
-        .id-card {
-            border: 1px solid #333333;
-            background-color: #111111;
-            /* Simulamos sombra con borde inferior */
-            border-bottom: 4px solid #CCFF00; 
-        }
     </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #050505; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #000000; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
 
     <!-- Preheader -->
     <div style="display: none; max-height: 0px; overflow: hidden;">
-        Tu perfil de corredor ha sido activado. Accede al terminal.
+        No has elegido una carrera normal. Has elegido la velocidad pura.
     </div>
 
-    <center class="wrapper" style="width: 100%; background-color: #050505;">
+    <center class="wrapper" style="width: 100%; background-color: #000000;">
         <div class="webkit" style="max-width: 600px; margin: 0 auto;">
             
-            <!-- CONTENEDOR PRINCIPAL -->
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #000000; border-left: 1px solid #222; border-right: 1px solid #222;">
+            <!-- CONTENEDOR -->
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #000000; border: 1px solid #333333;">
                 
-                <!-- STATUS BAR SUPERIOR -->
-                <tr>
-                    <td align="center" style="padding: 10px 0; background-color: #1a1a1a; border-bottom: 1px solid #333;">
-                        <span style="font-family: 'Courier New', Courier, monospace; font-size: 10px; color: #CCFF00; letter-spacing: 2px; text-transform: uppercase;">
-                            ● SYSTEM CONNECTED
-                        </span>
-                    </td>
-                </tr>
-
                 <!-- LOGO -->
                 <tr>
-                    <td align="center" style="padding: 40px 0 20px 0;">
+                    <td align="center" style="padding: 50px 0 30px 0;">
                         <a href="https://thedrop10k.space" target="_blank" style="text-decoration: none;">
                             <span style="font-family: 'Arial Black', Arial, sans-serif; font-size: 32px; color: #ffffff; letter-spacing: -2px; text-transform: uppercase;">
                                 THE DROP<span style="color: #CCFF00; font-style: italic;">10K</span>
@@ -168,118 +151,97 @@ module.exports = async (req, res) => {
                     </td>
                 </tr>
 
-                <!-- TITULAR DE BIENVENIDA -->
+                <!-- DIVIDER LINE -->
                 <tr>
-                    <td align="left" style="padding: 20px 40px 10px 40px;">
-                        <h1 style="margin: 0; font-family: 'Arial', sans-serif; font-weight: 900; font-size: 28px; line-height: 34px; color: #ffffff; text-transform: uppercase; letter-spacing: -0.5px;">
-                            PERFIL ACTIVADO.
+                    <td align="center" style="padding: 0 40px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="border-bottom: 1px solid #333333;"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- TITULAR -->
+                <tr>
+                    <td align="left" style="padding: 40px 40px 20px 40px;">
+                        <h1 style="margin: 0; font-family: 'Arial', sans-serif; font-weight: 900; font-size: 32px; line-height: 38px; color: #ffffff; text-transform: uppercase; letter-spacing: -0.5px;">
+                            TU NOMBRE YA ESTÁ EN LA LISTA, <span style="color: #CCFF00;">${name}</span>.
                         </h1>
-                        <p style="margin: 10px 0 0 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #888888;">
-                            // RUNNER_ID: NEW_ENTRY
+                    </td>
+                </tr>
+
+                <!-- TEXTO 1: ASPIRACIONAL -->
+                <tr>
+                    <td align="left" style="padding: 0 40px 20px 40px; font-size: 16px; line-height: 26px; color: #cccccc;">
+                        <p style="margin: 0;">
+                            La mayoría de corredores buscan controlar cada variable: el recorrido, el perfil, el avituallamiento. Buscan seguridad.
+                        </p>
+                        <p style="margin: 20px 0 0 0;">
+                            <strong>Tú has elegido la incertidumbre.</strong>
+                        </p>
+                        <p style="margin: 10px 0 0 0;">
+                            Has decidido formar parte del 1% que no pregunta <em>dónde</em>, sino <em>cuándo</em>. THE DROP no es solo una carrera cuesta abajo; es la búsqueda de tu versión más rápida. Es un pacto con la gravedad.
                         </p>
                     </td>
                 </tr>
 
-                <!-- INTRODUCCIÓN (CORREGIDA) -->
+                <!-- CAJA DE PRIVILEGIO -->
                 <tr>
-                    <td align="left" style="padding: 0 40px 30px 40px; font-size: 16px; line-height: 24px; color: #cccccc;">
-                        <p>
-                            Bienvenido, <strong style="color: #ffffff;">${name}</strong>.
-                        </p>
-                        <p>
-                            Tu cuenta ha sido creada correctamente. Ya no eres una visita anónima; ahora tienes credenciales de acceso. Este perfil es tu <strong>centro de mando</strong>, el lugar desde donde gestionarás tu asalto a tu marca personal en THE DROP.
-                        </p>
-                    </td>
-                </tr>
-
-                <!-- TARJETA DE PERFIL (ID CARD SIMULADO) -->
-                <tr>
-                    <td align="center" style="padding: 0 40px 40px 40px;">
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="id-card">
+                    <td align="center" style="padding: 10px 40px 30px 40px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #111111; border-left: 3px solid #CCFF00;">
                             <tr>
                                 <td style="padding: 20px;">
-                                    <!-- Header Tarjeta -->
-                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                        <tr>
-                                            <td valign="top">
-                                                <span style="font-family: 'Courier New', Courier, monospace; font-size: 10px; color: #666666; text-transform: uppercase;">
-                                                    RUNNER PROFILE
-                                                </span>
-                                            </td>
-                                            <td align="right" valign="top">
-                                                <span style="font-size: 16px;">👤</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    
-                                    <!-- Datos -->
-                                    <div style="margin-top: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                                        <span style="font-family: 'Arial', sans-serif; font-weight: bold; font-size: 24px; color: #ffffff; text-transform: uppercase; display: block;">
-                                            ${name}
-                                        </span>
-                                    </div>
-                                    
-                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 15px;">
-                                        <tr>
-                                            <td width="50%">
-                                                <p style="margin: 0; font-size: 10px; color: #666666; text-transform: uppercase; font-family: 'Courier New', Courier, monospace;">STATUS</p>
-                                                <p style="margin: 5px 0 0 0; font-size: 14px; color: #CCFF00; font-weight: bold;">ACTIVE</p>
-                                            </td>
-                                            <td width="50%">
-                                                <p style="margin: 0; font-size: 10px; color: #666666; text-transform: uppercase; font-family: 'Courier New', Courier, monospace;">ACCESS LEVEL</p>
-                                                <p style="margin: 5px 0 0 0; font-size: 14px; color: #ffffff; font-weight: bold;">MEMBER</p>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <p style="margin: 0 0 10px 0; font-size: 12px; color: #CCFF00; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
+                                        TU VENTAJA
+                                    </p>
+                                    <p style="margin: 0; font-size: 15px; line-height: 22px; color: #ffffff;">
+                                        Tu intuición tiene recompensa. Recibirás el enlace de inscripción <strong>60 minutos antes</strong> que el resto del mundo. 
+                                        <br><br>
+                                        Cuando se abran las puertas al público general, tú ya tendrás tu dorsal asegurado.
+                                    </p>
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
 
-                <!-- INSTRUCCIONES SIGUIENTES (CORREGIDAS) -->
+                <!-- CIERRE MOTIVACIONAL -->
                 <tr>
-                    <td align="left" style="padding: 0 40px 40px 40px; font-size: 15px; line-height: 22px; color: #cccccc;">
-                        <p style="margin: 0 0 10px 0; color: #CCFF00; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">
-                            QUÉ SUCEDE AHORA:
+                    <td align="left" style="padding: 0 40px 40px 40px; font-size: 16px; line-height: 26px; color: #cccccc;">
+                        <p style="margin: 0;">
+                            No necesitas suerte. Necesitas enfoque. Visualiza el descenso. Entrena la mente para la velocidad que se viene.
                         </p>
-                        <ol style="padding-left: 20px; margin: 0; color: #cccccc;">
-                            <li style="margin-bottom: 10px;">Tu perfil será tu llave para <strong>adquirir el dorsal</strong> rápidamente en cuanto se abra la venta.</li>
-                            <li style="margin-bottom: 10px;">Accede al <strong>Terminal de Usuario</strong> para definir y actualizar tu Tiempo Objetivo (Target PB).</li>
-                            <li style="margin-bottom: 0;">Mantén tu información actualizada para asegurar que compites en la categoría correcta.</li>
-                        </ol>
+                        <p style="margin: 20px 0 0 0; color: #ffffff; font-weight: bold;">
+                            Nos vemos.
+                        </p>
                     </td>
                 </tr>
 
-                <!-- BOTÓN CTA PRINCIPAL -->
+                <!-- BOTÓN -->
                 <tr>
                     <td align="center" style="padding: 0 40px 60px 40px;">
                         <table border="0" cellspacing="0" cellpadding="0" width="100%">
                             <tr>
                                 <td align="center">
-                                    <!-- Enlace al login/perfil de tu web -->
-                                    <a href="https://thedrop10k.space/profile" target="_blank" class="btn" style="display: block; width: 100%; padding: 18px 0; background-color: #ffffff; color: #000000; font-family: 'Arial', sans-serif; font-size: 14px; font-weight: 900; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; border: 2px solid #ffffff;">
-                                        ACCEDER AL TERMINAL ->
+                                    <a href="https://thedrop10k.space?action=login" target="_blank" class="btn" style="display: block; width: 100%; padding: 18px 0; background-color: #CCFF00; color: #000000; font-family: 'Arial', sans-serif; font-size: 14px; font-weight: 900; text-transform: uppercase; text-decoration: none; letter-spacing: 2px;">
+                                        ESTADO: DENTRO
                                     </a>
                                 </td>
                             </tr>
                         </table>
-                        <p style="margin-top: 20px; font-size: 12px; color: #444444; font-family: 'Courier New', Courier, monospace;">
-                            Si no has solicitado este acceso, ignora esta transmisión.
-                        </p>
                     </td>
                 </tr>
 
-                <!-- FOOTER -->
+                <!-- FOOTER MINIMALISTA -->
                 <tr>
-                    <td align="center" style="background-color: #0a0a0a; padding: 40px; border-top: 1px solid #222222;">
-                        <p style="margin: 0 0 15px 0; font-family: 'Courier New', Courier, monospace; font-size: 11px; color: #555555; text-transform: uppercase;">
-                            THE DROP 10K // PROFILE MANAGEMENT SYSTEM
+                    <td align="center" style="border-top: 1px solid #222222; padding: 40px;">
+                        <p style="margin: 0 0 15px 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #666666; text-transform: uppercase;">
+                            ÁVILA — CLASSIFIED LOCATION
                         </p>
-                        <p style="margin: 0; font-size: 11px; color: #444444;">
-                            <a href="#" style="color: #666666; text-decoration: none; margin: 0 10px;">Instagram</a>
-                            <a href="#" style="color: #666666; text-decoration: none; margin: 0 10px;">Strava</a>
-                            <a href="#" style="color: #666666; text-decoration: none; margin: 0 10px;">Login</a>
+                        <p style="margin: 0; font-size: 12px; color: #444444;">
+                            <a href="#" style="color: #666666; text-decoration: none; margin-right: 15px;">Instagram</a>
+                            <a href="#" style="color: #666666; text-decoration: none;">Strava</a>
                         </p>
                     </td>
                 </tr>
