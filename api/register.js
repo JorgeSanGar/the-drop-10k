@@ -283,7 +283,7 @@ module.exports = async (req, res) => {
     </center>
 </body>
 </html>`;
-                sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "no-reply@thedrop10k.com" };
+                sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "race@thedrop10k.space" };
                 sendSmtpEmail.to = [{ "email": email }];
 
                 await apiInstance.sendTransacEmail(sendSmtpEmail);
