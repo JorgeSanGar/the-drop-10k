@@ -241,7 +241,7 @@ module.exports = async (req, res) => {
                         </p>
                         <p style="margin: 0; font-size: 12px; color: #444444;">
                             <a href="#" style="color: #666666; text-decoration: none; margin-right: 15px;">Instagram</a>
-                            <a href="#" style="color: #666666; text-decoration: none;">Strava</a>
+                            <a href="https://www.strava.com/athletes/195749369" style="color: #666666; text-decoration: none;">Strava</a>
                         </p>
                     </td>
                 </tr>
