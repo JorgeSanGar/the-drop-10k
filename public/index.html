@@ -1597,20 +1597,7 @@
             altDisplay.innerText = `${currentAlt}m`;
         });
 
-        // ------------------------------------------------
-        // 2. GRAVITY TEXT ANIMATION
-        // ------------------------------------------------
-        const gravityContainer = document.getElementById('gravity-text');
-        const text = gravityContainer.innerText.trim();
-        gravityContainer.innerHTML = '';
 
-        text.split('').forEach((char, index) => {
-            const span = document.createElement('span');
-            span.innerText = char === ' ' ? '\u00A0' : char;
-            span.className = 'char-drop';
-            span.style.animationDelay = `${index * 0.1}s`;
-            gravityContainer.appendChild(span);
-        });
 
 
 
