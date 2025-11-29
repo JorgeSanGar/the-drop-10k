@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>400 - FALSE START | THE DROP 10K</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --color-bg: #F2F2F2;
+            --color-text: #111111;
+            --color-accent: #CCFF00;
+            --grain-url: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            cursor: crosshair;
+            height: 100vh;
+            width: 100vw;
+            touch-action: none;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--grain-url);
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .btn-hype {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .btn-hype:hover {
+            background-color: var(--color-accent);
+            color: var(--color-text);
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .stroke-text {
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body class="relative flex flex-col items-center justify-center">
+
+    <div class="noise-overlay"></div>
+
+    <!-- Fondo decorativo estático -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+        <h1 class="text-[30vw] font-black stroke-text select-none">NOPE</h1>
+    </div>
+
+    <!-- CANVAS LAYER (Physics World) -->
+    <canvas id="gravityWorld" class="absolute inset-0 w-full h-full z-10"></canvas>
+
+    <!-- UI LAYER -->
+    <div class="relative z-20 text-center px-4 pointer-events-none">
+
+        <div
+            class="bg-white/80 backdrop-blur-sm border border-black p-6 md:p-12 shadow-[8px_8px_0px_0px_#000] max-w-lg mx-auto pointer-events-auto mt-[20vh]">
+            <div class="font-mono text-xs text-[#CCFF00] bg-black inline-block px-2 py-1 mb-4 animate-pulse">
+                SYSTEM ERROR: BAD REQUEST
+            </div>
+
+            <h2 class="text-4xl md:text-6xl font-black uppercase leading-none mb-4">
+                SALIDA<br>NULA.
+            </h2>
+
+            <p class="font-mono text-xs md:text-sm border-l-2 border-black pl-4 mb-8 text-left">
+                Has intentado arrancar antes del disparo. Tu petición tiene mala técnica y el servidor la ha
+                descalificado.<br><br>
+                <span class="text-gray-500">// ERROR CODE: 400_FALSE_START</span>
+            </p>
+
+            <a href="index.html"
+                class="block w-full bg-black text-white p-4 font-bold text-lg uppercase hover:bg-[#CCFF00] hover:text-black border-2 border-black transition-colors flex justify-between items-center px-8 btn-hype">
+                <span>← Volver a la Salida</span>
+            </a>
+        </div>
+
+        <div class="mt-8 font-mono text-[10px] text-gray-500 uppercase animate-bounce">
+            ( Drag & Drop the numbers )
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // PHYSICS ENGINE: THE DROP 400
+        // ----------------------------------------------------
+        const canvas = document.getElementById('gravityWorld');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let bodies = [];
+        let mouse = { x: 0, y: 0, isDown: false };
+        let dragBody = null;
+
+        const gravity = 0.6;
+        const friction = 0.98;
+        const bounce = 0.7;
+
+        const resize = () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initBodies();
+        };
+        window.addEventListener('resize', resize);
+
+        class RigidBody {
+            constructor(x, y, char, size) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 10;
+                this.vy = 0;
+                this.char = char;
+                this.size = size;
+                this.rotation = (Math.random() - 0.5) * 0.5;
+                this.angle = 0;
+            }
+
+            update() {
+                if (this === dragBody) {
+                    this.vx = (mouse.x - this.x) * 0.2;
+                    this.vy = (mouse.y - this.y) * 0.2;
+                } else {
+                    this.vy += gravity;
+                    this.vx *= friction;
+                    this.vy *= friction;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+                this.angle += this.vx * 0.02;
+
+                if (this.x + this.size / 2 > width) {
+                    this.x = width - this.size / 2;
+                    this.vx *= -bounce;
+                } else if (this.x - this.size / 2 < 0) {
+                    this.x = this.size / 2;
+                    this.vx *= -bounce;
+                }
+
+                if (this.y + this.size / 2 > height) {
+                    this.y = height - this.size / 2;
+                    this.vy *= -bounce;
+                    this.vx *= 0.9;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+
+                ctx.font = `900 ${this.size}px 'Inter'`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                // Sombra dura
+                ctx.fillStyle = '#CCFF00';
+                ctx.fillText(this.char, 4, 4);
+
+                // Texto principal
+                ctx.fillStyle = '#111';
+                ctx.fillText(this.char, 0, 0);
+
+                ctx.strokeStyle = '#111';
+                ctx.lineWidth = 2;
+                ctx.strokeText(this.char, 0, 0);
+
+                ctx.restore();
+            }
+
+            isHit(mx, my) {
+                const dx = this.x - mx;
+                const dy = this.y - my;
+                return Math.sqrt(dx * dx + dy * dy) < this.size / 1.5;
+            }
+        }
+
+        function initBodies() {
+            bodies = [];
+            const fontSize = window.innerWidth < 768 ? 100 : 180;
+            const startY = -100;
+
+            // Creamos 4 - 0 - 0
+            bodies.push(new RigidBody(width * 0.3, startY, "4", fontSize));
+            bodies.push(new RigidBody(width * 0.5, startY - 200, "0", fontSize));
+            bodies.push(new RigidBody(width * 0.7, startY - 400, "0", fontSize));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            bodies.forEach(body => {
+                body.update();
+                body.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        const handleDown = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            mouse.x = clientX;
+            mouse.y = clientY;
+            mouse.isDown = true;
+
+            for (let body of bodies) {
+                if (body.isHit(mouse.x, mouse.y)) {
+                    dragBody = body;
+                    break;
+                }
+            }
+        };
+
+        const handleMove = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            mouse.x = clientX;
+            mouse.y = clientY;
+        };
+
+        const handleUp = () => {
+            mouse.isDown = false;
+            dragBody = null;
+        };
+
+        window.addEventListener('mousedown', handleDown);
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('mouseup', handleUp);
+
+        window.addEventListener('touchstart', handleDown, { passive: false });
+        window.addEventListener('touchmove', (e) => { e.preventDefault(); handleMove(e); }, { passive: false });
+        window.addEventListener('touchend', handleUp);
+
+        resize();
+        animate();
+
+    </script>
+</body>
+
+</html>

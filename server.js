@@ -2,88 +2,70 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const SibApiV3Sdk = require('sib-api-v3-sdk');
+const brevo = require('@getbrevo/brevo');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-// Firebase Setup
-// Check if we have credentials in env or file
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_PATH
-    ? require(process.env.FIREBASE_SERVICE_ACCOUNT_PATH)
-    : {
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined
-    };
-
-if (!admin.apps.length) {
+// ------------------------------------------------
+// 1. FIREBASE SETUP
+// ------------------------------------------------
+let db;
+try {
+    let serviceAccount;
     try {
+        serviceAccount = require('./firebase-service-account.json');
+        console.log('✅ Loaded credentials from firebase-service-account.json');
+    } catch (e) {
+        console.log('⚠️ firebase-service-account.json not found, using environment variables');
+        serviceAccount = {
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined
+        };
+    }
+
+    if (!admin.apps.length) {
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount)
         });
-        console.log('Firebase initialized successfully');
-    } catch (error) {
-        console.error('Firebase initialization error:', error.message);
+        console.log('✅ Firebase Connected Successfully');
     }
+    db = admin.firestore();
+} catch (error) {
+    console.error('❌ Firebase Connection Error:', error.message);
+    // Mock db for testing if credentials fail (optional, or just exit)
+    // process.exit(1); 
 }
 
-const db = admin.firestore();
+// ------------------------------------------------
+// 2. BREVO (EMAIL) SETUP
+// ------------------------------------------------
+const apiInstance = new brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
-// Brevo Setup
-const defaultClient = SibApiV3Sdk.ApiClient.instance;
-const apiKey = defaultClient.authentications['api-key'];
-apiKey.apiKey = process.env.BREVO_API_KEY;
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+// ------------------------------------------------
+// 3. API ROUTES
+// ------------------------------------------------
 
-// Routes
-app.post('/api/join', async (req, res) => {
-    const { email } = req.body;
+// JOIN WAITLIST
+app.post('/api/join', require('./api/join'));
 
-    if (!email) {
-        return res.status(400).json({ error: 'Email is required' });
-    }
+// REGISTER
+app.post('/api/register', require('./api/register'));
 
-    try {
-        const waitlistRef = db.collection('waitlist');
+// LOGIN
+app.post('/api/login', require('./api/login'));
 
-        // Check for duplicate
-        const snapshot = await waitlistRef.where('email', '==', email).get();
-        if (!snapshot.empty) {
-            return res.status(409).json({ error: 'Email already registered' });
-        }
-
-        // Save to Firestore
-        await waitlistRef.add({
-            email,
-            date: new Date(),
-            ip: req.ip
-        });
-
-        // Send Email via Brevo
-        const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-        sendSmtpEmail.subject = "THE DROP: YOU ARE IN [CLASSIFIED]";
-        sendSmtpEmail.htmlContent = "<h1>WELCOME OPERATIVE.</h1><p>You have secured your spot in the priority list.</p><p>Stay alert.</p>";
-        sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "no-reply@thedrop10k.com" };
-        sendSmtpEmail.to = [{ "email": email }];
-
-        await apiInstance.sendTransacEmail(sendSmtpEmail);
-
-        res.status(201).json({ message: 'Success' });
-
-    } catch (error) {
-        console.error('Error in /api/join:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// Start Server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+// ------------------------------------------------
+// 4. START SERVER
+// ------------------------------------------------
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });

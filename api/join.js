@@ -1,30 +1,23 @@
 const admin = require('firebase-admin');
-const SibApiV3Sdk = require('sib-api-v3-sdk');
+const brevo = require('@getbrevo/brevo');
 
-// Firebase Setup
+// Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
-    try {
-        const serviceAccount = {
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined
-        };
-
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount)
-        });
-    } catch (error) {
-        console.error('Firebase initialization error:', error.message);
+    const serviceAccount = JSON.parse(process.env.FIREBASE_PRIVATE_KEY || '{}');
+    if (serviceAccount.private_key) {
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
+
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
 }
 
 const db = admin.firestore();
 
-// Brevo Setup
-const defaultClient = SibApiV3Sdk.ApiClient.instance;
-const apiKey = defaultClient.authentications['api-key'];
-apiKey.apiKey = process.env.BREVO_API_KEY;
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+// Initialize Brevo
+const apiInstance = new brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
 module.exports = async (req, res) => {
     // Enable CORS
@@ -42,7 +35,7 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { email } = req.body;
+    const { email, name, sex } = req.body;
 
     if (!email) {
         return res.status(400).json({ error: 'Email is required' });
@@ -60,14 +53,16 @@ module.exports = async (req, res) => {
         // Save to Firestore
         await waitlistRef.add({
             email,
+            name: name || 'Unknown',
+            sex: sex || 'Unknown',
             date: new Date(),
             ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
         });
 
         // Send Email via Brevo
-        const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
         sendSmtpEmail.subject = "THE DROP: YOU ARE IN [CLASSIFIED]";
-        sendSmtpEmail.htmlContent = "<h1>WELCOME OPERATIVE.</h1><p>You have secured your spot in the priority list.</p><p>Stay alert.</p>";
+        sendSmtpEmail.htmlContent = `<h1>WELCOME OPERATIVE ${name ? name.toUpperCase() : ''}.</h1><p>You have secured your spot in the priority list.</p><p>Stay alert.</p>`;
         sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "no-reply@thedrop10k.com" };
         sendSmtpEmail.to = [{ "email": email }];
 
