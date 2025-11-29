@@ -499,16 +499,14 @@
                 cardClone.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6)'; // Stronger shadow
 
                 // 3. FIX FONT SIZES FOR HIGH RES CANVAS
-                // vw units fail in html2canvas when rendering off-screen or scaled.
-                // We must replace them with fixed pixels relative to the card size.
-                // Assuming card width in template is approx 300-400px (scaled by 2.2)
+                // We must replace responsive units with fixed pixels relative to the card size.
 
                 const bibText = cardClone.querySelector('#displayBib');
                 if (bibText) {
                     // Remove responsive classes
                     bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
-                    // Set fixed large size
-                    bibText.style.fontSize = '130px';
+                    // Set fixed large size optimized for 1080p width
+                    bibText.style.fontSize = '120px';
                     bibText.style.lineHeight = '1';
                     bibText.style.fontWeight = '900';
                 }
