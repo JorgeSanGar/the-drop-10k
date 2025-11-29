@@ -168,7 +168,7 @@
 <body class="min-h-screen flex flex-col p-4 md:p-12 relative selection:bg-[#CCFF00] selection:text-black">
 
   <div id="saveStatus"
-       class="fixed top-4 right-4 font-mono text-xs uppercase tracking-widest opacity-0 transition-opacity duration-500 z-50">
+    class="fixed top-4 right-4 font-mono text-xs uppercase tracking-widest opacity-0 transition-opacity duration-500 z-50">
     SAVING...
   </div>
 
@@ -201,20 +201,16 @@
           <div class="hole bottom-4 right-4"></div>
 
           <div class="flex justify-between items-start border-b-4 border-black pb-4 mt-2">
-            <span class="font-black text-3xl tracking-tighter">THE DROP <span
-                    class="italic text-3xl">10K</span></span>
+            <span class="font-black text-3xl tracking-tighter">THE DROP <span class="italic text-3xl">10K</span></span>
             <div class="border-2 border-black p-1">
               <i data-lucide="qr-code" class="w-12 h-12"></i>
             </div>
           </div>
 
           <div class="flex-1 flex items-center justify-center relative">
-            <span
-              id="displayBib"
-              class="font-black tracking-tighter leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem]"
-            >---</span>
-            <span
-              class="absolute text-[5rem] font-black text-gray-200 -rotate-45 opacity-50 z-[-1]">CLASSIFIED</span>
+            <span id="displayBib"
+              class="font-black tracking-tighter leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem]">---</span>
+            <span class="absolute text-[5rem] font-black text-gray-200 -rotate-45 opacity-50 z-[-1]">CLASSIFIED</span>
           </div>
 
           <div class="border-t-4 border-black pt-2 mb-2">
@@ -229,11 +225,11 @@
 
       <div class="w-full max-w-md mt-8 space-y-3 fade-in" style="animation-delay: 0.5s;">
         <button onclick="downloadBib()"
-                class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
+          class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
           <i data-lucide="instagram" class="w-4 h-4"></i> DESCARGAR STORY (9:16)
         </button>
         <button onclick="logout()"
-                class="w-full border border-red-900/30 text-red-700 hover:text-red-500 hover:border-red-500 py-3 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2">
+          class="w-full border border-red-900/30 text-red-700 hover:text-red-500 hover:border-red-500 py-3 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2">
           [→ Desconectar
         </button>
       </div>
@@ -248,8 +244,7 @@
           <h2 class="text-4xl font-bold uppercase tracking-tight">Confirmado</h2>
         </div>
         <div class="w-full h-1 bg-[#222] mt-6 relative overflow-hidden">
-          <div
-            class="absolute top-0 left-0 h-full bg-[#CCFF00] w-1/3 animate-[loading_4s_ease-in-out_infinite]">
+          <div class="absolute top-0 left-0 h-full bg-[#CCFF00] w-1/3 animate-[loading_4s_ease-in-out_infinite]">
           </div>
         </div>
         <p class="text-right font-mono text-[9px] text-gray-300 mt-1">WAITING FOR DROP SIGNAL...</p>
@@ -270,12 +265,12 @@
           <div>
             <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Nombre</label>
             <input type="text" id="inputName" class="input-brutal" placeholder="NOMBRE"
-                   oninput="updateVisuals('firstName', this.value.toUpperCase())">
+              oninput="updateVisuals('firstName', this.value.toUpperCase())">
           </div>
           <div>
             <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Apellido</label>
             <input type="text" id="inputSurname" class="input-brutal" placeholder="APELLIDO"
-                   oninput="updateVisuals('lastName', this.value.toUpperCase())">
+              oninput="updateVisuals('lastName', this.value.toUpperCase())">
           </div>
         </div>
 
@@ -301,7 +296,7 @@
             <span class="text-[#CCFF00] font-black text-3xl" id="paceValue">40:00</span>
           </div>
           <input type="range" min="28" max="70" value="40" class="w-full mb-2" id="paceSlider"
-                 oninput="updatePaceVisuals(this.value)">
+            oninput="updatePaceVisuals(this.value)">
           <p class="font-mono text-[10px] text-gray-300">
             *Este ajuste re-calcula tu oleada de salida estimada.
           </p>
@@ -316,7 +311,7 @@
 
         <div class="col-span-1 md:col-span-2 mt-4">
           <button onclick="saveProfile()"
-                  class="w-full bg-[#CCFF00] text-black font-black uppercase py-4 hover:bg-white transition-colors tracking-wider flex justify-center items-center gap-2">
+            class="w-full bg-[#CCFF00] text-black font-black uppercase py-4 hover:bg-white transition-colors tracking-wider flex justify-center items-center gap-2">
             <span>GUARDAR CAMBIOS</span>
             <i data-lucide="save" class="w-5 h-5"></i>
           </button>
@@ -332,8 +327,7 @@
           class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#CCFF00] opacity-50 group-hover:opacity-100 transition-opacity">
         </div>
 
-        <i data-lucide="database"
-           class="text-gray-300 shrink-0 mt-1 group-hover:text-[#CCFF00] transition-colors"></i>
+        <i data-lucide="database" class="text-gray-300 shrink-0 mt-1 group-hover:text-[#CCFF00] transition-colors"></i>
         <p class="font-mono text-xs text-gray-200 leading-relaxed">
           Tus datos se sincronizan en tiempo real con la base de datos central. El dorsal asignado (arriba) es
           permanente e intransferible para esta edición.
@@ -345,11 +339,11 @@
           Invita a un Rival
           <span class="text-[#CCFF00] text-xs font-mono ml-2">[ GANA PRIORIDAD ]</span>
         </h3>
-        <form onsubmit="event.preventDefault(); alert('Invitación enviada. Tu prioridad ha aumentado.');"
-              class="flex gap-0">
-          <input type="email" placeholder="RIVAL@EMAIL.COM"
-                 class="bg-[#111] border border-[#333] text-white font-mono text-sm px-4 py-3 w-full outline-none focus:border-[#CCFF00] transition-colors uppercase placeholder-gray-400">
-          <button class="bg-[#CCFF00] text-black font-bold uppercase px-6 hover:bg-white transition-colors">
+        <form onsubmit="sendChallenge(event)" class="flex gap-0">
+          <input type="email" id="rivalEmailInput" placeholder="RIVAL@EMAIL.COM" required
+            class="bg-[#111] border border-[#333] text-white font-mono text-sm px-4 py-3 w-full outline-none focus:border-[#CCFF00] transition-colors uppercase placeholder-gray-400">
+          <button type="submit" id="challengeBtn"
+            class="bg-[#CCFF00] text-black font-bold uppercase px-6 hover:bg-white transition-colors">
             <i data-lucide="send" class="w-4 h-4"></i>
           </button>
         </form>
@@ -359,10 +353,10 @@
   </main>
 
   <div id="storyTemplate"
-       class="fixed top-0 left-0 z-[-1] w-[1080px] h-[1920px] bg-[#050505] flex flex-col items-center justify-center hidden font-['Inter']">
+    class="fixed top-0 left-0 z-[-1] w-[1080px] h-[1920px] bg-[#050505] flex flex-col items-center justify-center hidden font-['Inter']">
     <div class="absolute inset-0 bg-gradient-to-b from-[#111] via-[#050505] to-[#CCFF00]/20"></div>
     <div class="absolute inset-0 opacity-20"
-         style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;"></div>
+      style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;"></div>
 
     <div class="absolute top-36 w-full text-center z-10">
       <h1 class="font-black text-8xl tracking-tighter text-white">
@@ -373,9 +367,9 @@
       </p>
     </div>
 
-    <div id="storyCardContainer"
-         class="z-20 flex items-center justify-center w-full" style="margin-top: 180px; margin-bottom: 180px;">
-      </div>
+    <div id="storyCardContainer" class="z-20 flex items-center justify-center w-full"
+      style="margin-top: 180px; margin-bottom: 180px;">
+    </div>
 
     <div class="absolute bottom-44 w-full text-center z-10">
       <p class="font-mono text-2xl text-[#CCFF00] bg-[#111] inline-block px-6 py-3 border border-[#333]">
@@ -670,6 +664,49 @@
       if (val < 60) return "WAVE 5 (SUB-60)";
       return "WAVE 6 (FINISHER)";
     }
+
+    window.sendChallenge = async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const rivalEmailInput = document.getElementById('rivalEmailInput');
+      const rivalEmail = rivalEmailInput.value;
+      const btn = document.getElementById('challengeBtn');
+      const originalContent = btn.innerHTML;
+
+      if (!rivalEmail) return;
+
+      btn.innerHTML = '<span class="animate-spin">↻</span>';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/challenge', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            senderEmail: currentUser.email,
+            senderName: currentUser.firstName || 'Un Corredor',
+            senderSurname: currentUser.lastName || '',
+            rivalEmail: rivalEmail
+          })
+        });
+
+        if (response.ok) {
+          alert('DESAFÍO ENVIADO. PREPÁRATE PARA LA GUERRA.');
+          rivalEmailInput.value = '';
+        } else {
+          const data = await response.json();
+          throw new Error(data.error || 'Error al enviar');
+        }
+      } catch (error) {
+        console.error('Challenge error:', error);
+        alert('Error al enviar el desafío. Inténtalo de nuevo.');
+      } finally {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    };
 
     window.logout = () => {
       localStorage.removeItem('drop_user');
