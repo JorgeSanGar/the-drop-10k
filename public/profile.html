@@ -505,10 +505,11 @@
                 if (bibText) {
                     // Remove responsive classes
                     bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
-                    // Set fixed large size optimized for 1080p width
-                    bibText.style.fontSize = '128px';
+                    // Set fixed large size optimized for 1080p width (Reduced to 110px to prevent overlap)
+                    bibText.style.fontSize = '110px';
                     bibText.style.lineHeight = '1';
                     bibText.style.fontWeight = '900';
+                    bibText.style.marginBottom = '30px'; // Add breathing room below time
                 }
 
                 const waterMark = cardClone.querySelector('span.absolute.text-gray-200');
@@ -521,6 +522,13 @@
                 if (nameText) {
                     nameText.className = nameText.className.replace(/text-\[.*?\]/g, '');
                     nameText.style.fontSize = '32px';
+                }
+
+                // Fix Footer Spacing in Clone
+                const footer = cardClone.querySelector('.border-t-4');
+                if (footer) {
+                    footer.style.paddingTop = '20px'; // More space between line and name
+                    footer.style.marginTop = '10px';
                 }
 
                 cardContainer.appendChild(cardClone);
