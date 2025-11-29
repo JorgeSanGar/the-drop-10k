@@ -167,13 +167,11 @@
 
 <body class="min-h-screen flex flex-col p-4 md:p-12 relative selection:bg-[#CCFF00] selection:text-black">
 
-  <!-- Indicador de Guardado (Flotante) -->
   <div id="saveStatus"
        class="fixed top-4 right-4 font-mono text-xs uppercase tracking-widest opacity-0 transition-opacity duration-500 z-50">
     SAVING...
   </div>
 
-  <!-- BACKGROUND DECO -->
   <div class="fixed top-0 right-0 p-12 pointer-events-none z-0 hidden md:block">
     <div class="text-right font-mono text-[10px] text-gray-300">
       CONEXIÓN SEGURA<br>V.2.0.4<br>NODE_ÁVILA
@@ -183,7 +181,6 @@
     <h1 class="text-[20vw] font-black stroke-text">10K</h1>
   </div>
 
-  <!-- HEADER -->
   <header class="relative z-10 mb-12 fade-in" style="animation-delay: 0.1s;">
     <p class="font-mono text-xs text-[#CCFF00] uppercase mb-2 tracking-widest">Acceso al Sistema</p>
     <h1 class="text-5xl md:text-7xl font-black uppercase leading-none tracking-tighter">
@@ -191,23 +188,18 @@
     </h1>
   </header>
 
-  <!-- GRID PRINCIPAL -->
   <main class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 w-full max-w-7xl mx-auto">
 
-    <!-- COLUMNA IZQUIERDA: EL DORSAL (VISUAL) -->
     <div class="lg:col-span-5 flex flex-col items-center">
 
-      <!-- TARJETA DORSAL 3D -->
       <div class="bib-card-container w-full max-w-md aspect-[3/4] fade-in" style="animation-delay: 0.3s;">
         <div id="bibCard" class="bib-card w-full h-full p-6 flex flex-col justify-between cursor-crosshair">
 
-          <!-- Agujeros -->
           <div class="hole top-4 left-4"></div>
           <div class="hole top-4 right-4"></div>
           <div class="hole bottom-4 left-4"></div>
           <div class="hole bottom-4 right-4"></div>
 
-          <!-- Header Dorsal -->
           <div class="flex justify-between items-start border-b-4 border-black pb-4 mt-2">
             <span class="font-black text-3xl tracking-tighter">THE DROP <span
                     class="italic text-3xl">10K</span></span>
@@ -216,7 +208,6 @@
             </div>
           </div>
 
-          <!-- Número -->
           <div class="flex-1 flex items-center justify-center relative">
             <span
               id="displayBib"
@@ -226,7 +217,6 @@
               class="absolute text-[5rem] font-black text-gray-200 -rotate-45 opacity-50 z-[-1]">CLASSIFIED</span>
           </div>
 
-          <!-- Footer Dorsal -->
           <div class="border-t-4 border-black pt-2 mb-2">
             <div class="font-black uppercase text-4xl truncate" id="displayName">RUNNER</div>
             <div class="flex justify-between font-mono text-sm font-bold mt-2 uppercase">
@@ -237,7 +227,6 @@
         </div>
       </div>
 
-      <!-- Botones -->
       <div class="w-full max-w-md mt-8 space-y-3 fade-in" style="animation-delay: 0.5s;">
         <button onclick="downloadBib()"
                 class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
@@ -250,10 +239,8 @@
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA -->
     <div class="lg:col-span-7 flex flex-col justify-center space-y-12 fade-in" style="animation-delay: 0.4s;">
 
-      <!-- STATUS BLOCK -->
       <div>
         <p class="font-mono text-[10px] text-[#CCFF00] uppercase mb-2">Estado de Registro</p>
         <div class="flex items-center gap-3">
@@ -268,10 +255,8 @@
         <p class="text-right font-mono text-[9px] text-gray-300 mt-1">WAITING FOR DROP SIGNAL...</p>
       </div>
 
-      <!-- DATA GRID -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-l-2 border-[#222] pl-6 md:pl-8">
 
-        <!-- Email -->
         <div class="col-span-1 md:col-span-2">
           <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">
             Email Asignado <span class="text-xs text-gray-400 ml-2">[LOCKED]</span>
@@ -281,7 +266,6 @@
           </div>
         </div>
 
-        <!-- Nombre / Apellido -->
         <div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-4">
           <div>
             <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Nombre</label>
@@ -295,7 +279,6 @@
           </div>
         </div>
 
-        <!-- Talla Camiseta -->
         <div>
           <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Talla Camiseta</label>
           <div class="relative">
@@ -310,7 +293,6 @@
           </div>
         </div>
 
-        <!-- Ritmo -->
         <div class="col-span-1 md:col-span-2 mt-4">
           <div class="flex justify-between items-end mb-2">
             <label class="block font-mono text-[10px] text-gray-200 uppercase">
@@ -325,7 +307,6 @@
           </p>
         </div>
 
-        <!-- Oleada -->
         <div>
           <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Oleada de Salida</label>
           <div class="text-xl text-white font-bold uppercase glitch-text cursor-default" id="waveDisplay">
@@ -333,7 +314,6 @@
           </div>
         </div>
 
-        <!-- Guardar -->
         <div class="col-span-1 md:col-span-2 mt-4">
           <button onclick="saveProfile()"
                   class="w-full bg-[#CCFF00] text-black font-black uppercase py-4 hover:bg-white transition-colors tracking-wider flex justify-center items-center gap-2">
@@ -344,7 +324,6 @@
 
       </div>
 
-      <!-- INFO BOX -->
       <div class="bg-[#111] border border-[#222] p-6 flex gap-4 items-start relative group">
         <div
           class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#CCFF00] opacity-50 group-hover:opacity-100 transition-opacity">
@@ -361,7 +340,6 @@
         </p>
       </div>
 
-      <!-- VIRAL LOOP -->
       <div class="border-t border-[#222] pt-8">
         <h3 class="text-white font-bold uppercase mb-4 text-sm tracking-wider">
           Invita a un Rival
@@ -380,16 +358,13 @@
     </div>
   </main>
 
-  <!-- STORY TEMPLATE 1080x1920 -->
   <div id="storyTemplate"
        class="fixed top-0 left-0 z-[-1] w-[1080px] h-[1920px] bg-[#050505] flex flex-col items-center justify-center hidden font-['Inter']">
-    <!-- Background -->
     <div class="absolute inset-0 bg-gradient-to-b from-[#111] via-[#050505] to-[#CCFF00]/20"></div>
     <div class="absolute inset-0 opacity-20"
          style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-    <!-- Header Text -->
-    <div class="absolute top-24 w-full text-center z-10">
+    <div class="absolute top-36 w-full text-center z-10">
       <h1 class="font-black text-8xl tracking-tighter text-white">
         THE DROP <span class="text-[#CCFF00] italic">10K</span>
       </h1>
@@ -398,14 +373,11 @@
       </p>
     </div>
 
-    <!-- Card Container centrado -->
     <div id="storyCardContainer"
-         class="z-20 flex items-center justify-center">
-      <!-- Aquí inyectamos la tarjeta clonada -->
-    </div>
+         class="z-20 flex items-center justify-center w-full" style="margin-top: 180px; margin-bottom: 180px;">
+      </div>
 
-    <!-- Footer Text -->
-    <div class="absolute bottom-24 w-full text-center z-10">
+    <div class="absolute bottom-44 w-full text-center z-10">
       <p class="font-mono text-2xl text-[#CCFF00] bg-[#111] inline-block px-6 py-3 border border-[#333]">
         ACCESO CONCEDIDO
       </p>
@@ -473,7 +445,7 @@
       }
     }
 
-    // STORY EXPORT
+    // STORY EXPORT (MEJORADA)
     window.downloadBib = async () => {
       const btn = document.querySelector('button[onclick="downloadBib()"]');
       const originalText = btn.innerHTML;
@@ -491,46 +463,77 @@
 
         // quitamos transform / sombras dinámicas
         cardClone.style.transform = 'none';
-        cardClone.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6)';
+        cardClone.style.boxShadow = '0 40px 80px rgba(0,0,0,0.5)'; // Sombra más sutil para story
 
-        // eliminamos w-full / h-full para poder fijar tamaño propio
+        // eliminamos clases que fijan tamaños
         cardClone.className = cardClone.className
           .replace(/\bw-full\b/g, '')
-          .replace(/\bh-full\b/g, '');
+          .replace(/\bh-full\b/g, '')
+          .replace(/\baspect-\[.*?\]/g, ''); // eliminar el aspect ratio cuadrado
 
-        // tamaño de la tarjeta dentro de la story (grande pero con margen seguro)
-        cardClone.style.width = '880px';      // ocupa casi todo el ancho con algo de margen
-        cardClone.style.maxWidth = '92%';
-        cardClone.style.height = 'auto';
-        cardClone.style.paddingBottom = '80px'; // más espacio bajo el nombre / CAT
+        // --- MODIFICACIONES CLAVE PARA STORY VERTICAL ---
 
-        // ajustar tipografía del tiempo
+        // 1. Tamaño de la tarjeta en la Story
+        // Ocupará casi todo el ancho disponible (con margen seguro)
+        // Y será mucho más alta, adaptándose a la verticalidad
+        cardClone.style.width = '860px';
+        cardClone.style.height = '1300px'; // Altura fija mucho mayor
+        cardClone.style.padding = '60px'; // Padding interno mayor
+        cardClone.style.display = 'flex';
+        cardClone.style.flexDirection = 'column';
+        cardClone.style.justifyContent = 'space-between';
+
+
+        // 2. Agujeros más grandes y separados
+        const holes = cardClone.querySelectorAll('.hole');
+        holes.forEach(hole => {
+          hole.style.width = '24px';
+          hole.style.height = '24px';
+        });
+        cardClone.querySelector('.hole.top-4.left-4').style.top = '30px';
+        cardClone.querySelector('.hole.top-4.left-4').style.left = '30px';
+        cardClone.querySelector('.hole.top-4.right-4').style.top = '30px';
+        cardClone.querySelector('.hole.top-4.right-4').style.right = '30px';
+        cardClone.querySelector('.hole.bottom-4.left-4').style.bottom = '30px';
+        cardClone.querySelector('.hole.bottom-4.left-4').style.left = '30px';
+        cardClone.querySelector('.hole.bottom-4.right-4').style.bottom = '30px';
+        cardClone.querySelector('.hole.bottom-4.right-4').style.right = '30px';
+
+
+        // 3. Tipografía del TIEMPO (Gigante)
         const bibText = cardClone.querySelector('#displayBib');
         if (bibText) {
           bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
-          bibText.style.fontSize = '96px'; // tamaño grande, sin salirse
-          bibText.style.lineHeight = '1';
+          bibText.style.fontSize = '240px'; // Tamaño mucho más grande
+          bibText.style.lineHeight = '0.9';
           bibText.style.fontWeight = '900';
-          bibText.style.marginBottom = '30px';
+          bibText.style.letterSpacing = '-10px';
         }
 
+        // 4. Marca de Agua (CLASSIFIED)
         const waterMark = cardClone.querySelector('span.absolute.text-gray-200');
         if (waterMark) {
           waterMark.className = waterMark.className.replace(/text-\[.*?\]/g, '');
-          waterMark.style.fontSize = '60px';
+          waterMark.style.fontSize = '140px';
+          waterMark.style.opacity = '0.3';
         }
 
+        // 5. Nombre del Corredor (Más grande)
         const nameText = cardClone.querySelector('#displayName');
         if (nameText) {
           nameText.className = nameText.className.replace(/text-\[.*?\]/g, '');
-          nameText.style.fontSize = '32px';
+          nameText.style.fontSize = '64px'; // Más grande
         }
 
+        // 6. Ajustes del Footer de la tarjeta
         const footer = cardClone.querySelector('.border-t-4');
         if (footer) {
-          footer.style.paddingTop = '20px';
-          footer.style.marginTop = '10px';
-          footer.style.paddingBottom = '10px';
+          footer.style.borderTopWidth = '6px';
+          footer.style.paddingTop = '40px';
+          footer.style.paddingBottom = '30px';
+          // Aumentar tamaño del texto del footer
+          const footerSpans = footer.querySelectorAll('span');
+          footerSpans.forEach(span => span.style.fontSize = '1.5rem');
         }
 
         cardContainer.appendChild(cardClone);
@@ -539,11 +542,16 @@
 
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
+        // Generar el canvas con el tamaño exacto de la story (1080x1920)
         const canvas = await html2canvas(template, {
-          scale: 1,
+          scale: 1, // Escala 1 porque el contenedor ya mide 1080x1920
           useCORS: true,
           allowTaint: true,
-          backgroundColor: '#050505'
+          backgroundColor: '#050505',
+          width: 1080,
+          height: 1920,
+          windowWidth: 1080,
+          windowHeight: 1920
         });
 
         template.classList.add('hidden');
@@ -555,7 +563,7 @@
 
       } catch (err) {
         console.error("Error generating story:", err);
-        alert("Error al generar la imagen.");
+        alert("Error al generar la imagen. Inténtalo de nuevo.");
         template.classList.add('hidden');
       } finally {
         btn.innerHTML = originalText;
