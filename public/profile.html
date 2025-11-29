@@ -395,7 +395,7 @@
         </div>
 
         <!-- CONTAINER FOR CLONED CARD -->
-        <div id="storyCardContainer" class="z-20 transform scale-[1.8]">
+        <div id="storyCardContainer" class="z-20 transform scale-[2.2]">
             <!-- Card will be injected here via JS -->
         </div>
 
@@ -496,20 +496,33 @@
 
                 // 2. Clean up clone styles for flat export
                 cardClone.style.transform = 'none';
-                cardClone.style.boxShadow = '0 20px 50px rgba(0,0,0,0.5)'; // Add static shadow
+                cardClone.style.boxShadow = '0 30px 60px rgba(0,0,0,0.6)'; // Stronger shadow
 
-                // Ensure text sizes in clone are fixed for the large canvas
-                // We are scaling the container by 1.8, so the base sizes might need tweak if they are vw
-                // Let's replace vw units with fixed px in the clone for stability in 1080px width
+                // 3. FIX FONT SIZES FOR HIGH RES CANVAS
+                // vw units fail in html2canvas when rendering off-screen or scaled.
+                // We must replace them with fixed pixels relative to the card size.
+                // Assuming card width in template is approx 300-400px (scaled by 2.2)
+
                 const bibText = cardClone.querySelector('#displayBib');
                 if (bibText) {
-                    bibText.classList.remove('text-[14vw]', 'sm:text-[15vw]');
-                    bibText.style.fontSize = '160px'; // Fixed large size for 1080p canvas
+                    // Remove responsive classes
+                    bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
+                    // Set fixed large size
+                    bibText.style.fontSize = '130px';
+                    bibText.style.lineHeight = '1';
+                    bibText.style.fontWeight = '900';
                 }
-                const waterMark = cardClone.querySelector('.absolute.text-\\[10vw\\]');
+
+                const waterMark = cardClone.querySelector('span.absolute.text-gray-200');
                 if (waterMark) {
-                    waterMark.classList.remove('text-[10vw]');
-                    waterMark.style.fontSize = '80px';
+                    waterMark.className = waterMark.className.replace(/text-\[.*?\]/g, '');
+                    waterMark.style.fontSize = '60px';
+                }
+
+                const nameText = cardClone.querySelector('#displayName');
+                if (nameText) {
+                    nameText.className = nameText.className.replace(/text-\[.*?\]/g, '');
+                    nameText.style.fontSize = '32px';
                 }
 
                 cardContainer.appendChild(cardClone);
