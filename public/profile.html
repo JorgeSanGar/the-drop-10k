@@ -7,6 +7,7 @@
     <title>PORTAL DEL CORREDOR | THE DROP 10K</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
@@ -241,7 +242,7 @@
 
             <!-- Botones de Acción Rápida -->
             <div class="w-full max-w-md mt-8 space-y-3 fade-in" style="animation-delay: 0.5s;">
-                <button
+                <button onclick="downloadBib()"
                     class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
                     <i data-lucide="download" class="w-4 h-4"></i> Guardar en Wallet
                 </button>
@@ -411,8 +412,8 @@
 
         function updateUI(data) {
             // Actualizar Tarjeta Visual
-            // Generate a consistent "Bib Number" based on name length or random if not present
-            const bibNum = data.bibNumber || Math.floor(Math.random() * 900) + 100;
+            // Use persistent BIB from DB. If not present (legacy users), show "---" or generate one (but ideally should be in DB)
+            const bibNum = data.bib || "---";
             if (els.bibNumber) els.bibNumber.innerText = bibNum;
 
             const fullName = (data.firstName || "RUNNER") + " " + (data.lastName || "");
@@ -431,8 +432,6 @@
 
             // Slider
             if (els.paceSlider) {
-                // Parse target pace "MM:SS" to minutes for slider if needed, or just use raw if it's a number
-                // Assuming data.target is "MM:SS" or number. Let's try to parse.
                 let paceVal = 45;
                 if (data.targetPace) {
                     paceVal = parseInt(data.targetPace);
@@ -446,6 +445,42 @@
                 updatePaceVisuals(paceVal);
             }
         }
+
+        // --- DOWNLOAD AS IMAGE (WALLET SIMULATION) ---
+        window.downloadBib = async () => {
+            const card = document.getElementById('bibCard');
+            const btn = document.querySelector('button[onclick="downloadBib()"]'); // Assuming I'll update the button onclick
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = 'GENERANDO...';
+            btn.disabled = true;
+
+            try {
+                // Reset transform for clean capture
+                card.style.transform = 'none';
+
+                const canvas = await html2canvas(card, {
+                    backgroundColor: null, // Transparent background if possible, or inherit
+                    scale: 2, // High resolution
+                    logging: false,
+                    useCORS: true
+                });
+
+                const link = document.createElement('a');
+                link.download = `THE_DROP_ID_${currentUser.bib || 'RUNNER'}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                alert("ID Digital descargado. Guárdalo en tu galería o agrégalo a tu Wallet manualmente.");
+
+            } catch (err) {
+                console.error("Error generating image:", err);
+                alert("Error al generar la imagen.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
 
         // --- VISUAL UPDATES ONLY (No Save) ---
         window.updateVisuals = (field, value) => {
