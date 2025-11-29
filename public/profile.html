@@ -139,12 +139,29 @@
     }
 
     @keyframes glitch {
-      0% { transform: translate(0) }
-      20% { transform: translate(-2px, 2px) }
-      40% { transform: translate(-2px, -2px) }
-      60% { transform: translate(2px, 2px) }
-      80% { transform: translate(2px, -2px) }
-      100% { transform: translate(0) }
+      0% {
+        transform: translate(0)
+      }
+
+      20% {
+        transform: translate(-2px, 2px)
+      }
+
+      40% {
+        transform: translate(-2px, -2px)
+      }
+
+      60% {
+        transform: translate(2px, 2px)
+      }
+
+      80% {
+        transform: translate(2px, -2px)
+      }
+
+      100% {
+        transform: translate(0)
+      }
     }
   </style>
 </head>
@@ -152,7 +169,7 @@
 <body class="min-h-screen flex flex-col p-4 md:p-12 relative selection:bg-[#CCFF00] selection:text-black">
 
   <div id="saveStatus"
-       class="fixed top-4 right-4 font-mono text-xs uppercase tracking-widest opacity-0 transition-opacity duration-500 z-50">
+    class="fixed top-4 right-4 font-mono text-xs uppercase tracking-widest opacity-0 transition-opacity duration-500 z-50">
     SAVING...
   </div>
 
@@ -166,6 +183,12 @@
   </div>
 
   <header class="relative z-10 mb-12 fade-in" style="animation-delay: 0.1s;">
+    <a href="/" class="inline-block mb-8 no-underline group">
+      <span
+        class="font-black text-3xl md:text-4xl tracking-tighter text-white group-hover:text-gray-300 transition-colors">
+        THE DROP <span class="text-[#CCFF00] italic">10K</span>
+      </span>
+    </a>
     <p class="font-mono text-xs text-[#CCFF00] uppercase mb-2 tracking-widest">Acceso al Sistema</p>
     <h1 class="text-5xl md:text-7xl font-black uppercase leading-none tracking-tighter">
       Portal del<br>Corredor
@@ -191,7 +214,8 @@
           </div>
 
           <div class="flex-1 flex items-center justify-center relative">
-            <span id="displayBib" class="font-black tracking-tighter leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem]">---</span>
+            <span id="displayBib"
+              class="font-black tracking-tighter leading-none text-[5.5rem] sm:text-[7rem] md:text-[8.5rem]">---</span>
             <span class="absolute text-[5rem] font-black text-gray-200 -rotate-45 opacity-50 z-[-1]">CLASSIFIED</span>
           </div>
 
@@ -207,11 +231,11 @@
 
       <div class="w-full max-w-md mt-8 space-y-3 fade-in" style="animation-delay: 0.5s;">
         <button onclick="downloadBib()"
-                class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
+          class="w-full border border-[#333] hover:border-[#CCFF00] text-gray-300 hover:text-[#CCFF00] py-4 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2 group">
           <i data-lucide="instagram" class="w-4 h-4"></i> DESCARGAR STORY (9:16)
         </button>
         <button onclick="logout()"
-                class="w-full border border-red-900/30 text-red-700 hover:text-red-500 hover:border-red-500 py-3 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2">
+          class="w-full border border-red-900/30 text-red-700 hover:text-red-500 hover:border-red-500 py-3 font-mono text-xs uppercase transition-colors flex items-center justify-center gap-2">
           [→ Desconectar
         </button>
       </div>
@@ -232,17 +256,21 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-l-2 border-[#222] pl-6 md:pl-8">
         <div class="col-span-1 md:col-span-2">
-          <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Email Asignado <span class="text-xs text-gray-400 ml-2">[LOCKED]</span></label>
-          <div class="text-xl md:text-2xl font-mono text-gray-100 break-all select-all" id="emailDisplay">cargando...</div>
+          <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Email Asignado <span
+              class="text-xs text-gray-400 ml-2">[LOCKED]</span></label>
+          <div class="text-xl md:text-2xl font-mono text-gray-100 break-all select-all" id="emailDisplay">cargando...
+          </div>
         </div>
         <div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-4">
           <div>
             <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Nombre</label>
-            <input type="text" id="inputName" class="input-brutal" placeholder="NOMBRE" oninput="updateVisuals('firstName', this.value.toUpperCase())">
+            <input type="text" id="inputName" class="input-brutal" placeholder="NOMBRE"
+              oninput="updateVisuals('firstName', this.value.toUpperCase())">
           </div>
           <div>
             <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Apellido</label>
-            <input type="text" id="inputSurname" class="input-brutal" placeholder="APELLIDO" oninput="updateVisuals('lastName', this.value.toUpperCase())">
+            <input type="text" id="inputSurname" class="input-brutal" placeholder="APELLIDO"
+              oninput="updateVisuals('lastName', this.value.toUpperCase())">
           </div>
         </div>
         <div>
@@ -263,15 +291,18 @@
             <label class="block font-mono text-[10px] text-gray-200 uppercase">Ritmo Objetivo (10K)</label>
             <span class="text-[#CCFF00] font-black text-3xl" id="paceValue">40:00</span>
           </div>
-          <input type="range" min="28" max="70" value="40" class="w-full mb-2" id="paceSlider" oninput="updatePaceVisuals(this.value)">
+          <input type="range" min="28" max="70" value="40" class="w-full mb-2" id="paceSlider"
+            oninput="updatePaceVisuals(this.value)">
           <p class="font-mono text-[10px] text-gray-300">*Este ajuste re-calcula tu oleada de salida estimada.</p>
         </div>
         <div>
           <label class="block font-mono text-[10px] text-gray-200 uppercase mb-1">Oleada de Salida</label>
-          <div class="text-xl text-white font-bold uppercase glitch-text cursor-default" id="waveDisplay">CALCULANDO...</div>
+          <div class="text-xl text-white font-bold uppercase glitch-text cursor-default" id="waveDisplay">CALCULANDO...
+          </div>
         </div>
         <div class="col-span-1 md:col-span-2 mt-4">
-          <button onclick="saveProfile()" class="w-full bg-[#CCFF00] text-black font-black uppercase py-4 hover:bg-white transition-colors tracking-wider flex justify-center items-center gap-2">
+          <button onclick="saveProfile()"
+            class="w-full bg-[#CCFF00] text-black font-black uppercase py-4 hover:bg-white transition-colors tracking-wider flex justify-center items-center gap-2">
             <span>GUARDAR CAMBIOS</span>
             <i data-lucide="save" class="w-5 h-5"></i>
           </button>
@@ -285,8 +316,7 @@
           class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#CCFF00] opacity-50 group-hover:opacity-100 transition-opacity">
         </div>
 
-        <i data-lucide="database"
-           class="text-gray-300 shrink-0 mt-1 group-hover:text-[#CCFF00] transition-colors"></i>
+        <i data-lucide="database" class="text-gray-300 shrink-0 mt-1 group-hover:text-[#CCFF00] transition-colors"></i>
         <p class="font-mono text-xs text-gray-200 leading-relaxed">
           Tus datos se sincronizan en tiempo real con la base de datos central. El dorsal asignado (arriba) es
           permanente e intransferible para esta edición.
@@ -299,9 +329,9 @@
           <span class="text-[#CCFF00] text-xs font-mono ml-2">[ GANA PRIORIDAD ]</span>
         </h3>
         <form onsubmit="event.preventDefault(); alert('Invitación enviada. Tu prioridad ha aumentado.');"
-              class="flex gap-0">
+          class="flex gap-0">
           <input type="email" placeholder="RIVAL@EMAIL.COM"
-                 class="bg-[#111] border border-[#333] text-white font-mono text-sm px-4 py-3 w-full outline-none focus:border-[#CCFF00] transition-colors uppercase placeholder-gray-400">
+            class="bg-[#111] border border-[#333] text-white font-mono text-sm px-4 py-3 w-full outline-none focus:border-[#CCFF00] transition-colors uppercase placeholder-gray-400">
           <button class="bg-[#CCFF00] text-black font-bold uppercase px-6 hover:bg-white transition-colors">
             <i data-lucide="send" class="w-4 h-4"></i>
           </button>
@@ -311,10 +341,11 @@
   </main>
 
   <div id="storyTemplate"
-       class="fixed top-0 left-0 z-[-1] w-[1080px] h-[1920px] bg-[#050505] flex flex-col items-center justify-between py-24 hidden font-['Inter'] text-black">
+    class="fixed top-0 left-0 z-[-1] w-[1080px] h-[1920px] bg-[#050505] flex flex-col items-center justify-between py-24 hidden font-['Inter'] text-black">
 
     <div class="absolute inset-0 bg-gradient-to-b from-[#111] via-[#050505] to-[#CCFF00]/20 z-0"></div>
-    <div class="absolute inset-0 opacity-20 z-0" style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;"></div>
+    <div class="absolute inset-0 opacity-20 z-0"
+      style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;"></div>
 
     <div class="relative z-10 text-center mt-12">
       <h1 class="font-black text-8xl tracking-tighter text-white">
@@ -325,38 +356,41 @@
       </p>
     </div>
 
-    <div class="relative z-20 bg-[#f2f2f2] w-[860px] h-[1350px] p-[60px] flex flex-col justify-between shadow-[0_60px_120px_rgba(0,0,0,0.5)]">
+    <div
+      class="relative z-20 bg-[#f2f2f2] w-[860px] h-[1350px] p-[60px] flex flex-col justify-between shadow-[0_60px_120px_rgba(0,0,0,0.5)]">
 
-        <div class="hole top-[30px] left-[30px] w-[24px] h-[24px]"></div>
-        <div class="hole top-[30px] right-[30px] w-[24px] h-[24px]"></div>
-        <div class="hole bottom-[30px] left-[30px] w-[24px] h-[24px]"></div>
-        <div class="hole bottom-[30px] right-[30px] w-[24px] h-[24px]"></div>
+      <div class="hole top-[30px] left-[30px] w-[24px] h-[24px]"></div>
+      <div class="hole top-[30px] right-[30px] w-[24px] h-[24px]"></div>
+      <div class="hole bottom-[30px] left-[30px] w-[24px] h-[24px]"></div>
+      <div class="hole bottom-[30px] right-[30px] w-[24px] h-[24px]"></div>
 
-        <div class="flex justify-between items-start border-b-[6px] border-black pb-[40px]">
-            <span class="font-black text-5xl tracking-tighter">THE DROP <span class="italic text-5xl">10K</span></span>
-            <div class="border-4 border-black p-2">
-              <i data-lucide="qr-code" class="w-16 h-16 text-black"></i>
-            </div>
+      <div class="flex justify-between items-start border-b-[6px] border-black pb-[40px]">
+        <span class="font-black text-5xl tracking-tighter">THE DROP <span class="italic text-5xl">10K</span></span>
+        <div class="border-4 border-black p-2">
+          <i data-lucide="qr-code" class="w-16 h-16 text-black"></i>
         </div>
+      </div>
 
-        <div class="flex-1 flex items-center justify-center relative my-12">
-            <span id="storyBibValue" class="font-black tracking-tighter leading-[0.9] text-[280px] tracking-[-15px] z-10 relative">
-                45:00
-            </span>
-            <span class="absolute text-[160px] font-black text-gray-300 -rotate-45 opacity-30 select-none z-0">
-                CLASSIFIED
-            </span>
-        </div>
+      <div class="flex-1 flex items-center justify-center relative my-12">
+        <span id="storyBibValue"
+          class="font-black tracking-tighter leading-[0.9] text-[280px] tracking-[-15px] z-10 relative">
+          45:00
+        </span>
+        <span class="absolute text-[160px] font-black text-gray-300 -rotate-45 opacity-30 select-none z-0">
+          CLASSIFIED
+        </span>
+      </div>
 
-        <div class="border-t-[6px] border-black pt-[40px]">
-            <div id="storyNameValue" class="font-black uppercase text-[70px] leading-[1.1] mb-6 break-words overflow-visible">
-                JORGE
-            </div>
-            <div class="flex justify-between font-mono text-3xl font-bold uppercase">
-                <span id="storyCatValue">CAT: HOMBRE</span>
-                <span>ÁVILA</span>
-            </div>
+      <div class="border-t-[6px] border-black pt-[40px]">
+        <div id="storyNameValue"
+          class="font-black uppercase text-[70px] leading-[1.1] mb-6 break-words overflow-visible">
+          JORGE
         </div>
+        <div class="flex justify-between font-mono text-3xl font-bold uppercase">
+          <span id="storyCatValue">CAT: HOMBRE</span>
+          <span>ÁVILA</span>
+        </div>
+      </div>
     </div>
 
     <div class="relative z-10 text-center mb-12">
@@ -466,10 +500,10 @@
           height: 1920,
           windowWidth: 1080,
           windowHeight: 1920,
-           onclone: (clonedDoc) => {
-             // Aseguramos que el clon sea visible
-             clonedDoc.getElementById('storyTemplate').classList.remove('hidden');
-           }
+          onclone: (clonedDoc) => {
+            // Aseguramos que el clon sea visible
+            clonedDoc.getElementById('storyTemplate').classList.remove('hidden');
+          }
         });
 
         // 6. Ocultamos la plantilla de nuevo
@@ -530,8 +564,8 @@
 
         els.saveStatus.innerText = "SAVED";
         setTimeout(() => {
-             els.saveStatus.style.opacity = "0";
-             els.saveStatus.innerText = "SAVING...";
+          els.saveStatus.style.opacity = "0";
+          els.saveStatus.innerText = "SAVING...";
         }, 2000);
 
       } catch (e) {
@@ -581,4 +615,5 @@
     });
   </script>
 </body>
+
 </html>
