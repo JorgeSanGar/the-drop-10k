@@ -1150,7 +1150,7 @@
 
             <!-- EMAIL CAPTURE -->
             <div id="signup-container"
-                class="mt-12 bg-[#CCFF00] p-6 md:p-12 border border-black shadow-[8px_8px_0px_0px_#000] md:shadow-[12px_12px_0px_0px_#000] relative overflow-hidden group">
+                class="scroll-mt-24 mt-12 bg-[#CCFF00] p-6 md:p-12 border border-black shadow-[8px_8px_0px_0px_#000] md:shadow-[12px_12px_0px_0px_#000] relative overflow-hidden group">
                 <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
                         <!-- FIXED RESPONSIVENESS FOR TITLE -->
@@ -1532,12 +1532,13 @@
             }, { once: true });
         });
 
-        // Botón Vortex Scroll Suave
+        // Botón Vortex -> AHORA ABRE EL TERMINAL (Acceso Directo)
         vortexBtn.addEventListener('click', () => {
-            const signup = document.getElementById('emailInput');
-            // Scroll suave manual para mejor control
-            signup.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => signup.focus(), 800);
+            if (window.toggleTerminal) {
+                window.toggleTerminal();
+            } else {
+                console.error("Terminal function not found");
+            }
         });
 
         // ------------------------------------------------
