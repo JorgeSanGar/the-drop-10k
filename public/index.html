@@ -1533,12 +1533,11 @@
             }, { once: true });
         });
 
-        // Botón Vortex -> AHORA ABRE EL TERMINAL (Acceso Directo)
+        // Botón Vortex -> SCROLL TO WAITLIST (Aumentar conversión)
         vortexBtn.addEventListener('click', () => {
-            if (window.toggleTerminal) {
-                window.toggleTerminal();
-            } else {
-                console.error("Terminal function not found");
+            const signupSection = document.getElementById('signup-container');
+            if (signupSection) {
+                signupSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
 
