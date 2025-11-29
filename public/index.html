@@ -1650,6 +1650,12 @@
             lucide.createIcons();
         }
 
+        // Check for persisted session
+        window.addEventListener('load', () => {
+            // Just init icons, do NOT auto redirect
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+
         // Toggle Open/Close Terminal
         window.toggleTerminal = () => {
             terminal.classList.toggle('open');
@@ -1657,6 +1663,13 @@
             if (terminal.classList.contains('open')) {
                 document.body.style.overflow = 'hidden';
                 if (typeof lucide !== 'undefined') lucide.createIcons();
+
+                // Check if user is logged in
+                const savedUser = localStorage.getItem('drop_user');
+                if (savedUser) {
+                    // Redirect to profile page if logged in
+                    window.location.href = 'profile.html';
+                }
             } else {
                 document.body.style.overflow = 'auto';
             }
@@ -1678,26 +1691,13 @@
         };
 
         // --- AUTH LOGIC (REAL) ---
-
-        // Check for persisted session
-        window.addEventListener('load', () => {
-            const savedUser = localStorage.getItem('drop_user');
-            if (savedUser) {
-                // Redirect to profile page if logged in
-                window.location.href = 'profile.html';
-            } else {
-                switchView('register'); // Default to register
-            }
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        });
-
         function updateProfileView(user) {
             // Populate Profile Data
             const name = user.firstName || user.name || 'RUNNER';
             bibName.innerText = name.split(' ')[0].toUpperCase();
 
             // Generate a consistent "Bib Number" based on name length or random if not present
-            bibNumber.innerText = user.bibNumber || Math.floor(Math.random() * 900) + 100;
+            bibNumber.innerText = user.bib || Math.floor(Math.random() * 900) + 100;
 
             profileEmail.innerText = user.email;
             profileTarget.innerText = user.target || "--:--";

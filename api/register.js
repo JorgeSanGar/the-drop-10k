@@ -55,6 +55,25 @@ module.exports = async (req, res) => {
             return res.status(409).json({ error: 'Email already registered' });
         }
 
+        // Generate Unique Bib
+        let bib;
+        let isUnique = false;
+        // Safety break to prevent infinite loops in case of full DB (unlikely for 10k range)
+        let attempts = 0;
+
+        while (!isUnique && attempts < 20) {
+            bib = Math.floor(Math.random() * 9900) + 100; // Range 100 - 9999
+            const bibSnapshot = await usersRef.where('bib', '==', bib).get();
+            if (bibSnapshot.empty) {
+                isUnique = true;
+            }
+            attempts++;
+        }
+
+        if (!isUnique) {
+            return res.status(500).json({ error: 'Failed to assign unique BIB. Please try again.' });
+        }
+
         // Create User Document
         // NOTE: In production, password should be hashed!
         const newUser = {
@@ -65,7 +84,7 @@ module.exports = async (req, res) => {
             gender: gender || 'Unknown',
             target: target || null,
             role: 'user',
-            bib: null, // To be assigned later
+            bib: bib, // Assigned Unique Bib
             createdAt: new Date().toISOString()
         };
 
