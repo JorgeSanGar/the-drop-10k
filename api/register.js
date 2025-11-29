@@ -99,11 +99,9 @@ module.exports = async (req, res) => {
             console.log(`[Brevo] Initializing with key length: ${brevoKey.length}`);
 
             try {
-                const defaultClient = brevo.ApiClient.instance;
-                const apiKey = defaultClient.authentications['api-key'];
-                apiKey.apiKey = brevoKey.trim();
-
                 const apiInstance = new brevo.TransactionalEmailsApi();
+                apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey.trim());
+
                 const sendSmtpEmail = new brevo.SendSmtpEmail();
 
                 sendSmtpEmail.subject = "THE DROP: PROFILE ACTIVATED";
