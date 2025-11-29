@@ -94,12 +94,19 @@ module.exports = async (req, res) => {
         await usersRef.add(newUser);
 
         // Send Welcome Email (Non-blocking / Graceful Failure)
+        const brevoKey = process.env.BREVO_API_KEY;
         if (brevoKey) {
-            console.log(`[Brevo] Attempting to send email to ${email} with key length: ${brevoKey.length}`);
-            try {
-                const sendSmtpEmail = new brevo.SendSmtpEmail();
-                sendSmtpEmail.subject = "THE DROP: PROFILE ACTIVATED";
+            console.log(`[Brevo] Initializing with key length: ${brevoKey.length}`);
 
+            try {
+                const defaultClient = brevo.ApiClient.instance;
+                const apiKey = defaultClient.authentications['api-key'];
+                apiKey.apiKey = brevoKey.trim();
+
+                const apiInstance = new brevo.TransactionalEmailsApi();
+                const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+                sendSmtpEmail.subject = "THE DROP: PROFILE ACTIVATED";
                 const name = firstName ? firstName.toUpperCase() : 'RUNNER';
 
                 sendSmtpEmail.htmlContent = `<!DOCTYPE html>
