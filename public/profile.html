@@ -445,7 +445,7 @@
       }
     }
 
-    // STORY EXPORT (MEJORADA)
+    // STORY EXPORT - DISEÑO VERTICAL APROBADO (9:16)
     window.downloadBib = async () => {
       const btn = document.querySelector('button[onclick="downloadBib()"]');
       const originalText = btn.innerHTML;
@@ -457,113 +457,135 @@
       btn.disabled = true;
 
       try {
-        // limpiamos contenedor
+        // 1. Limpiamos el contenedor donde irá la tarjeta
         cardContainer.innerHTML = '';
         const cardClone = originalCard.cloneNode(true);
 
-        // quitamos transform / sombras dinámicas
-        cardClone.style.transform = 'none';
-        cardClone.style.boxShadow = '0 40px 80px rgba(0,0,0,0.5)'; // Sombra más sutil para story
+        // 2. Reseteamos estilos básicos del clon
+        cardClone.style.transform = 'none'; // Quitamos la inclinación 3D
+        cardClone.style.boxShadow = '0 60px 120px rgba(0,0,0,0.5)'; // Sombra potente para la story
 
-        // eliminamos clases que fijan tamaños
+        // Eliminamos clases de Tailwind que interfieren con el nuevo tamaño
+        // IMPORTANTE: Quitamos 'truncate' para que el nombre largo no se corte.
         cardClone.className = cardClone.className
           .replace(/\bw-full\b/g, '')
           .replace(/\bh-full\b/g, '')
-          .replace(/\baspect-\[.*?\]/g, ''); // eliminar el aspect ratio cuadrado
+          .replace(/\baspect-\[.*?\]/g, '')
+          .replace(/\btruncate\b/g, '');
 
-        // --- MODIFICACIONES CLAVE PARA STORY VERTICAL ---
+        // --- ESTILOS ESPECÍFICOS PARA EL DISEÑO VERTICAL (9:16) ---
 
-        // 1. Tamaño de la tarjeta en la Story
-        // Ocupará casi todo el ancho disponible (con margen seguro)
-        // Y será mucho más alta, adaptándose a la verticalidad
-        cardClone.style.width = '860px';
-        cardClone.style.height = '1300px'; // Altura fija mucho mayor
-        cardClone.style.padding = '60px'; // Padding interno mayor
+        // A. CONTENEDOR PRINCIPAL DE LA TARJETA
+        // La clave es usar Flexbox con 'space-between' para estirar el contenido
+        cardClone.style.width = '880px';   // Ancho casi total
+        cardClone.style.height = '1450px'; // MUY ALTA para llenar el espacio vertical
+        cardClone.style.padding = '70px';  // Padding interno generoso
         cardClone.style.display = 'flex';
         cardClone.style.flexDirection = 'column';
+        // Esto es lo que separa el header, el tiempo central y el footer automáticamente:
         cardClone.style.justifyContent = 'space-between';
 
-
-        // 2. Agujeros más grandes y separados
+        // B. LOS AGUJEROS DE LAS ESQUINAS
+        // Hay que recolocarlos porque el padding ha cambiado
         const holes = cardClone.querySelectorAll('.hole');
-        holes.forEach(hole => {
-          hole.style.width = '24px';
-          hole.style.height = '24px';
-        });
-        cardClone.querySelector('.hole.top-4.left-4').style.top = '30px';
-        cardClone.querySelector('.hole.top-4.left-4').style.left = '30px';
-        cardClone.querySelector('.hole.top-4.right-4').style.top = '30px';
-        cardClone.querySelector('.hole.top-4.right-4').style.right = '30px';
-        cardClone.querySelector('.hole.bottom-4.left-4').style.bottom = '30px';
-        cardClone.querySelector('.hole.bottom-4.left-4').style.left = '30px';
-        cardClone.querySelector('.hole.bottom-4.right-4').style.bottom = '30px';
-        cardClone.querySelector('.hole.bottom-4.right-4').style.right = '30px';
+        holes.forEach(h => { h.style.width = '20px'; h.style.height = '20px'; }); // Un poco más grandes
+        cardClone.querySelector('.hole.top-4.left-4').style.cssText += 'top: 30px; left: 30px;';
+        cardClone.querySelector('.hole.top-4.right-4').style.cssText += 'top: 30px; right: 30px;';
+        cardClone.querySelector('.hole.bottom-4.left-4').style.cssText += 'bottom: 30px; left: 30px;';
+        cardClone.querySelector('.hole.bottom-4.right-4').style.cssText += 'bottom: 30px; right: 30px;';
 
-
-        // 3. Tipografía del TIEMPO (Gigante)
-        const bibText = cardClone.querySelector('#displayBib');
-        if (bibText) {
-          bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
-          bibText.style.fontSize = '240px'; // Tamaño mucho más grande
-          bibText.style.lineHeight = '0.9';
-          bibText.style.fontWeight = '900';
-          bibText.style.letterSpacing = '-10px';
+        // C. HEADER (Logo y QR) y LÍNEAS DIVISORIAS
+        const headerBorder = cardClone.querySelector('.border-b-4');
+        const footerBorder = cardClone.querySelector('.border-t-4');
+        if (headerBorder) {
+            headerBorder.style.borderBottomWidth = '6px'; // Línea más gruesa
+            headerBorder.style.paddingBottom = '40px';
+        }
+        if (footerBorder) {
+            footerBorder.style.borderTopWidth = '6px'; // Línea más gruesa
+            footerBorder.style.paddingTop = '40px';
+            footerBorder.style.marginTop = '0'; // El flex se encarga del espacio
         }
 
-        // 4. Marca de Agua (CLASSIFIED)
+        // D. EL TIEMPO PRINCIPAL (GIGANTE CENTRAL)
+        const bibText = cardClone.querySelector('#displayBib');
+        if (bibText) {
+          // Quitamos tamaños de Tailwind
+          bibText.className = bibText.className.replace(/text-\[.*?\]/g, '');
+          // Estilo gigante final
+          bibText.style.fontSize = '300px';
+          bibText.style.lineHeight = '1';
+          bibText.style.fontWeight = '900';
+          bibText.style.letterSpacing = '-15px'; // Tracking muy apretado
+          // Quitamos márgenes para que el flex justify-between lo centre verticalmente
+          bibText.style.margin = '0';
+        }
+
+        // E. MARCA DE AGUA (CLASSIFIED)
         const waterMark = cardClone.querySelector('span.absolute.text-gray-200');
         if (waterMark) {
           waterMark.className = waterMark.className.replace(/text-\[.*?\]/g, '');
-          waterMark.style.fontSize = '140px';
-          waterMark.style.opacity = '0.3';
+          waterMark.style.fontSize = '180px'; // Mucho más grande para cubrir la tarjeta alta
+          waterMark.style.opacity = '0.25';
         }
 
-        // 5. Nombre del Corredor (Más grande)
+        // F. NOMBRE DEL CORREDOR (JORGE)
         const nameText = cardClone.querySelector('#displayName');
         if (nameText) {
           nameText.className = nameText.className.replace(/text-\[.*?\]/g, '');
-          nameText.style.fontSize = '64px'; // Más grande
+          nameText.style.fontSize = '80px'; // Tamaño grande como en la imagen de muestra
+          nameText.style.lineHeight = '1.1';
+          // Aseguramos que se vea completo
+          nameText.style.whiteSpace = 'normal';
+          nameText.style.overflow = 'visible';
         }
 
-        // 6. Ajustes del Footer de la tarjeta
-        const footer = cardClone.querySelector('.border-t-4');
-        if (footer) {
-          footer.style.borderTopWidth = '6px';
-          footer.style.paddingTop = '40px';
-          footer.style.paddingBottom = '30px';
-          // Aumentar tamaño del texto del footer
-          const footerSpans = footer.querySelectorAll('span');
-          footerSpans.forEach(span => span.style.fontSize = '1.5rem');
+        // G. FOOTER (Categoría y Ciudad)
+        const footerInfo = cardClone.querySelector('.border-t-4 .flex');
+        if (footerInfo) {
+          // Aumentamos el tamaño de los textos del footer
+          const spans = footerInfo.querySelectorAll('span');
+          spans.forEach(span => span.style.fontSize = '28px');
         }
 
+        // 3. Insertamos la tarjeta modificada en el template
         cardContainer.appendChild(cardClone);
-
         template.classList.remove('hidden');
 
+        // Re-inicializamos iconos si es necesario
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
-        // Generar el canvas con el tamaño exacto de la story (1080x1920)
+        // 4. Generamos la imagen con html2canvas
+        // Usamos el tamaño exacto de una story (1080x1920)
         const canvas = await html2canvas(template, {
-          scale: 1, // Escala 1 porque el contenedor ya mide 1080x1920
+          scale: 1,
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#050505',
           width: 1080,
           height: 1920,
           windowWidth: 1080,
-          windowHeight: 1920
+          windowHeight: 1920,
+          onclone: (clonedDoc) => {
+             // Aseguramos que el template clonado sea visible para la captura
+             clonedDoc.getElementById('storyTemplate').classList.remove('hidden');
+          }
         });
 
+        // Ocultamos el template de nuevo
         template.classList.add('hidden');
 
+        // 5. Descargamos la imagen
         const link = document.createElement('a');
-        link.download = `THE_DROP_STORY_${currentUser.firstName || 'RUNNER'}.png`;
+        // Usamos el nombre del usuario para el archivo, o "RUNNER" si no hay nombre
+        const fileName = currentUser.firstName ? currentUser.firstName.replace(/\s+/g, '_') : 'RUNNER';
+        link.download = `THE_DROP_STORY_${fileName}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
 
       } catch (err) {
         console.error("Error generating story:", err);
-        alert("Error al generar la imagen. Inténtalo de nuevo.");
+        alert("Error al generar la imagen. Por favor, inténtalo de nuevo.");
         template.classList.add('hidden');
       } finally {
         btn.innerHTML = originalText;
