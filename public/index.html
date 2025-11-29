@@ -724,12 +724,63 @@
         </div>
     </div>
 
-    <!-- Terminal Footer -->
-    <div class="p-4 border-t border-[#333] text-center">
-        <p class="font-mono text-[10px] text-gray-600 uppercase">
-            Secure Connection via THE DROP Server
-        </p>
-    </div>
+    <!-- MODAL: IDENTITY CONFLICT (DUPLICATE EMAIL) -->
+    <div id="emailExistsModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
+            onclick="closeModal('emailExistsModal')"></div>
+
+        <!-- Modal Container -->
+        <div
+            class="relative bg-[#0a0a0a] w-full max-w-md shadow-[0_0_40px_rgba(255,255,255,0.05)] modal-enter-duplicate border border-[#333] overflow-hidden">
+            <!-- Barra Superior de Estado -->
+            <div class="h-1 w-full bg-gradient-to-r from-transparent via-[#CCFF00] to-transparent opacity-50"></div>
+
+            <div class="relative z-20 p-8 flex flex-col items-center text-center">
+                <!-- Icono de Alerta -->
+                <div class="mb-6 relative w-16 h-16 flex items-center justify-center">
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border border-[#CCFF00] rounded-full animate-[ripple_2s_linear_infinite] opacity-0">
+                    </div>
+                    <i data-lucide="shield-alert" class="w-8 h-8 text-[#CCFF00]"></i>
+                </div>
+
+                <!-- Headline -->
+                <h2 class="text-2xl font-black text-white uppercase leading-none mb-2 tracking-tight">
+                    Conflicto de<br>Identidad.
+                </h2>
+
+                <!-- Subtítulo técnico -->
+                <div
+                    class="font-mono text-[10px] text-[#CCFF00] mb-6 uppercase tracking-widest bg-[#CCFF00]/5 px-2 py-1 border border-[#CCFF00]/20">
+                    Error 409: Duplicate Entry
+                </div>
+
+                <!-- Mensaje -->
+                <p class="font-mono text-xs text-gray-400 mb-8 leading-relaxed">
+                    Este correo electrónico ya tiene credenciales asignadas en el servidor de <span
+                        class="text-white font-bold">THE DROP</span>.
+                    <br><br>
+                    No puedes crear una nueva identidad sobre una existente.
+                </p>
+
+                <!-- Acciones (Grid) -->
+                <div class="grid grid-cols-1 w-full gap-3">
+                    <!-- Opción A: Login (Principal) -->
+                    <button onclick="switchToLoginFromModal()"
+                        class="w-full bg-[#CCFF00] text-black font-bold uppercase py-3 hover:bg-white transition-colors tracking-wider text-xs flex justify-center items-center gap-2">
+                        <span>Acceder al Terminal</span>
+                        <i data-lucide="log-in" class="w-3 h-3"></i>
+                    </button>
+
+                    <!-- Opción B: Reintentar (Secundaria) -->
+                    <button onclick="closeModal('emailExistsModal')"
+                        class="w-full border border-[#333] text-gray-500 font-mono uppercase py-3 hover:text-white hover:border-gray-500 transition-colors tracking-wider text-[10px]">
+                        [ Usar otro Email ]
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -1696,17 +1747,27 @@
                     localStorage.setItem('drop_user', JSON.stringify(result.user));
                     updateProfileView(result.user);
                     switchView('profile');
+                    // Reset form only on success
+                    form.reset();
+                } else if (response.status === 409) {
+                    // Duplicate Email -> Show Custom Modal
+                    openModal('emailExistsModal');
                 } else {
                     alert(result.error || 'ACCESO DENEGADO');
                 }
             } catch (error) {
                 console.error('Auth Error:', error);
-                alert('ERROR DEL SISTEMA');
+                alert('ERROR DEL SISTEMA: ' + error.message);
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             }
+        };
+
+        window.switchToLoginFromModal = () => {
+            closeModal('emailExistsModal');
+            switchView('login');
         };
 
         window.handleLogin = async (e) => {
