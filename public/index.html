@@ -314,7 +314,6 @@
             background-color: #000;
             color: #F2F2F2;
             z-index: 9999;
-            /* High z-index to cover everything */
             /* El truco: Empieza como un círculo de 0px en la esquina superior derecha */
             clip-path: circle(0% at 100% 0%);
             transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
@@ -492,116 +491,6 @@
                 transform: translateX(0) skewX(0);
             }
         }
-
-        /* CRT Scanline Effects */
-        .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(204, 255, 0, 0.05) 51%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .scan-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: rgba(204, 255, 0, 0.1);
-            opacity: 0.5;
-            animation: scan 3s linear infinite;
-            pointer-events: none;
-            z-index: 11;
-        }
-
-        @keyframes scan {
-            0% {
-                top: -10%;
-            }
-
-            100% {
-                top: 110%;
-            }
-        }
-
-        /* 2. DUPLICATE MODAL (GLITCH ENTRY) */
-        .modal-enter-duplicate {
-            animation: glitchEntry 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-        }
-
-        @keyframes glitchEntry {
-            0% {
-                transform: scale(1.1);
-                opacity: 0;
-                filter: blur(10px);
-            }
-
-            50% {
-                transform: scale(0.9);
-                opacity: 1;
-                filter: blur(0px);
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Fingerprint Scanner Animation */
-        .scan-line-vertical {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #CCFF00;
-            box-shadow: 0 0 10px #CCFF00;
-            animation: scanVertical 2s ease-in-out infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes scanVertical {
-            0% {
-                top: 0%;
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                top: 100%;
-                opacity: 0;
-            }
-        }
-
-        /* Modal Entrada */
-        .modal-enter {
-            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes modalIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
     </style>
 </head>
 
@@ -635,13 +524,13 @@
             <!-- ENCABEZADO TERMINAL -->
             <div class="w-full mb-12 flex items-end justify-between border-b border-[#333] pb-4">
                 <div>
-                    <h2 class="text-[#CCFF00] font-mono text-xs uppercase tracking-[0.3em] mb-2">System Access</h2>
+                    <h2 class="text-[#CCFF00] font-mono text-xs uppercase tracking-[0.3em] mb-2">ACCESO AL SISTEMA</h2>
                     <h1 class="text-4xl md:text-6xl font-black uppercase text-white leading-none">
-                        Runner<br>Portal
+                        PORTAL DEL<br>CORREDOR
                     </h1>
                 </div>
                 <div class="hidden md:block text-right font-mono text-[10px] text-gray-500">
-                    SECURE CONNECTION<br>V.2.0.4
+                    CONEXIÓN SEGURA<br>V.2.0.4
                 </div>
             </div>
 
@@ -649,9 +538,9 @@
             <div id="registerView" class="w-full max-w-lg fade-in-up">
 
                 <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
-                    <button class="text-[#CCFF00] border-b-2 border-[#CCFF00] pb-1">Initiate Protocol</button>
+                    <button class="text-[#CCFF00] border-b-2 border-[#CCFF00] pb-1">INICIAR PROTOCOLO</button>
                     <button onclick="switchView('login')"
-                        class="text-gray-600 hover:text-white transition-colors pb-1">Login</button>
+                        class="text-gray-600 hover:text-white transition-colors pb-1">INICIAR SESIÓN</button>
                 </div>
 
                 <form id="registrationForm" onsubmit="handleRegistration(event)" class="flex flex-col gap-6">
@@ -659,24 +548,24 @@
                     <!-- NOMBRE -->
                     <div class="group">
                         <label
-                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">Runner
-                            ID / Name</label>
-                        <input type="text" name="name" placeholder="E.G. ALEX_RUNNER" required class="input-brutal">
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">ID
+                            CORREDOR / NOMBRE</label>
+                        <input type="text" name="name" placeholder="EJ. ALEX_RUNNER" required class="input-brutal">
                     </div>
 
                     <!-- EMAIL -->
                     <div class="group">
                         <label
-                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">Comms
-                            Channel (Email)</label>
-                        <input type="email" name="email" placeholder="YOU@EMAIL.COM" required class="input-brutal">
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
+                            DE COMUNICACIÓN (EMAIL)</label>
+                        <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
 
                     <!-- CONTRASEÑA -->
                     <div class="group">
                         <label
-                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">Access
-                            Key</label>
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
+                            DE ACCESO</label>
                         <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
                     </div>
 
@@ -684,57 +573,155 @@
                     <div class="grid grid-cols-2 gap-6">
                         <div class="group">
                             <label
-                                class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">Bio-Data
-                                (Gender)</label>
+                                class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">BIO-DATOS
+                                (GÉNERO)</label>
                             <select name="gender" required class="input-brutal text-gray-400 focus:text-white"
                                 onchange="this.classList.remove('text-gray-400'); this.classList.add('text-white')">
-                                <option value="" disabled selected>SELECT</option>
-                                <option value="M">MALE</option>
-                                <option value="F">FEMALE</option>
-                                <option value="X">NON-BINARY</option>
+                                <option value="" disabled selected>SELECCIONAR</option>
+                                <option value="M">HOMBRE</option>
+                                <option value="F">MUJER</option>
+                                <option value="X">NO BINARIO</option>
                             </select>
                         </div>
-                        class="w-full h-full object-cover grayscale">
-                    </div>
-                    <h3 class="text-2xl font-black uppercase text-white mb-1" id="profileName">RUNNER NAME</h3>
-                    <p class="font-mono text-xs text-gray-500 uppercase mb-6">ID: DROP-8821-X</p>
-
-                    <div class="grid grid-cols-2 gap-4 border-t border-[#333] pt-4">
-                        <div>
-                            <p class="font-mono text-[10px] text-gray-500 uppercase">Status</p>
-                            <p class="text-[#CCFF00] font-bold uppercase">Active</p>
-                        </div>
-                        <div>
-                            <p class="font-mono text-[10px] text-gray-500 uppercase">Category</p>
-                            <p class="text-white font-bold uppercase">Open</p>
+                        <div class="group">
+                            <label
+                                class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">TIEMPO
+                                OBJETIVO (10K)</label>
+                            <input type="text" name="target" placeholder="MM:SS" class="input-brutal">
                         </div>
                     </div>
+
+                    <!-- BOTÓN SUBMIT -->
+                    <button type="submit" class="btn-action mt-4 group">
+                        <span>GENERAR ID</span>
+                        <i data-lucide="cpu" class="w-5 h-5 group-hover:animate-spin"></i>
+                    </button>
+
+                    <p class="text-center font-mono text-[10px] text-gray-600 mt-4">
+                        Al iniciar, aceptas los riesgos de la gravedad.
+                    </p>
+                </form>
             </div>
 
-            <!-- STATS / ACTIONS -->
-            <div class="flex flex-col gap-4">
-                <div
-                    class="bg-[#CCFF00] text-black p-6 flex justify-between items-center cursor-pointer hover:bg-white transition-colors">
-                    <div>
-                        <h4 class="font-black uppercase text-xl">My Bib</h4>
-                        <p class="font-mono text-xs">Not assigned yet</p>
+            <!-- VISTA 2: LOGIN (AÑADIDA MANUALMENTE) -->
+            <div id="loginView" class="hidden w-full max-w-lg fade-in-up">
+
+                <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
+                    <button onclick="switchView('register')"
+                        class="text-gray-600 hover:text-white transition-colors pb-1">INICIAR PROTOCOLO</button>
+                    <button class="text-[#CCFF00] border-b-2 border-[#CCFF00] pb-1">INICIAR SESIÓN</button>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)" class="flex flex-col gap-6">
+
+                    <!-- EMAIL -->
+                    <div class="group">
+                        <label
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
+                            DE COMUNICACIÓN (EMAIL)</label>
+                        <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
-                    <i data-lucide="qr-code" class="w-8 h-8"></i>
-                </div>
 
-                <div class="bg-[#222] text-white p-6 border-l-4 border-[#CCFF00]">
-                    <h4 class="font-bold uppercase mb-2">Next Mission</h4>
-                    <p class="font-mono text-xs text-gray-400">Wait for the signal. Training plan loading...</p>
-                </div>
+                    <!-- CONTRASEÑA -->
+                    <div class="group">
+                        <label
+                            class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
+                            DE ACCESO</label>
+                        <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
+                    </div>
 
-                <button onclick="logout()"
-                    class="mt-auto w-full border border-[#333] text-gray-500 py-3 font-mono text-xs uppercase hover:text-white hover:border-white transition-colors">
-                    <Log>Out</Log> // Disconnect
-                </button>
+                    <!-- BOTÓN SUBMIT -->
+                    <button type="submit" class="btn-action mt-4 group">
+                        <span>ACCEDER AL SISTEMA</span>
+                        <i data-lucide="log-in" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
             </div>
+
+            <!-- VISTA 3: PERFIL DE USUARIO (Se muestra tras registrarse) -->
+            <div id="profileView" class="hidden w-full fade-in-up">
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+
+                    <!-- LEFT COL: DORSAL DIGITAL -->
+                    <div class="md:col-span-5">
+                        <div class="bib-container p-6 relative aspect-[3/4] flex flex-col justify-between">
+                            <!-- Agujeros del dorsal -->
+                            <div class="absolute top-4 left-4 w-3 h-3 bg-[#111] rounded-full"></div>
+                            <div class="absolute top-4 right-4 w-3 h-3 bg-[#111] rounded-full"></div>
+                            <div class="absolute bottom-4 left-4 w-3 h-3 bg-[#111] rounded-full"></div>
+                            <div class="absolute bottom-4 right-4 w-3 h-3 bg-[#111] rounded-full"></div>
+
+                            <div class="flex justify-between items-start border-b-2 border-black pb-4">
+                                <span class="font-black text-xl tracking-tighter">THE DROP</span>
+                                <i data-lucide="qr-code" class="w-10 h-10"></i>
+                            </div>
+
+                            <div class="flex-1 flex items-center justify-center">
+                                <span class="text-8xl font-black tracking-tighter" id="bibNumber">000</span>
+                            </div>
+
+                            <div class="border-t-2 border-black pt-2">
+                                <div class="font-black uppercase text-2xl truncate" id="bibName">RUNNER</div>
+                                <div class="flex justify-between font-mono text-xs mt-1 font-bold">
+                                    <span id="bibCategory">CAT: OPEN</span>
+                                    <span>ÁVILA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="downloadBib()"
+                            class="mt-4 w-full border border-[#333] text-[#CCFF00] font-mono text-xs py-3 uppercase hover:bg-[#333] transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-3 h-3"></i> GUARDAR EN WALLET
+                        </button>
+                        <button onclick="logout()"
+                            class="mt-2 w-full border border-red-900 text-red-500 font-mono text-xs py-3 uppercase hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="log-out" class="w-3 h-3"></i> DESCONECTAR
+                        </button>
+                    </div>
+
+                    <!-- RIGHT COL: STATS & DATA -->
+                    <div class="md:col-span-7 flex flex-col justify-center h-full">
+                        <div class="mb-8">
+                            <h3 class="text-[#CCFF00] font-mono text-xs uppercase mb-2">ESTADO DE REGISTRO</h3>
+                            <h2 class="text-3xl font-bold text-white uppercase flex items-center gap-3">
+                                <div class="w-3 h-3 bg-[#CCFF00] rounded-full animate-pulse"></div>
+                                CONFIRMADO
+                            </h2>
+                        </div>
+
+                        <div class="space-y-6 border-l border-[#333] pl-6">
+                            <div>
+                                <label class="font-mono text-[10px] text-gray-500 uppercase">EMAIL ASIGNADO</label>
+                                <div class="text-xl text-white font-mono" id="profileEmail">user@example.com</div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="font-mono text-[10px] text-gray-500 uppercase">RITMO OBJETIVO</label>
+                                    <div class="text-xl text-[#CCFF00] font-mono" id="profileTarget">--:--</div>
+                                </div>
+                                <div>
+                                    <label class="font-mono text-[10px] text-gray-500 uppercase">OLEADA DE
+                                        SALIDA</label>
+                                    <div class="text-xl text-white font-mono">WAVE 1 (ELITE)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 p-4 bg-[#111] border border-[#333] flex items-start gap-4">
+                            <i data-lucide="info" class="text-gray-500 mt-1"></i>
+                            <p class="font-mono text-xs text-gray-400 leading-relaxed">
+                                Tu perfil ha sido creado. Puedes editar tus datos usando el comando "Google AntiGravity"
+                                más adelante. Mantente a la espera para la asignación de dorsal definitiva.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-    </div>
-
     </div>
 
     <!-- Terminal Footer -->
@@ -1607,12 +1594,18 @@
         const profileEmail = document.getElementById('profileEmail');
         const profileTarget = document.getElementById('profileTarget');
 
+        // Initialize Icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
         // Toggle Open/Close Terminal
         window.toggleTerminal = () => {
             terminal.classList.toggle('open');
             // Bloquear scroll del body cuando está abierto
             if (terminal.classList.contains('open')) {
                 document.body.style.overflow = 'hidden';
+                if (typeof lucide !== 'undefined') lucide.createIcons();
             } else {
                 document.body.style.overflow = 'auto';
             }
@@ -1639,28 +1632,35 @@
         window.addEventListener('load', () => {
             const savedUser = localStorage.getItem('drop_user');
             if (savedUser) {
-                const user = JSON.parse(savedUser);
-                updateProfileView(user);
-                // If user is logged in, show profile view by default when terminal opens
-                switchView('profile');
+                try {
+                    const user = JSON.parse(savedUser);
+                    updateProfileView(user);
+                    // If user is logged in, show profile view by default when terminal opens
+                    switchView('profile');
+                } catch (e) {
+                    console.error("Error parsing saved user", e);
+                    localStorage.removeItem('drop_user');
+                }
             } else {
                 switchView('register'); // Default to register
             }
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         });
 
         function updateProfileView(user) {
             // Populate Profile Data
-            bibName.innerText = (user.firstName || user.name || 'RUNNER').split(' ')[0].toUpperCase();
+            const name = user.firstName || user.name || 'RUNNER';
+            bibName.innerText = name.split(' ')[0].toUpperCase();
+
             // Generate a consistent "Bib Number" based on name length or random if not present
-            // In a real app, this should come from the DB. For now, mock it or use a hash.
             bibNumber.innerText = user.bibNumber || Math.floor(Math.random() * 900) + 100;
 
             profileEmail.innerText = user.email;
             profileTarget.innerText = user.target || "--:--";
 
             const gender = user.gender || user.sex;
-            if (gender === 'F') bibCategory.innerText = "CAT: FEMALE";
-            else if (gender === 'M') bibCategory.innerText = "CAT: MALE";
+            if (gender === 'F') bibCategory.innerText = "CAT: MUJER";
+            else if (gender === 'M') bibCategory.innerText = "CAT: HOMBRE";
             else bibCategory.innerText = "CAT: OPEN";
         }
 
@@ -1671,15 +1671,13 @@
             const originalText = btn.innerHTML;
 
             // Loading State
-            btn.innerHTML = 'PROCESSING...';
+            btn.innerHTML = 'PROCESANDO...';
             btn.disabled = true;
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-            // Map 'name' to 'firstName' for backend compatibility if needed, or update backend
-            // The new form uses 'name', backend expects 'firstName'/'lastName' or just 'name'.
-            // Let's send 'name' as 'firstName' to keep it simple or update backend to use 'name'.
-            // Current backend register.js uses firstName, lastName. Let's split name.
+
+            // Split name for backend compatibility
             const nameParts = data.name.trim().split(' ');
             data.firstName = nameParts[0];
             data.lastName = nameParts.slice(1).join(' ') || '';
@@ -1699,14 +1697,15 @@
                     updateProfileView(result.user);
                     switchView('profile');
                 } else {
-                    alert(result.error || 'ACCESS DENIED');
+                    alert(result.error || 'ACCESO DENEGADO');
                 }
             } catch (error) {
                 console.error('Auth Error:', error);
-                alert('SYSTEM ERROR');
+                alert('ERROR DEL SISTEMA');
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+                if (typeof lucide !== 'undefined') lucide.createIcons();
             }
         };
 
@@ -1717,7 +1716,7 @@
             const originalText = btn.innerHTML;
 
             // Loading State
-            btn.innerHTML = 'PROCESSING...';
+            btn.innerHTML = 'PROCESANDO...';
             btn.disabled = true;
 
             const formData = new FormData(form);
@@ -1738,14 +1737,15 @@
                     updateProfileView(result.user);
                     switchView('profile');
                 } else {
-                    alert(result.error || 'ACCESS DENIED');
+                    alert(result.error || 'ACCESO DENEGADO');
                 }
             } catch (error) {
                 console.error('Auth Error:', error);
-                alert('SYSTEM ERROR');
+                alert('ERROR DEL SISTEMA');
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+                if (typeof lucide !== 'undefined') lucide.createIcons();
             }
         };
 
@@ -1758,7 +1758,7 @@
         };
 
         window.downloadBib = () => {
-            alert('Downloading Digital Asset... (Feature coming soon)');
+            alert('Descargando Activo Digital... (Próximamente)');
         };
 
 
