@@ -3008,10 +3008,16 @@
 
         // Iniciar temporizador al cargar
         window.addEventListener('load', () => {
-            // Solo mostrar si no se ha cerrado antes en esta sesión (opcional, por ahora siempre)
-            popupTimer = setTimeout(() => {
-                openPopup();
-            }, delayTime);
+            // Verificar si ya se mostró en esta sesión
+            const hasShown = sessionStorage.getItem('systemAlertShown');
+
+            if (!hasShown) {
+                popupTimer = setTimeout(() => {
+                    openPopup();
+                    // Marcar como mostrado para esta sesión
+                    sessionStorage.setItem('systemAlertShown', 'true');
+                }, delayTime);
+            }
         });
 
         function openPopup() {
