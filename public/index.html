@@ -1956,42 +1956,74 @@
             oracleText.innerText = "Analyzing biomechanics... Calculating gravity coefficient...";
             predictedTimeDisplay.innerText = "";
 
-            try {
-                const response = await fetch('/api/oracle', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ pb: pb })
-                });
+            // Static Calculation Logic (No API)
+            setTimeout(() => {
+                try {
+                    // 1. Parse Input (MM:SS or H:MM:SS)
+                    const parts = pb.split(':').map(Number);
+                    let totalSeconds = 0;
 
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Oracle Error');
-                }
-
-                predictedTimeDisplay.innerText = data.prediction;
-
-                oracleText.innerText = "";
-                let i = 0;
-                const advice = data.advice;
-                const typeWriter = () => {
-                    if (i < advice.length) {
-                        oracleText.innerText += advice.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, 30);
+                    if (parts.length === 2) {
+                        totalSeconds = parts[0] * 60 + parts[1];
+                    } else if (parts.length === 3) {
+                        totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+                    } else {
+                        // Fallback for simple number (minutes)
+                        totalSeconds = parseInt(pb) * 60;
                     }
-                };
-                typeWriter();
 
-            } catch (error) {
-                console.error("Oracle Error:", error);
-                // Fallback demo
-                predictedTimeDisplay.innerText = "38:45";
-                oracleText.innerText = "SYSTEM OVERLOAD. GRAVITY IS TOO STRONG. BUT YOU LOOK FAST.";
-            } finally {
-                generateBtn.innerHTML = '<span>Consult The Oracle</span><span>✨</span>';
-                generateBtn.disabled = false;
-            }
+                    if (isNaN(totalSeconds)) throw new Error("Invalid Format");
+
+                    // 2. Apply Formula (-42 seconds)
+                    let predictedSeconds = totalSeconds - 42;
+                    if (predictedSeconds < 0) predictedSeconds = 0;
+
+                    // 3. Format Output
+                    const h = Math.floor(predictedSeconds / 3600);
+                    const m = Math.floor((predictedSeconds % 3600) / 60);
+                    const s = predictedSeconds % 60;
+
+                    let predictionStr = "";
+                    if (h > 0) {
+                        predictionStr = `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                    } else {
+                        predictionStr = `${m}:${s.toString().padStart(2, '0')}`;
+                    }
+
+                    predictedTimeDisplay.innerText = predictionStr;
+
+                    // 4. Random Advice (Spanglish/Hypebeast Persona)
+                    const advices = [
+                        "Gravity is your best friend. Don't fight it, just flow. Tu PB es historia.",
+                        "Ese ritmo en llano es cute. Pero en The Drop vas a volar. Trust the process.",
+                        "Physics don't lie. 120m de desnivel te van a regalar alas. Full send.",
+                        "Olvida el reloj. Siente la gravedad. Your legs know what to do. Brutal pace incoming.",
+                        "No es magia, es física pura. Déjate caer y rompe esa barrera. It's time to shine.",
+                        "Run fast, look cool. La bajada hará el resto. See you at the bottom.",
+                        "Tu técnica + Gravedad = New PB. It's simple math. No lo pienses, solo corre."
+                    ];
+                    const randomAdvice = advices[Math.floor(Math.random() * advices.length)];
+
+                    oracleText.innerText = "";
+                    let i = 0;
+                    const typeWriter = () => {
+                        if (i < randomAdvice.length) {
+                            oracleText.innerText += randomAdvice.charAt(i);
+                            i++;
+                            setTimeout(typeWriter, 30);
+                        }
+                    };
+                    typeWriter();
+
+                } catch (error) {
+                    console.error("Calculation Error:", error);
+                    predictedTimeDisplay.innerText = "ERROR";
+                    oracleText.innerText = "INVALID TIME FORMAT. TRY 'MM:SS'.";
+                } finally {
+                    generateBtn.innerHTML = '<span>Consult The Oracle</span><span>✨</span>';
+                    generateBtn.disabled = false;
+                }
+            }, 2000); // 2 seconds delay to simulate "Processing"
         });
     </script>
 
