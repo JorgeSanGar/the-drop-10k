@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const compression = require('compression'); // <--- AÑADIR AL INICIO
 const cors = require('cors');
 const admin = require('firebase-admin');
 const brevo = require('@getbrevo/brevo');
@@ -8,6 +9,7 @@ const path = require('path');
 const app = express();
 
 // Middleware
+app.use(compression()); // <--- AÑADIR AQUÍ (Antes de cors y express.json)
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,6 +77,12 @@ app.post('/api/challenge', require('./api/challenge'));
 
 // ORACLE AI
 app.post('/api/oracle', require('./api/oracle'));
+
+// MANEJO DE ERROR 404 (Añadir justo antes del app.listen)
+// Esto asegura que cualquier ruta no definida arriba sirva el 404.html
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
 
 // ------------------------------------------------
 // 4. START SERVER

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /profile.html
+Disallow: /404.html
+Disallow: /400.html
+
+Sitemap: https://thedrop10k.com/sitemap.xml
