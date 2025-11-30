@@ -11,6 +11,9 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 
+// Trust Proxy (Required for Vercel/Heroku/etc to get real IP)
+app.set('trust proxy', 1);
+
 // Security Headers (Helmet)
 app.use(helmet({
     contentSecurityPolicy: false, // Disable CSP for now to avoid breaking external scripts (Tailwind, Lucide, Google Fonts)
