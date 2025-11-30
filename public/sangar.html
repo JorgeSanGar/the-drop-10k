@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANGAR x THE DROP | Control Total y Seguridad</title>
+    <meta name="description"
+        content="Neumáticos Sangar: El Checkpoint de Seguridad oficial de THE DROP 10K en Ávila. Especialistas en neumáticos, alineación y mecánica rápida. Tu seguridad es nuestra meta.">
+    <link rel="canonical" href="https://thedrop10k.com/sangar.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thedrop10k.com/sangar.html">
+    <meta property="og:title" content="SANGAR x THE DROP | Control Total">
+    <meta property="og:description"
+        content="La gravedad nos acelera. Nosotros la controlamos. Descubre el socio oficial de seguridad de THE DROP 10K.">
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            /* Fondo oscuro para esta página */
+            --color-text: #F2F2F2;
+            --color-accent: #CCFF00;
+            /* Verde DROP */
+            --color-safety: #FF4D00;
+            /* Naranja SANGAR/Seguridad */
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Grid de fondo técnico */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 77, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 77, 0, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* TEXTO GIGANTE */
+        .display-text {
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        /* ANIMACIÓN DE RUEDA (CANVAS) */
+        #tireCanvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.4;
+            mix-blend-mode: screen;
+        }
+
+        /* CARD DE SERVICIO */
+        .service-card {
+            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--color-safety);
+            background: rgba(255, 77, 0, 0.05);
+            transform: translateY(-5px);
+        }
+
+        /* BOTÓN DE SEGURIDAD */
+        .btn-safety {
+            background: var(--color-safety);
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn-safety:hover {
+            background: white;
+            color: var(--color-safety);
+            box-shadow: 0 0 30px rgba(255, 77, 0, 0.6);
+        }
+
+        /* EFECTO GLITCH EN TEXTO */
+        .glitch-safety {
+            position: relative;
+        }
+
+        .glitch-safety::before,
+        .glitch-safety::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-safety::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            animation: glitch-1 2s infinite linear alternate-reverse;
+            clip-path: inset(0 0 0 0);
+        }
+
+        .glitch-safety::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            animation: glitch-2 3s infinite linear alternate-reverse;
+            clip-path: inset(0 0 0 0);
+        }
+
+        @keyframes glitch-1 {
+            0% {
+                clip-path: inset(20% 0 80% 0);
+            }
+
+            100% {
+                clip-path: inset(80% 0 5% 0);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0% {
+                clip-path: inset(10% 0 60% 0);
+            }
+
+            100% {
+                clip-path: inset(30% 0 10% 0);
+            }
+        }
+
+        /* SCROLL BARRA LATERAL */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-safety);
+        }
+    </style>
+</head>
+
+<body class="relative">
+
+    <div class="tech-grid"></div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 mix-blend-difference text-white">
+        <div class="font-black text-xl tracking-tighter">NEUMÁTICOS SANGAR <span class="text-[#FF4D00]">///</span>
+            PATROCINADOR</div>
+        <a href="/" class="font-mono text-xs hover:text-[#FF4D00] transition-colors">[ UN CAMINO SEGURO ]</a>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <header class="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+
+            <!-- Rotating Tire Animation -->
+            <canvas id="tireCanvas"></canvas>
+
+            <div class="z-10 text-center relative px-4">
+                <div
+                    class="font-mono text-[#FF4D00] text-xs md:text-sm mb-4 tracking-[0.3em] md:tracking-[0.5em] uppercase">
+                    Socio Oficial de Seguridad</div>
+                <h1 class="display-text text-[15vw] md:text-[12vw] leading-none glitch-safety" data-text="CONTROL">
+                    CONTROL
+                </h1>
+                <h2 class="display-text text-[15vw] md:text-[12vw] leading-none text-transparent"
+                    style="-webkit-text-stroke: 1px white;">
+                    TOTAL
+                </h2>
+            </div>
+
+            <div
+                class="absolute bottom-10 left-0 w-full flex justify-between px-8 font-mono text-xs text-gray-500 uppercase">
+                <div>Coef. Fricción: <span class="text-white">1.05μ</span></div>
+                <div>Estado: <span class="text-[#FF4D00] animate-pulse">OPTIMIZADO</span></div>
+                <div>Ubic: Ávila</div>
+            </div>
+        </header>
+
+        <!-- MANIFESTO / MISSION -->
+        <section class="py-24 px-6 md:px-12 border-t border-[#333] bg-[#0a0a0a] relative z-20">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-black uppercase mb-8 leading-tight">
+                        La gravedad nos acelera.<br>
+                        <span class="text-[#FF4D00]">Nosotros la controlamos.</span>
+                    </h2>
+                    <p class="font-mono text-sm md:text-base text-gray-400 leading-relaxed mb-8 text-justify">
+                        En la carrera, la velocidad es tu aliada. En la carretera, es tu responsabilidad.
+                        <br><br>
+                        Neumáticos Sangar no es solo un taller. Es el <strong>Checkpoint de Seguridad</strong> oficial
+                        de Ávila.
+                        Te protegemos a ti y a tu familia asegurando que el único "Drop" que experimentes sea controlado
+                        y seguro.
+                    </p>
+
+                    <div class="flex gap-4">
+                        <div class="border border-[#333] p-4 flex-1">
+                            <div class="text-2xl font-bold text-white">100%</div>
+                            <div class="text-[10px] text-[#FF4D00] uppercase">Pensando en tu seguridad</div>
+                        </div>
+                        <div class="border border-[#333] p-4 flex-1">
+                            <div class="text-2xl font-bold text-white">+20</div>
+                            <div class="text-[10px] text-[#FF4D00] uppercase">Años de experiencia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Element (Abstract Rim) -->
+                <div class="relative h-[400px] border border-[#333] bg-[#111] p-8 flex items-center justify-center overflow-hidden group"
+                    role="img" aria-label="Taller Neumáticos Sangar">
+                    <div
+                        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1578844251758-2f71da645217?q=80&w=2071&auto=format&fit=crop')] bg-cover bg-center opacity-30 grayscale group-hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="relative z-10 border-2 border-[#FF4D00] p-8 text-center bg-black/80 backdrop-blur-sm">
+                        <div class="text-4xl font-black text-white mb-2">SANGAR</div>
+                        <div class="font-mono text-xs text-[#FF4D00]">EST. ÁVILA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES (THE PROTOCOLS) -->
+        <section class="py-24 px-6 md:px-12 border-t border-[#333]">
+            <div class="max-w-7xl mx-auto">
+                <div class="font-mono text-xs text-[#FF4D00] mb-8">[ PROTOCOLOS OPERATIVOS ]</div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Service 1 -->
+                    <article class="service-card p-8">
+                        <i data-lucide="disc" class="w-8 h-8 text-white mb-6"></i>
+                        <h3 class="text-xl font-bold uppercase mb-4">Cambio de Neumáticos</h3>
+                        <p class="font-mono text-xs text-gray-400">
+                            Instalación de compuestos de alto rendimiento. Michelin, Pirelli, Bridgestone.
+                            Tu único punto de contacto con la realidad.
+                        </p>
+                    </article>
+
+                    <!-- Service 2 -->
+                    <article class="service-card p-8">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-[#FF4D00] mb-6"></i>
+                        <h3 class="text-xl font-bold uppercase mb-4">Revisión de Seguridad</h3>
+                        <p class="font-mono text-xs text-gray-400">
+                            Diagnóstico completo de alineación y frenos.
+                            Porque la carga más valiosa no es conseguir PB, es tu familia.
+                        </p>
+                    </article>
+
+                    <!-- Service 3 -->
+                    <article class="service-card p-8">
+                        <i data-lucide="wrench" class="w-8 h-8 text-white mb-6"></i>
+                        <h3 class="text-xl font-bold uppercase mb-4">Pit Stop Express</h3>
+                        <p class="font-mono text-xs text-gray-400">
+                            Mantenimiento rápido y eficiente. No pierdas tiempo.
+                            Vuelve a la carretera (o a la carrera) ASAP.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- CTA FOOTER -->
+    <footer class="py-24 px-6 md:px-12 border-t border-[#333] bg-[#FF4D00] text-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-8xl font-black uppercase leading-none mb-8 tracking-tighter">
+                MEJORA<br>TU AGARRE
+            </h2>
+            <p class="font-mono text-sm md:text-lg mb-12 font-bold max-w-xl mx-auto">
+                Visita nuestro taller en Ávila y recuerda, Detrás de cada recuerdo hay un camino seguro.
+            </p>
+            <a href="https://www.neumaticossangar.es/" target="_blank" rel="noopener noreferrer"
+                class="inline-block bg-black text-white px-8 py-4 font-mono font-bold uppercase hover:bg-white hover:text-black transition-colors shadow-[8px_8px_0px_0px_white]">
+                Iniciar Ruta →
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 3D TIRE ANIMATION (CANVAS)
+        const canvas = document.getElementById('tireCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let angle = 0;
+
+        function drawTire() {
+            ctx.clearRect(0, 0, width, height);
+
+            const cx = width / 2;
+            const cy = height / 2;
+            const radius = Math.min(width, height) * 0.35;
+
+            ctx.save();
+            ctx.translate(cx, cy);
+
+            // Simular rotación 3D
+            ctx.scale(1, 0.4); // Aplanar para perspectiva
+            ctx.rotate(angle);
+
+            // Dibujar "tread" (huella)
+            ctx.lineWidth = 40;
+            ctx.strokeStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Dibujar detalles de la llanta (animados)
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#FF4D00'; // Safety Orange
+
+            for (let i = 0; i < 12; i++) {
+                ctx.beginPath();
+                const theta = (i / 12) * Math.PI * 2;
+                ctx.moveTo(Math.cos(theta) * (radius - 20), Math.sin(theta) * (radius - 20));
+                ctx.lineTo(Math.cos(theta) * (radius - 60), Math.sin(theta) * (radius - 60));
+                ctx.stroke();
+            }
+
+            ctx.restore();
+
+            angle += 0.01; // Velocidad de rotación
+            requestAnimationFrame(drawTire);
+        }
+
+        drawTire();
+    </script>
+</body>
+
+</html>
