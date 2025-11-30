@@ -1,5 +1,6 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
+const bcrypt = require('bcryptjs');
 
 // Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
@@ -54,8 +55,9 @@ module.exports = async (req, res) => {
         const userDoc = snapshot.docs[0];
         const userData = userDoc.data();
 
-        // Verify Password (Simple check for MVP)
-        if (userData.password !== password) {
+        // Verify Password (Hash check)
+        const isMatch = await bcrypt.compare(password, userData.password);
+        if (!isMatch) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 const brevo = require('@getbrevo/brevo');
+const bcrypt = require('bcryptjs');
 
 // Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
@@ -77,11 +78,14 @@ module.exports = async (req, res) => {
             return res.status(500).json({ error: 'Failed to assign unique BIB. Please try again.' });
         }
 
+        // Hash Password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         // Create User Document
-        // NOTE: In production, password should be hashed!
         const newUser = {
             email,
-            password, // Storing plain text as per MVP requirement "manage in the back"
+            password: hashedPassword, // Store Hashed Password
             firstName,
             lastName,
             gender: gender || 'Unknown',
