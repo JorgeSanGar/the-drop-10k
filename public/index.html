@@ -707,6 +707,237 @@
                 transform: translate(1px, -2px) rotate(-1deg);
             }
         }
+
+        /* --- ESTILOS DE LA SECCIÓN (DESCENT PROTOCOL v2.1) --- */
+        #route-v2 {
+            position: relative;
+            background: white;
+            /* Altura de 400vh para un scroll largo y suave */
+            height: 400vh;
+            z-index: 10;
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            /* Ocupa toda la pantalla */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* GRID DE FONDO ANIMADO (VELOCIDAD) */
+        .velocity-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            /* Perspectiva 3D sutil */
+            transform: perspective(500px) rotateX(20deg);
+            transform-origin: center 80%;
+        }
+
+        /* ELEMENTOS UI FLOTANTES (HUD) */
+        .hud-element {
+            position: absolute;
+            z-index: 20;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .hud-top-left {
+            top: 2rem;
+            left: 2rem;
+        }
+
+        .hud-top-right {
+            top: 2rem;
+            right: 2rem;
+            text-align: right;
+        }
+
+        .hud-bottom-left {
+            bottom: 2rem;
+            left: 2rem;
+        }
+
+        .hud-bottom-right {
+            bottom: 2rem;
+            right: 2rem;
+            text-align: right;
+        }
+
+        /* EL RECORRIDO SVG */
+        .svg-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* Línea base */
+        .path-line-bg {
+            stroke: #E5E5E5;
+            stroke-width: 4;
+            fill: none;
+        }
+
+        /* Línea de progreso activa */
+        .path-line-active {
+            stroke: #000;
+            stroke-width: 4;
+            fill: none;
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+            /* Se controla con JS */
+        }
+
+        /* El Corredor (Puck) */
+        .runner-puck {
+            fill: #CCFF00;
+            stroke: black;
+            stroke-width: 2;
+            filter: drop-shadow(0px 0px 10px rgba(204, 255, 0, 0.8));
+            r: 8;
+            transition: r 0.3s ease;
+        }
+
+        /* Efecto de velocidad en el corredor */
+        .runner-puck.moving {
+            r: 10;
+            stroke-width: 3;
+        }
+
+        /* Marcadores de Estaciones */
+        .station-marker {
+            fill: white;
+            stroke: black;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+
+        .station-marker.active {
+            fill: black;
+            r: 8;
+        }
+
+        /* Etiquetas de Estaciones */
+        .station-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            text-transform: uppercase;
+            fill: black;
+            opacity: 0.2;
+            /* Inactivo */
+            transition: all 0.5s ease;
+        }
+
+        .station-label.active {
+            opacity: 1;
+            font-size: 2.5rem;
+            /* Zoom effect */
+        }
+
+        .station-sub {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            fill: #666;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.2s;
+        }
+
+        .station-label.active+.station-sub {
+            opacity: 1;
+        }
+
+        /* GLITCH TEXT EFFECT para "EL ABISMO" */
+        .glitch-text {
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-skew {
+            0% {
+                transform: skew(0deg);
+            }
+
+            20% {
+                transform: skew(-2deg);
+            }
+
+            40% {
+                transform: skew(2deg);
+            }
+
+            60% {
+                transform: skew(-1deg);
+            }
+
+            80% {
+                transform: skew(1deg);
+            }
+
+            100% {
+                transform: skew(0deg);
+            }
+        }
+
+        /* RESPONSIVE: Ajustes para móvil */
+        @media (max-width: 768px) {
+            .station-label {
+                font-size: 1.5rem;
+            }
+
+            .station-label.active {
+                font-size: 1.8rem;
+            }
+
+            .hud-top-left,
+            .hud-top-right,
+            .hud-bottom-left,
+            .hud-bottom-right {
+                font-size: 0.6rem;
+                /* Texto más pequeño en HUD móvil */
+                padding: 4px;
+            }
+
+            .hud-top-left {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .hud-top-right {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .hud-bottom-left {
+                bottom: 1rem;
+                left: 1rem;
+            }
+
+            .hud-bottom-right {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -1127,49 +1358,77 @@
     </section>
 
     <!-- THE ROUTE -->
-    <section id="route" class="py-20 md:py-24 px-4 md:px-8 border-b border-black bg-white relative overflow-hidden">
-        <div
-            class="absolute top-4 right-4 font-mono text-xs uppercase border border-black px-2 py-1 rounded-full bg-white z-10">
-            Net Drop: -110m
-        </div>
+    <!-- THE ROUTE v2.1 -->
+    <section id="route-v2">
+        <div class="sticky-container">
 
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="font-mono text-xs text-gray-500 uppercase mb-8 md:mb-12">
-                [ 02 — The Descent Protocol ]
+            <!-- 1. Grid de Velocidad (Fondo) -->
+            <div class="velocity-grid"></div>
+
+            <!-- 3. HUD (Heads Up Display) - Datos Técnicos -->
+            <div class="hud-element hud-top-left">
+                [ PROTOCOL: DESCENT ]<br>
+                <span class="text-[#CCFF00] bg-black px-1">ACTIVE</span>
+            </div>
+            <div class="hud-element hud-top-right">
+                ALTITUDE<br>
+                <!-- Contador Dinámico -->
+                <span id="live-altitude" class="text-3xl md:text-5xl font-black tabular-nums">1160</span><span
+                    class="text-xs">m</span>
+            </div>
+            <div class="hud-element hud-bottom-left">
+                GRADIENT<br>
+                <span class="text-xl font-bold">-1.2% AVG</span>
+            </div>
+            <div class="hud-element hud-bottom-right">
+                DISTANCE<br>
+                <span id="live-dist" class="text-xl font-bold tabular-nums">0.0</span> km
             </div>
 
-            <!-- Abstract Graph -->
-            <div class="relative h-[50vh] md:h-[60vh] w-full flex items-center justify-center reveal-on-scroll">
-                <svg class="absolute w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
-                    <line x1="0" y1="20" x2="100" y2="80" stroke="black" stroke-width="0.5"
-                        vector-effect="non-scaling-stroke" />
-                    <circle r="2" fill="#CCFF00" stroke="black" stroke-width="0.5" class="gravity-accelerate">
-                        <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"
-                            calcMode="spline" keySplines="0.5 0 1 1; 0 0 1 1" keyTimes="0;0.8;1" />
-                    </circle>
-                    <circle cx="0" cy="20" r="2" fill="black" />
-                    <circle cx="50" cy="50" r="1.5" fill="#CCFF00" stroke="black" stroke-width="0.5" />
-                    <circle cx="100" cy="80" r="2" fill="black" />
+            <!-- 4. SVG INTERACTIVO -->
+            <div class="svg-container">
+                <svg id="routeSvg" preserveAspectRatio="xMidYMid meet">
+                    <!-- Definiciones de Filtros (Sombra Neón) -->
+                    <defs>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- La Ruta (Fondo) -->
+                    <path id="path-bg" class="path-line-bg" d="" />
+
+                    <!-- La Ruta (Progreso Activo) -->
+                    <path id="path-active" class="path-line-active" d="" />
+
+                    <!-- Estaciones (Texto) -->
+                    <!-- Start (Sin cambios) -->
+                    <text id="label-start" class="station-label" text-anchor="start" x="0" y="0">The Summit</text>
+                    <text id="sub-start" class="station-sub" text-anchor="start" x="0" y="20">1160 MASL // POLICE
+                        ACADEMY</text>
+                    <circle id="dot-start" class="station-marker" r="5" cx="0" cy="0" />
+
+                    <!-- Middle (CAMBIO: THE VOID -> EL ABISMO) -->
+                    <text id="label-mid" class="station-label" text-anchor="middle" x="0" y="0">EL ABISMO</text>
+                    <text id="sub-mid" class="station-sub" text-anchor="middle" x="0" y="20">SIN RETORNO // VELOCIDAD
+                        MAX</text>
+                    <circle id="dot-mid" class="station-marker" r="5" cx="0" cy="0" />
+
+                    <!-- End (Sin cambios) -->
+                    <text id="label-end" class="station-label" text-anchor="end" x="0" y="0">Ground Zero</text>
+                    <text id="sub-end" class="station-sub" text-anchor="end" x="0" y="20">1050 MASL // RIVER
+                        ADAJA</text>
+                    <circle id="dot-end" class="station-marker" r="5" cx="0" cy="0" />
+
+                    <!-- El Corredor (Puck) -->
+                    <circle id="runner" class="runner-puck" r="8" cx="0" cy="0" />
                 </svg>
-
-                <div class="absolute top-[10%] left-0 bg-white/80 p-2 backdrop-blur-sm rounded-sm max-w-[45%]">
-                    <h3 class="font-bold text-lg md:text-2xl uppercase leading-none">THE SUMMIT <del>(REDACTED)</del>
-                    </h3>
-                    <p class="font-mono text-[10px] md:text-xs text-gray-600">1.160 MASL</p>
-                </div>
-
-                <div
-                    class="absolute top-[45%] left-[50%] -translate-x-1/2 bg-white p-2 border border-black z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <h3 class="font-bold text-sm md:text-lg uppercase leading-none">THE VOID</h3>
-                    <p class="font-mono text-[9px] md:text-[10px]">No return</p>
-                </div>
-
-                <div
-                    class="absolute bottom-[10%] right-0 text-right bg-white/80 p-2 backdrop-blur-sm rounded-sm max-w-[45%]">
-                    <h3 class="font-bold text-lg md:text-2xl uppercase leading-none">GROUND ZERO</h3>
-                    <p class="font-mono text-[10px] md:text-xs text-gray-600">1.050 MASL</p>
-                </div>
             </div>
+
         </div>
     </section>
 
@@ -2350,6 +2609,175 @@
                 submitBtn.disabled = false;
             }
         });
+    </script>
+    <script>
+        // ==================================================
+        // LOGICA DE "THE DESCENT PROTOCOL" v2.1
+        // ==================================================
+
+        const section = document.getElementById('route-v2');
+        const svg = document.getElementById('routeSvg');
+        const pathBg = document.getElementById('path-bg');
+        const pathActive = document.getElementById('path-active');
+        const runner = document.getElementById('runner');
+
+        // Elementos de texto SVG
+        const labels = {
+            start: { main: document.getElementById('label-start'), sub: document.getElementById('sub-start'), dot: document.getElementById('dot-start') },
+            mid: { main: document.getElementById('label-mid'), sub: document.getElementById('sub-mid'), dot: document.getElementById('dot-mid') },
+            end: { main: document.getElementById('label-end'), sub: document.getElementById('sub-end'), dot: document.getElementById('dot-end') }
+        };
+
+        // Elementos HUD
+        const liveAltDisplay = document.getElementById('live-altitude');
+        const liveDistDisplay = document.getElementById('live-dist');
+
+        // Configuración de coordenadas (Responsive)
+        let pathPoints = { start: { x: 0, y: 0 }, mid: { x: 0, y: 0 }, end: { x: 0, y: 0 } };
+        let pathLength = 0;
+
+        // 1. DIBUJAR LA RUTA RESPONSIVE
+        function drawRoute() {
+            if (!svg) return; // Safety check
+            const w = svg.clientWidth;
+            const h = svg.clientHeight;
+
+            // Definir puntos basados en el tamaño de pantalla
+            const isMobile = w < 768;
+
+            // Padding aumentado para evitar cortes
+            const paddingX = isMobile ? 30 : 100;
+            const paddingY = isMobile ? 80 : 100; // Más margen vertical en móvil
+
+            pathPoints.start = { x: paddingX, y: paddingY };
+            pathPoints.end = { x: w - paddingX, y: h - paddingY };
+
+            // El punto medio "EL ABISMO"
+            pathPoints.mid = {
+                x: w * 0.5,
+                y: h * 0.5
+            };
+
+            // Construir el string del Path (SVG d)
+            const d = `M ${pathPoints.start.x} ${pathPoints.start.y} 
+                       L ${pathPoints.mid.x} ${pathPoints.mid.y} 
+                       L ${pathPoints.end.x} ${pathPoints.end.y}`;
+
+            pathBg.setAttribute('d', d);
+            pathActive.setAttribute('d', d);
+
+            // Calcular longitud total para la animación
+            pathLength = pathBg.getTotalLength();
+            pathActive.style.strokeDasharray = pathLength;
+            pathActive.style.strokeDashoffset = pathLength; // Empieza vacío
+
+            // Posicionar Textos Estáticos
+            positionLabel(labels.start, pathPoints.start, 'left');
+            positionLabel(labels.mid, pathPoints.mid, 'center');
+            positionLabel(labels.end, pathPoints.end, 'right');
+        }
+
+        function positionLabel(group, point, align) {
+            // Ajustar posición del punto
+            group.dot.setAttribute('cx', point.x);
+            group.dot.setAttribute('cy', point.y);
+
+            // Ajustar textos (Offset para no tapar la línea)
+            const textY = point.y - 25;
+            const subY = point.y + 30;
+
+            group.main.setAttribute('y', textY);
+            group.main.setAttribute('x', point.x);
+            group.sub.setAttribute('y', subY);
+            group.sub.setAttribute('x', point.x);
+
+            // Alineación SVG
+            let anchor = 'middle';
+            if (align === 'left') {
+                anchor = 'start';
+                // Ajuste extra si estamos muy al borde izquierdo
+                if (point.x < 50) group.main.setAttribute('x', point.x + 10);
+            }
+            if (align === 'right') {
+                anchor = 'end';
+                // Ajuste extra si estamos muy al borde derecho
+                if (point.x > (svg.clientWidth - 50)) group.main.setAttribute('x', point.x - 10);
+            }
+
+            group.main.setAttribute('text-anchor', anchor);
+            group.sub.setAttribute('text-anchor', anchor);
+        }
+
+        // 2. SCROLL LOOP (ANIMACIÓN)
+        function onScroll() {
+            if (!section) return;
+            // Calcular progreso dentro de la sección sticky
+            const rect = section.getBoundingClientRect();
+            const scrollDist = window.innerHeight; // La altura de la ventana
+            const sectionH = section.offsetHeight - scrollDist; // Cuánto se puede scrollear dentro
+
+            // Top de la sección relativo al viewport. 
+            // Cuando top es 0, empieza. Cuando top es -sectionH, termina.
+            let progress = -rect.top / sectionH;
+
+            // Clampear entre 0 y 1
+            progress = Math.max(0, Math.min(1, progress));
+
+            // A. Animar la línea (Stroke Dashoffset)
+            const drawLength = pathLength * progress;
+            pathActive.style.strokeDashoffset = pathLength - drawLength;
+
+            // B. Mover al Corredor (Puck)
+            const movePoint = pathBg.getPointAtLength(drawLength);
+            runner.setAttribute('cx', movePoint.x);
+            runner.setAttribute('cy', movePoint.y);
+
+            // Efecto visual al moverse
+            if (progress > 0 && progress < 1) runner.classList.add('moving');
+            else runner.classList.remove('moving');
+
+            // C. Actualizar Datos HUD
+            // Altitud: 1160 -> 1050
+            const currentAlt = Math.round(1160 - (progress * (1160 - 1050)));
+            liveAltDisplay.innerText = currentAlt;
+
+            // Distancia: 0.0 -> 10.0
+            const currentDist = (progress * 10).toFixed(1);
+            liveDistDisplay.innerText = currentDist;
+
+            // D. Activar Estaciones al pasar
+            // Start (0-10%)
+            toggleActive(labels.start, progress > 0 && progress < 0.2);
+            // Mid (40-60%)
+            toggleActive(labels.mid, progress > 0.4 && progress < 0.6);
+            if (progress > 0.4 && progress < 0.6) labels.mid.main.classList.add('glitch-text');
+            else labels.mid.main.classList.remove('glitch-text');
+            // End (90-100%)
+            toggleActive(labels.end, progress > 0.9);
+        }
+
+        function toggleActive(group, isActive) {
+            if (isActive) {
+                group.main.classList.add('active');
+                group.dot.classList.add('active');
+            } else {
+                group.main.classList.remove('active');
+                group.dot.classList.remove('active');
+            }
+        }
+
+        // INIT
+        window.addEventListener('resize', () => {
+            drawRoute();
+            onScroll(); // Recalcular posición inmediata
+        });
+        window.addEventListener('scroll', onScroll);
+
+        // Pequeño delay para asegurar que el SVG cargó dimensiones
+        setTimeout(() => {
+            drawRoute();
+            onScroll();
+        }, 100);
     </script>
 </body>
 
