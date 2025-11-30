@@ -3032,13 +3032,15 @@
 
         window.confirmAction = function () {
             closePopup();
-            // Redirigir al registro
-            switchView('register');
-            // Scroll suave al formulario si es necesario
-            const authSection = document.getElementById('auth-section');
-            if (authSection) {
-                authSection.scrollIntoView({ behavior: 'smooth' });
+
+            // 1. Abrir el Terminal de Acceso (Overlay)
+            const terminal = document.getElementById('accessTerminal');
+            if (terminal && !terminal.classList.contains('open')) {
+                toggleTerminal();
             }
+
+            // 2. Cambiar a la vista de Registro ("Iniciar Protocolo")
+            switchView('register');
         }
 
         // Escuchar fin de animación para efecto crítico
