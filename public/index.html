@@ -1974,8 +1974,58 @@
 
                     if (isNaN(totalSeconds)) throw new Error("Invalid Format");
 
-                    // 2. Apply Formula (-42 seconds)
-                    let predictedSeconds = totalSeconds - 42;
+                    // 2. Apply Formula (Interpolation based on Table)
+                    // Table Data: [Input Seconds, Output Seconds]
+                    const tableData = [
+                        [1500, 1440], // 25:00 -> 24:00
+                        [1650, 1585], // 27:30 -> 26:25
+                        [1800, 1725], // 30:00 -> 28:45
+                        [1950, 1870], // 32:30 -> 31:10
+                        [2100, 2010], // 35:00 -> 33:30
+                        [2250, 2155], // 37:30 -> 35:55
+                        [2400, 2300], // 40:00 -> 38:20
+                        [2550, 2445], // 42:30 -> 40:45
+                        [2700, 2590], // 45:00 -> 43:10
+                        [2850, 2740], // 47:30 -> 45:40
+                        [3000, 2880], // 50:00 -> 48:00
+                        [3150, 3030], // 52:30 -> 50:30
+                        [3300, 3175], // 55:00 -> 52:55
+                        [3450, 3325], // 57:30 -> 55:25
+                        [3600, 3470], // 60:00 -> 57:50
+                        [3900, 3765], // 65:00 -> 62:45
+                        [4200, 4060], // 70:00 -> 67:40
+                        [4500, 4350], // 75:00 -> 72:30
+                        [4800, 4650], // 80:00 -> 77:30
+                        [5100, 4940], // 85:00 -> 82:20
+                        [5400, 5235]  // 90:00 -> 87:15
+                    ];
+
+                    let predictedSeconds = totalSeconds;
+
+                    // Interpolation Logic
+                    if (totalSeconds <= tableData[0][0]) {
+                        // If faster than fastest table entry, apply same ratio/diff roughly
+                        const diff = tableData[0][0] - tableData[0][1];
+                        predictedSeconds = totalSeconds - diff;
+                    } else if (totalSeconds >= tableData[tableData.length - 1][0]) {
+                        // If slower than slowest table entry
+                        const diff = tableData[tableData.length - 1][0] - tableData[tableData.length - 1][1];
+                        predictedSeconds = totalSeconds - diff;
+                    } else {
+                        // Find range
+                        for (let i = 0; i < tableData.length - 1; i++) {
+                            const [t1, p1] = tableData[i];
+                            const [t2, p2] = tableData[i + 1];
+                            if (totalSeconds >= t1 && totalSeconds <= t2) {
+                                // Linear Interpolation
+                                const ratio = (totalSeconds - t1) / (t2 - t1);
+                                predictedSeconds = p1 + ratio * (p2 - p1);
+                                break;
+                            }
+                        }
+                    }
+
+                    predictedSeconds = Math.round(predictedSeconds);
                     if (predictedSeconds < 0) predictedSeconds = 0;
 
                     // 3. Format Output
