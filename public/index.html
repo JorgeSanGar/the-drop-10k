@@ -1693,9 +1693,9 @@
                 <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
                         <!-- FIXED RESPONSIVENESS FOR TITLE -->
-                        <h3 class="text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-none mb-4 break-words">
+                        <h2 class="text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-none mb-4 break-words">
                             Don't Sleep.<br>Get Notified.
-                        </h3>
+                        </h2>
                         <p class="font-mono text-xs md:text-sm border-l-2 border-black pl-4 mb-4 md:mb-0">
                             Únete a la lista de prioridad. Recibirás el enlace una hora antes del lanzamiento público.
                         </p>
@@ -1704,10 +1704,12 @@
                     <form id="waitlistForm" class="flex flex-col gap-4">
                         <!-- ROW 1: NAME + SEX -->
                         <div class="flex flex-col sm:flex-row gap-4 w-full">
-                            <input type="text" name="NOMBRE" placeholder="NAME / AKA" required
+                            <label for="nameInput" class="sr-only">Nombre</label>
+                            <input id="nameInput" type="text" name="NOMBRE" placeholder="NAME / AKA" required
                                 class="w-full sm:w-[70%] bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all placeholder-gray-400">
 
-                            <select name="SEXO" required
+                            <label for="sexInput" class="sr-only">Sexo</label>
+                            <select id="sexInput" name="SEXO" required
                                 class="w-full sm:w-[30%] bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all text-gray-400 invalid:text-gray-400 focus:text-black rounded-none"
                                 onchange="this.classList.remove('text-gray-400'); this.classList.add('text-black')">
                                 <option value="" disabled selected>SEX</option>
@@ -1718,6 +1720,7 @@
                         </div>
 
                         <!-- ROW 2: EMAIL -->
+                        <label for="emailInput" class="sr-only">Email</label>
                         <input id="emailInput" type="email" name="EMAIL" placeholder="YOUR@EMAIL.COM" required
                             class="w-full bg-white border-2 border-black p-4 font-mono text-base md:text-lg uppercase outline-none focus:translate-x-1 focus:translate-y-1 focus:shadow-none shadow-[4px_4px_0px_0px_#000] transition-all placeholder-gray-400">
 
