@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny read/write access to all users by default
+    // Since we are using the Admin SDK on the server, we don't need client-side access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

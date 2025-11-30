@@ -6,10 +6,30 @@ const admin = require('firebase-admin');
 const brevo = require('@getbrevo/brevo');
 const path = require('path');
 
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
 const app = express();
 
+// Security Headers (Helmet)
+app.use(helmet({
+    contentSecurityPolicy: false, // Disable CSP for now to avoid breaking external scripts (Tailwind, Lucide, Google Fonts)
+}));
+
+// Rate Limiting (Global or specific to API)
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 100, // Limit each IP to 100 requests per windowMs
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    message: 'Too many requests from this IP, please try again after a minute.'
+});
+
+// Apply rate limiting to all requests (or just API if preferred)
+app.use(limiter);
+
 // Middleware
-app.use(compression()); // <--- AÑADIR AQUÍ (Antes de cors y express.json)
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
