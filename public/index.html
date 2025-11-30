@@ -954,6 +954,148 @@
                 right: 1rem;
             }
         }
+
+        /* --- SYSTEM ALERT POPUP STYLES --- */
+        #system-alert-popup {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            /* Centro en PC */
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        /* Estado Activo */
+        #system-alert-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Fondo desenfocado */
+        .popup-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+        }
+
+        .popup-card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 500px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            color: #F2F2F2;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        #system-alert-popup.active .popup-card {
+            transform: scale(1) translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            #system-alert-popup {
+                align-items: flex-end;
+                /* Abajo en móvil */
+            }
+
+            .popup-card {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 16px 16px 0 0;
+                margin-bottom: 0;
+                transform: translateY(100%);
+            }
+
+            #system-alert-popup.active .popup-card {
+                transform: translateY(0);
+            }
+        }
+
+        .purge-bar-container {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            position: relative;
+        }
+
+        .purge-bar {
+            height: 100%;
+            background: #CCFF00;
+            width: 100%;
+            /* Animation controlled by JS */
+        }
+
+        .purge-bar.critical {
+            background: #FF3333;
+            animation: flash 0.5s infinite;
+        }
+
+        @keyframes purge {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: 0%;
+            }
+        }
+
+        @keyframes flash {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .card-noise {
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            pointer-events: none;
+        }
+
+        /* Botón Glitch */
+        .btn-glitch {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .btn-glitch:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0 #CCFF00;
+        }
+
+        .btn-glitch::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-glitch:hover::after {
+            left: 100%;
+        }
     </style>
 </head>
 
@@ -2011,6 +2153,68 @@
         </div>
     </div>
 
+    <!-- SYSTEM ALERT POPUP (NEW) -->
+    <div id="system-alert-popup">
+        <div class="popup-backdrop" onclick="closePopup()"></div>
+
+        <div class="popup-card">
+            <div class="card-noise"></div>
+
+            <!-- Barra de Estado / Purga -->
+            <div class="purge-bar-container">
+                <div class="purge-bar" id="purgeBar"></div>
+            </div>
+
+            <div class="p-6 md:p-10 relative z-10">
+                <!-- Cabecera Técnica -->
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex items-center gap-2 text-[#CCFF00]">
+                        <i data-lucide="scan-face" class="w-5 h-5 animate-pulse"></i>
+                        <span class="font-mono text-[10px] md:text-xs tracking-widest uppercase">
+                            ID: UNKNOWN_USER
+                        </span>
+                    </div>
+                    <button onclick="closePopup()" class="text-gray-500 hover:text-white transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Titular Impactante -->
+                <h2 class="text-3xl md:text-5xl font-black uppercase leading-none mb-4 text-white">
+                    YOU ARE<br>
+                    <span class="text-transparent" style="-webkit-text-stroke: 1px #CCFF00;">INVISIBLE.</span>
+                </h2>
+
+                <!-- Texto Persuasivo -->
+                <p
+                    class="font-mono text-xs md:text-sm text-gray-400 mb-8 border-l-2 border-[#333] pl-4 leading-relaxed">
+                    El sistema no detecta tu registro.
+                    <strong class="text-white">Los corredores no listados se quedarán en la salida.</strong>
+                    <br><br>
+                    Asegura tu plaza antes de que el protocolo de admisión se cierre.
+                </p>
+
+                <!-- Call To Action -->
+                <div class="flex flex-col gap-3">
+                    <button onclick="confirmAction()"
+                        class="btn-glitch w-full bg-[#CCFF00] text-black font-black uppercase py-4 text-lg flex justify-between items-center px-6">
+                        <span>ASEGURAR MI PLAZA</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+
+                    <button onclick="closePopup()"
+                        class="w-full text-center font-mono text-[10px] text-gray-600 uppercase hover:text-gray-400 transition-colors">
+                        I prefer to stay slow
+                    </button>
+                </div>
+            </div>
+
+            <div class="absolute bottom-2 right-3 font-mono text-[9px] text-[#333]">
+                SYS_ERR_401
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -2791,6 +2995,57 @@
                 group.main.classList.remove('active');
                 group.dot.classList.remove('active');
             }
+        }
+
+        // --- SYSTEM ALERT POPUP LOGIC ---
+        const popup = document.getElementById('system-alert-popup');
+        const purgeBar = document.getElementById('purgeBar');
+        let popupTimer;
+
+        // Detectar dispositivo y configurar tiempo
+        const isMobile = window.innerWidth <= 768;
+        const delayTime = isMobile ? 13000 : 6000; // 13s móvil, 6s desktop
+
+        // Iniciar temporizador al cargar
+        window.addEventListener('load', () => {
+            // Solo mostrar si no se ha cerrado antes en esta sesión (opcional, por ahora siempre)
+            popupTimer = setTimeout(() => {
+                openPopup();
+            }, delayTime);
+        });
+
+        function openPopup() {
+            if (!popup) return;
+            popup.classList.add('active');
+            // Reiniciar animación de la barra
+            if (purgeBar) {
+                purgeBar.style.animation = 'none';
+                purgeBar.offsetHeight; /* trigger reflow */
+                purgeBar.style.animation = 'purge 10s linear forwards';
+            }
+        }
+
+        window.closePopup = function () {
+            if (!popup) return;
+            popup.classList.remove('active');
+        }
+
+        window.confirmAction = function () {
+            closePopup();
+            // Redirigir al registro
+            switchView('register');
+            // Scroll suave al formulario si es necesario
+            const authSection = document.getElementById('auth-section');
+            if (authSection) {
+                authSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Escuchar fin de animación para efecto crítico
+        if (purgeBar) {
+            purgeBar.addEventListener('animationend', () => {
+                purgeBar.classList.add('critical');
+            });
         }
 
         // INIT
