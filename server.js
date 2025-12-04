@@ -47,6 +47,11 @@ app.get('/registro', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registro.html'));
 });
 
+// Route for the legal page
+app.get('/legal', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'legal.html'));
+});
+
 // ------------------------------------------------
 // 1. FIREBASE SETUP
 // ------------------------------------------------
