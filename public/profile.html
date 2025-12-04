@@ -557,16 +557,25 @@
       };
 
       try {
-        // SIMULACIÓN DE API (Reemplazar con tu fetch real)
-        // const response = await fetch(...)
-        console.log("Guardando datos...", updatedData);
-        await new Promise(r => setTimeout(r, 1000)); // Simula espera
+        const response = await fetch('/api/update-profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData)
+        });
 
-        // Simulación de éxito
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Error al actualizar perfil');
+        }
+
+        // Éxito: Actualizar local storage con los datos devueltos (o los enviados)
         const mergedUser = { ...currentUser, ...updatedData };
         localStorage.setItem('drop_user', JSON.stringify(mergedUser));
         currentUser = mergedUser;
-        updateUI(currentUser); // Asegura que la UI refleje lo guardado
+        updateUI(currentUser);
 
         els.saveStatus.innerText = "SAVED";
         setTimeout(() => {
