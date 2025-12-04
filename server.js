@@ -42,6 +42,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Route for the new registration landing page
+app.get('/registro', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'registro.html'));
+});
+
 // ------------------------------------------------
 // 1. FIREBASE SETUP
 // ------------------------------------------------

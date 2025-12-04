@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>REGISTRO - THE DROP 10K</title>
+    <meta name="description"
+        content="Apúntate a la lista prioritaria para la carrera de 10K más rápida de tu vida. Desnivel negativo en Ávila.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --color-bg: #F2F2F2;
+            --color-text: #111111;
+            --color-accent: #CCFF00;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Utility Classes */
+        .btn-hype {
+            transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .btn-hype:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #111;
+            background-color: #fff;
+            color: black;
+        }
+
+        .btn-hype:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        /* Glitch Text Small */
+        .glitch-text:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--color-accent);
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        /* Progress Bar Animation */
+        .progress-fill {
+            width: 0%;
+            animation: fillBar 2s ease-out forwards;
+        }
+
+        @keyframes fillBar {
+            to {
+                width: 84%;
+            }
+
+            /* Porcentaje fake de ocupación */
+        }
+
+        /* Wind Canvas Background */
+        #windCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="noise-overlay"></div>
+
+    <!-- HEADER MINIMALISTA (Solo Logo) -->
+    <header class="fixed top-0 w-full z-50 py-6 flex justify-center pointer-events-none">
+        <div
+            class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 pointer-events-auto shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+            <span class="font-black tracking-tighter text-xl italic transform -skew-x-12 inline-block">THE DROP
+                10K™</span>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO (VALUE PROPOSITION) -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-12 px-4 overflow-hidden">
+
+        <!-- Canvas Background (Velocidad) -->
+        <canvas id="windCanvas"></canvas>
+
+        <div class="relative z-10 max-w-3xl w-full mx-auto text-center">
+
+            <!-- Micro Tag -->
+            <div
+                class="inline-flex items-center gap-2 border border-black bg-[#CCFF00] px-3 py-1 mb-6 rotate-1 shadow-[2px_2px_0px_black]">
+                <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+                <span class="font-mono text-xs font-bold uppercase">Lista Prioritaria Abierta</span>
+            </div>
+
+            <!-- H1: Beneficio Directo -->
+            <h1 class="text-4xl md:text-7xl font-black uppercase leading-[0.9] mb-6 tracking-tighter">
+                Tu 10K<br>
+                <span class="text-transparent" style="-webkit-text-stroke: 1px black;">Más Rápido.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p
+                class="font-mono text-sm md:text-lg text-gray-700 mb-8 max-w-xl mx-auto bg-white/50 p-2 backdrop-blur-sm">
+                10 kilómetros. <strong>110 metros de desnivel negativo</strong> por las calles de Ávila.
+                La carrera diseñada científicamente para destrozar tu Marca Personal.
+            </p>
+
+            <!-- FORMULARIO PRINCIPAL (Above the fold) -->
+            <div
+                class="bg-white border-2 border-black p-6 md:p-8 shadow-[8px_8px_0px_black] max-w-lg mx-auto relative group">
+
+                <!-- Elemento decorativo "Corner" -->
+                <div class="absolute -top-2 -right-2 w-4 h-4 bg-black"></div>
+                <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-[#CCFF00] border border-black"></div>
+
+                <h3 class="font-black text-xl uppercase mb-4 text-left flex items-center gap-2">
+                    <i data-lucide="ticket" class="w-5 h-5"></i>
+                    Asegura tu plaza
+                </h3>
+
+                <form id="signup-form-hero" onsubmit="event.preventDefault(); handleSignup();"
+                    class="flex flex-col gap-3">
+                    <!-- NUEVO CAMPO: NOMBRE -->
+                    <div class="text-left">
+                        <label class="font-mono text-[10px] uppercase font-bold mb-1 block">Nombre</label>
+                        <input type="text" id="nameHero" placeholder="TU NOMBRE"
+                            class="w-full bg-[#F2F2F2] border-2 border-black p-3 font-mono text-sm focus:bg-[#CCFF00] outline-none transition-colors placeholder-gray-400">
+                    </div>
+
+                    <div class="text-left">
+                        <label class="font-mono text-[10px] uppercase font-bold mb-1 block">Email (Obligatorio)</label>
+                        <input type="email" id="emailHero" required placeholder="CORREDOR@EMAIL.COM"
+                            class="w-full bg-[#F2F2F2] border-2 border-black p-3 font-mono text-sm focus:bg-[#CCFF00] outline-none transition-colors placeholder-gray-400">
+                    </div>
+
+                    <!-- Checkbox Opcional (Lead Qualification) -->
+                    <div class="flex items-center gap-2 text-left py-1">
+                        <input type="checkbox" id="pbCheck"
+                            class="w-4 h-4 accent-black border-2 border-black cursor-pointer">
+                        <label for="pbCheck"
+                            class="font-mono text-[10px] text-gray-600 cursor-pointer select-none">Quiero batir mi MMP
+                            (Marca Personal)</label>
+                    </div>
+
+                    <button type="submit"
+                        class="btn-hype w-full bg-black text-[#CCFF00] font-black uppercase py-4 text-lg flex justify-between items-center px-4 mt-2">
+                        <span>ENTRAR EN LA WAITLIST</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </form>
+
+                <!-- Micro-copy Anti-Spam -->
+                <p class="font-mono text-[9px] text-gray-400 mt-4 text-center uppercase">
+                    Sin Spam. Solo acceso prioritario cuando se abran inscripciones.
+                </p>
+            </div>
+
+            <!-- Social Proof (Contador Fake-Real) -->
+            <div class="mt-8 flex justify-center items-center gap-4 font-mono text-xs">
+                <div class="flex -space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
+                    <div class="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-gray-500 border-2 border-white flex items-center justify-center text-[8px] font-bold">
+                        +1K</div>
+                </div>
+                <p class="opacity-60">Corredores esperando el Drop.</p>
+            </div>
+
+        </div>
+
+        <!-- Flecha "Scroll" -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+            <i data-lucide="arrow-down" class="w-6 h-6"></i>
+        </div>
+    </section>
+
+    <!-- SECTION 2: BENEFIT BULLETS -->
+    <section class="py-16 px-4 bg-white border-y border-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-black uppercase mb-12 text-center">¿Por qué esta carrera?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="border border-black p-6 hover:bg-[#F2F2F2] transition-colors group">
+                    <i data-lucide="trending-down"
+                        class="w-8 h-8 mb-4 text-black group-hover:text-[#CCFF00] transition-colors"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Gravedad a favor</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        -110m de desnivel negativo neto. La física hace el trabajo duro. Tú solo tienes que dejarte
+                        llevar.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="border border-black p-6 hover:bg-[#F2F2F2] transition-colors group">
+                    <i data-lucide="castle"
+                        class="w-8 h-8 mb-4 text-black group-hover:text-[#CCFF00] transition-colors"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Escenario Épico</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        Salida en la zona alta, paso por la Muralla de Ávila y meta en el río. Turismo a ritmo de
+                        récord.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="border border-black p-6 hover:bg-[#F2F2F2] transition-colors group">
+                    <i data-lucide="lock"
+                        class="w-8 h-8 mb-4 text-black group-hover:text-[#CCFF00] transition-colors"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Edición Limitada</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        Plazas muy reducidas por seguridad. La lista prioritaria entra primero. El resto espera.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: KEY DETAILS -->
+    <section class="py-16 px-4 bg-[#CCFF00] border-b border-black">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="font-mono text-xs border border-black inline-block px-2 py-1 mb-4 bg-white uppercase">
+                    [ Datos Clasificados ]
+                </div>
+                <h2 class="text-4xl font-black uppercase mb-6 leading-none">
+                    Detalles<br>Operativos
+                </h2>
+
+                <ul class="space-y-4 font-mono text-sm">
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="calendar" class="w-5 h-5 shrink-0"></i>
+                        <div>
+                            <span class="font-bold block">FECHA</span>
+                            <span>***** 2026 (Pendiente de confirmación oficial)</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="map-pin" class="w-5 h-5 shrink-0"></i>
+                        <div>
+                            <span class="font-bold block">RUTA</span>
+                            <span>Zona Alta -> HFndTRvOhe</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="shield-check" class="w-5 h-5 shrink-0"></i>
+                        <div>
+                            <span class="font-bold block">SPONSOR TÉCNICO</span>
+                            <span>Neumáticos Sangar (Grip Partner)</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- INFO CARD -->
+            <div class="bg-black text-white p-8 shadow-[10px_10px_0px_white] relative">
+                <div class="text-center">
+                    <div class="text-6xl font-black mb-2">10K</div>
+                    <div class="font-mono text-xs uppercase text-gray-400 mb-6">Distancia Homologada</div>
+                    <div class="w-full h-px bg-gray-800 mb-6"></div>
+                    <div class="text-4xl font-black mb-2 text-[#CCFF00]">-110m</div>
+                    <div class="font-mono text-xs uppercase text-gray-400">Desnivel Negativo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: FINAL CTA & SCARCITY -->
+    <section class="py-24 px-4 text-center">
+        <div class="max-w-xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black uppercase mb-6">
+                Las bajadas no esperan.
+            </h2>
+            <p class="font-mono text-sm mb-8">
+                El cupo de la lista prioritaria está al <span class="font-bold bg-[#CCFF00] px-1">84% de
+                    capacidad</span>.
+            </p>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-4 bg-gray-300 border border-black mb-8 relative overflow-hidden">
+                <div class="h-full bg-black progress-fill"></div>
+                <!-- Scanlines overlay -->
+                <div
+                    class="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(255,255,255,0.2)_50%)] bg-[length:100%_4px]">
+                </div>
+            </div>
+
+            <button
+                onclick="window.scrollTo({top: 0, behavior: 'smooth'}); document.getElementById('emailHero').focus();"
+                class="btn-hype inline-flex bg-black text-white font-black uppercase py-4 px-8 text-lg items-center gap-3">
+                <span>RESERVAR MI SITIO AHORA</span>
+                <i data-lucide="zap" class="w-5 h-5 fill-[#CCFF00] text-[#CCFF00]"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- FOOTER SIMPLE -->
+    <footer class="py-8 text-center font-mono text-[10px] uppercase text-gray-400 border-t border-gray-300">
+        <p>© 2025 THE DROP10K. ÁVILA.</p>
+        <div class="mt-2 space-x-4">
+            <a href="#" class="hover:text-black">Privacidad</a>
+            <a href="#" class="hover:text-black">Términos</a>
+            <a href="#" class="hover:text-black">Sangar</a>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP -->
+    <div id="modal-overlay"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div id="modal-content"
+            class="bg-white border-2 border-black p-8 max-w-md w-full mx-4 shadow-[8px_8px_0px_black] transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeModal()" class="absolute top-2 right-2 p-1 hover:bg-gray-100">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div id="modal-icon" class="mb-4">
+                <!-- Icon injected via JS -->
+            </div>
+
+            <h3 id="modal-title" class="font-black text-2xl uppercase mb-2">TITULO</h3>
+            <p id="modal-message" class="font-mono text-sm text-gray-600 mb-6">Mensaje del modal.</p>
+
+            <button onclick="closeModal()"
+                class="btn-hype w-full bg-black text-[#CCFF00] font-black uppercase py-3 text-lg">
+                ENTENDIDO
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // SCRIPT DE VIENTO (Reutilizado para coherencia pero simplificado)
+        const canvas = document.getElementById('windCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let windLines = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class WindLine {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width + width;
+                this.y = Math.random() * height;
+                this.speed = Math.random() * 10 + 5;
+                this.len = Math.random() * 80 + 40;
+            }
+            update() {
+                this.x -= this.speed;
+                if (this.x < -this.len) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                let grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y);
+                grad.addColorStop(0, "rgba(0,0,0,0.1)");
+                grad.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + this.len, this.y);
+                ctx.stroke();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) windLines.push(new WindLine());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            windLines.forEach(l => { l.update(); l.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // MODAL LOGIC
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalIcon = document.getElementById('modal-icon');
+
+        function showModal(type, title, message) {
+            modalOverlay.classList.remove('hidden');
+            // Force reflow
+            void modalOverlay.offsetWidth;
+            modalOverlay.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+
+            if (type === 'success') {
+                modalIcon.innerHTML = `<div class="w-12 h-12 bg-[#CCFF00] border-2 border-black flex items-center justify-center rounded-full"><i data-lucide="check" class="w-8 h-8 text-black"></i></div>`;
+            } else if (type === 'error') {
+                modalIcon.innerHTML = `<div class="w-12 h-12 bg-red-500 border-2 border-black flex items-center justify-center rounded-full"><i data-lucide="alert-triangle" class="w-8 h-8 text-white"></i></div>`;
+            } else {
+                modalIcon.innerHTML = `<div class="w-12 h-12 bg-gray-200 border-2 border-black flex items-center justify-center rounded-full"><i data-lucide="info" class="w-8 h-8 text-black"></i></div>`;
+            }
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modalOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // FORM HANDLE
+        async function handleSignup() {
+            const btn = document.querySelector('#signup-form-hero button');
+            const nameInput = document.getElementById('nameHero');
+            const emailInput = document.getElementById('emailHero');
+            const pbCheck = document.getElementById('pbCheck');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showModal('error', 'Falta el Email', 'Por favor, introduce tu email para continuar.');
+                return;
+            }
+
+            // Estado Loading
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = "PROCESANDO...";
+            btn.classList.remove('bg-black', 'text-[#CCFF00]');
+            btn.classList.add('bg-gray-200', 'text-gray-500');
+
+            try {
+                const response = await fetch('/api/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        sex: 'Unknown', // Default as not in form
+                        mmpGoal: pbCheck ? pbCheck.checked : false
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 201) {
+                    // Success
+                    showModal('success', '¡ESTÁS DENTRO!', 'Te hemos añadido a la lista prioritaria. Revisa tu email.');
+                    btn.innerHTML = "LISTA CONFIRMADA ✓";
+                    btn.classList.remove('bg-gray-200', 'text-gray-500');
+                    btn.classList.add('bg-[#CCFF00]', 'text-black');
+
+                    // Reset form
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    if (pbCheck) pbCheck.checked = false;
+
+                } else if (response.status === 409) {
+                    // Duplicate
+                    showModal('info', 'YA ESTÁS DENTRO', 'Este email ya está registrado en nuestra base de datos. No te preocupes, tu plaza está asegurada.');
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.classList.add('bg-black', 'text-[#CCFF00]');
+                    btn.classList.remove('bg-gray-200', 'text-gray-500');
+                } else {
+                    // Other error
+                    throw new Error(data.error || 'Error desconocido');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showModal('error', 'ERROR TÉCNICO', 'Ha ocurrido un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.');
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                btn.classList.add('bg-black', 'text-[#CCFF00]');
+                btn.classList.remove('bg-gray-200', 'text-gray-500');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { email, name, sex } = req.body;
+    const { email, name, sex, mmpGoal } = req.body;
 
     if (!email) {
         return res.status(400).json({ error: 'Email is required' });
@@ -56,6 +56,7 @@ module.exports = async (req, res) => {
             email,
             name: name || 'Unknown',
             sex: sex || 'Unknown',
+            mmpGoal: mmpGoal || false,
             date: new Date(),
             ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
         });
