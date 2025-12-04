@@ -45,10 +45,17 @@ module.exports = async (req, res) => {
     try {
         const waitlistRef = db.collection('waitlist');
 
-        // Check for duplicate
+        // Check for duplicate in Waitlist
         const snapshot = await waitlistRef.where('email', '==', email).get();
         if (!snapshot.empty) {
             return res.status(409).json({ error: 'Email already registered' });
+        }
+
+        // Check for duplicate in Users (Registered Users)
+        const usersRef = db.collection('users');
+        const userSnapshot = await usersRef.where('email', '==', email).get();
+        if (!userSnapshot.empty) {
+            return res.status(409).json({ error: 'Email already registered as User', isUser: true });
         }
 
         // Save to Firestore

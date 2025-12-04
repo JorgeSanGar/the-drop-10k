@@ -126,11 +126,13 @@
 
     <!-- HEADER MINIMALISTA (Solo Logo) -->
     <header class="fixed top-0 w-full z-50 py-6 flex justify-center pointer-events-none">
-        <div
-            class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 pointer-events-auto shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
-            <span class="font-black tracking-tighter text-xl italic transform -skew-x-12 inline-block">THE DROP
-                10K™</span>
-        </div>
+        <a href="/" class="pointer-events-auto">
+            <div
+                class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:scale-105 transition-transform">
+                <span class="font-black tracking-tighter text-xl italic transform -skew-x-12 inline-block">THE DROP
+                    10K™</span>
+            </div>
+        </a>
     </header>
 
     <!-- SECTION 1: HERO (VALUE PROPOSITION) -->
@@ -522,7 +524,12 @@
 
                 } else if (response.status === 409) {
                     // Duplicate
-                    showModal('info', 'YA ESTÁS DENTRO', 'Este email ya está registrado en nuestra base de datos. No te preocupes, tu plaza está asegurada.');
+                    if (data.isUser) {
+                        showModal('info', 'YA ERES CORREDOR', 'Este email ya está registrado como usuario oficial. No necesitas apuntarte a la waitlist.');
+                    } else {
+                        showModal('info', 'YA ESTÁS DENTRO', 'Este email ya está registrado en nuestra base de datos. No te preocupes, tu plaza está asegurada.');
+                    }
+
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
                     btn.classList.add('bg-black', 'text-[#CCFF00]');
