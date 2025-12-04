@@ -10,7 +10,7 @@
     <meta name="description"
         content="La carrera de 10K más rápida de Ávila. 110m de desnivel negativo diseñados para romper tu marca personal. Únete a THE DROP 10K: velocidad y gravedad.">
 
-    <!-- Open Graph -->
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://thedrop10k.com/">
     <meta property="og:title" content="THE DROP 10K | Gravity Optimized Running">
@@ -24,7 +24,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    <!-- Import Gemini API -->
+    
     <script type="importmap">
       {
         "imports": {
@@ -625,7 +625,7 @@
             }
         }
 
-        /* --- ROSTER SECTION STYLES --- */
+        
         .text-yellow {
             color: var(--color-accent);
         }
@@ -724,7 +724,7 @@
             }
         }
 
-        /* --- ESTILOS DE LA SECCIÓN (DESCENT PROTOCOL v2.1) --- */
+        
         #route-v2 {
             position: relative;
             background: white;
@@ -745,7 +745,7 @@
             overflow: hidden;
         }
 
-        /* GRID DE FONDO ANIMADO (VELOCIDAD) */
+        
         .velocity-grid {
             position: absolute;
             inset: 0;
@@ -759,7 +759,7 @@
             transform-origin: center 80%;
         }
 
-        /* ELEMENTOS UI FLOTANTES (HUD) */
+        
         .hud-element {
             position: absolute;
             z-index: 20;
@@ -794,7 +794,7 @@
             text-align: right;
         }
 
-        /* EL RECORRIDO SVG */
+        
         .svg-container {
             position: relative;
             width: 100%;
@@ -884,7 +884,7 @@
             opacity: 1;
         }
 
-        /* GLITCH TEXT EFFECT para "EL ABISMO" */
+        
         .glitch-text {
             animation: glitch-skew 1s infinite linear alternate-reverse;
         }
@@ -915,7 +915,7 @@
             }
         }
 
-        /* RESPONSIVE: Ajustes para móvil */
+        
         @media (max-width: 768px) {
             .station-label {
                 font-size: 1.5rem;
@@ -955,7 +955,7 @@
             }
         }
 
-        /* --- SYSTEM ALERT POPUP STYLES --- */
+        
         #system-alert-popup {
             position: fixed;
             inset: 0;
@@ -1105,7 +1105,7 @@
 
     <div id="accessTerminal" class="terminal-overlay">
 
-        <!-- Botón de Cerrar (Flotante y fijo) -->
+        
         <div class="absolute top-4 right-4 md:top-8 md:right-8 z-50">
             <button onclick="toggleTerminal()"
                 class="text-white hover:text-[#CCFF00] transition-transform hover:rotate-90 duration-300">
@@ -1113,18 +1113,18 @@
             </button>
         </div>
 
-        <!-- Decoración de Fondo -->
+        
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
             <div class="text-[80vh] font-black text-white leading-none overflow-hidden select-none">
                 //
             </div>
         </div>
 
-        <!-- Contenedor Principal -->
+        
         <div
             class="relative z-10 flex-1 flex flex-col items-center justify-center p-6 md:p-12 w-full max-w-4xl mx-auto">
 
-            <!-- ENCABEZADO TERMINAL -->
+            
             <div class="w-full mb-12 flex items-end justify-between border-b border-[#333] pb-4">
                 <div>
                     <h2 class="text-[#CCFF00] font-mono text-xs uppercase tracking-[0.3em] mb-2">ACCESO AL SISTEMA</h2>
@@ -1137,7 +1137,7 @@
                 </div>
             </div>
 
-            <!-- VISTA 1: FORMULARIO DE REGISTRO (INITIATE) -->
+            
             <div id="registerView" class="w-full max-w-lg fade-in-up">
 
                 <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
@@ -1148,21 +1148,21 @@
 
                 <form id="registrationForm" onsubmit="handleRegistration(event)" class="flex flex-col gap-6">
 
-                    <!-- NOMBRE -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">NOMBRE</label>
                         <input type="text" name="firstName" placeholder="EJ. ALEX" required class="input-brutal">
                     </div>
 
-                    <!-- APELLIDOS -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">APELLIDOS</label>
                         <input type="text" name="lastName" placeholder="EJ. RUNNER" required class="input-brutal">
                     </div>
 
-                    <!-- EMAIL -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
@@ -1170,7 +1170,7 @@
                         <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
 
-                    <!-- CONTRASEÑA -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
@@ -1178,7 +1178,7 @@
                         <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
                     </div>
 
-                    <!-- GÉNERO Y TIEMPO (2 columnas) -->
+                    
                     <div class="grid grid-cols-2 gap-6">
                         <div class="group">
                             <label
@@ -1212,7 +1212,7 @@
                 </form>
             </div>
 
-            <!-- VISTA 2: LOGIN (AÑADIDA MANUALMENTE) -->
+            
             <div id="loginView" class="hidden w-full max-w-lg fade-in-up">
 
                 <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
@@ -1223,7 +1223,7 @@
 
                 <form id="loginForm" onsubmit="handleLogin(event)" class="flex flex-col gap-6">
 
-                    <!-- EMAIL -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
@@ -1231,7 +1231,7 @@
                         <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
 
-                    <!-- CONTRASEÑA -->
+                    
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
@@ -1239,7 +1239,7 @@
                         <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
                     </div>
 
-                    <!-- BOTÓN SUBMIT -->
+                    
                     <button type="submit" class="btn-action mt-4 group">
                         <span>ACCEDER AL SISTEMA</span>
                         <i data-lucide="log-in" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
@@ -1247,12 +1247,12 @@
                 </form>
             </div>
 
-            <!-- VISTA 3: PERFIL DE USUARIO (Se muestra tras registrarse) -->
+            
             <div id="profileView" class="hidden w-full fade-in-up">
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
 
-                    <!-- LEFT COL: DORSAL DIGITAL -->
+                    
                     <div class="md:col-span-5">
                         <div class="bib-container p-6 relative aspect-[3/4] flex flex-col justify-between">
                             <!-- Agujeros del dorsal -->
@@ -1289,7 +1289,7 @@
                         </button>
                     </div>
 
-                    <!-- RIGHT COL: STATS & DATA -->
+                    
                     <div class="md:col-span-7 flex flex-col justify-center h-full">
                         <div class="mb-8">
                             <h3 class="text-[#CCFF00] font-mono text-xs uppercase mb-2">ESTADO DE REGISTRO</h3>
@@ -1333,13 +1333,13 @@
         </div>
     </div>
 
-    <!-- MODAL: IDENTITY CONFLICT (DUPLICATE EMAIL) -->
+    
     <div id="emailExistsModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4">
-        <!-- Backdrop -->
+        
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
             onclick="closeModal('emailExistsModal')"></div>
 
-        <!-- Modal Container -->
+        
         <div
             class="relative bg-[#0a0a0a] w-full max-w-md shadow-[0_0_40px_rgba(255,255,255,0.05)] modal-enter-duplicate border border-[#333] overflow-hidden">
             <!-- Barra Superior de Estado -->
@@ -1428,14 +1428,12 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <!-- ============================================== -->
-    <!-- HERO SECTION (WIND EFFECT) -->
-    <!-- ============================================== -->
+    
     <header
         class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center items-center pt-20 border-b border-black overflow-hidden"
         id="hero">
 
-        <!-- NUEVO FONDO: WIND CANVAS -->
+        
         <canvas id="windCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
         <div class="z-10 text-center px-2 relative w-full max-w-7xl mx-auto flex flex-col items-center">
@@ -1444,17 +1442,17 @@
                 Ávila, Spain — Date: [REDACTED]
             </div>
 
-            <!-- TITULO GLITCH + USP INTEGRADA -->
+            
             <div class="flex flex-col items-center">
                 <h1
                     class="display-text font-black uppercase flex flex-col items-center relative mix-blend-multiply leading-none">
                     <div class="flex justify-center overflow-hidden pb-2 flex-wrap text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.8] hero-glitch"
-                        data-text="GRAVITY">
-                        GRAVITY
+                        data-text="SPEED">
+                        SPEED
                     </div>
                     <span
                         class="stroke-text cursor-pointer block mt-[-1vw] md:mt-[-1vw] hover:text-[#CCFF00] transition-colors duration-300 text-[14vw] md:text-[12vw] lg:text-[160px] leading-[0.8]">
-                        OPTIMIZED
+                        DESCENT
                     </span>
                 </h1>
 
@@ -1479,15 +1477,15 @@
             <div class="marquee-container font-bold text-lg md:text-xl uppercase tracking-tight">
                 <div class="marquee-content">
                     TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • RITMO GUIADO POR DATOS • LABORATORIO DE
-                    MEJOR MARCA* • THE DROP10K • TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • DESCONOCIDA
-                    HASTA EL DÍA DE CARRERA • THE DROP10K •
+                    MEJOR MARCA • THE DROP10K • TOP SECRET ROUTE • VELOCIDAD ASISTIDA POR LA GRAVEDAD • DESCONOCIDA
+                    HASTA EL DÍA XXXX • THE DROP10K •
 
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- MANIFESTO SECTION -->
+    
     <section id="manifesto" class="py-20 md:py-24 px-4 md:px-8 border-b border-black">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
             <div class="md:col-span-4 font-mono text-xs text-gray-500 uppercase md:sticky md:top-24 h-fit mb-4 md:mb-0">
