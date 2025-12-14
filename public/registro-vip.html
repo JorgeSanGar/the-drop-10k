@@ -139,11 +139,14 @@
     <div class="noise-overlay"></div>
 
     <header class="fixed top-0 w-full z-50 py-6 flex justify-center pointer-events-none">
-        <div
-            class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 pointer-events-auto shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
-            <span class="font-black tracking-tighter text-xl inline-block">THE DROP<span class="logo-slope">10K</span>™
-                <span class="text-xs bg-black text-[#CCFF00] px-1 ml-1 align-middle">VIP</span></span>
-        </div>
+        <a href="/" class="pointer-events-auto cursor-pointer text-current no-underline">
+            <div
+                class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 transition-colors">
+                <span class="font-black tracking-tighter text-xl inline-block">THE DROP<span
+                        class="logo-slope">10K</span>™ <span
+                        class="text-xs bg-black text-[#CCFF00] px-1 ml-1 align-middle">VIP</span></span>
+            </div>
+        </a>
     </header>
 
     <section class="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-12 px-4 overflow-hidden">
@@ -428,12 +431,19 @@
                     btn.classList.remove('bg-black', 'text-white');
                     btn.classList.add('bg-green-500', 'text-black');
 
-                    alert("ACCESO CONCEDIDO. Bienvenido a la unidad. Revisa tu email.");
+                    // Guardar sesión localmente para que el perfil funcione
+                    const userData = {
+                        name: name,
+                        email: email,
+                        referral_code: referralCode,
+                        role: 'vip_candidate'
+                    };
+                    localStorage.setItem('drop_user', JSON.stringify(userData));
 
-                    // Limpiar formulario
-                    nameInput.value = '';
-                    emailInput.value = '';
-                    if (!codeInput.readOnly) codeInput.value = '';
+                    alert("ACCESO CONCEDIDO. Bienvenido a la unidad. Redirigiendo al perfil...");
+
+                    // REDIRECCIÓN FORZOSA
+                    window.location.href = "/profile";
 
                 } else if (response.status === 409) {
                     // DUPLICADO
