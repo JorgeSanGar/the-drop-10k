@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
                 ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
             });
             // Return early as the trigger handles the email
-            return res.status(201).json({ message: 'VIP Access Granted' });
+            // return res.status(201).json({ message: 'VIP Access Granted' });
         } else {
             await waitlistRef.add({
                 email,
@@ -91,7 +91,13 @@ module.exports = async (req, res) => {
                 apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey.trim());
 
                 const sendSmtpEmail = new brevo.SendSmtpEmail();
-                sendSmtpEmail.subject = "THE DROP: WAITLIST CONFIRMED";
+                // Dynamic Subject based on Source
+                if (req.body.source === 'landing_vip') {
+                    sendSmtpEmail.subject = "THE DROP: PROFILE ACTIVATED";
+                } else {
+                    sendSmtpEmail.subject = "THE DROP: WAITLIST CONFIRMED";
+                }
+
                 sendSmtpEmail.sender = { "name": "THE DROP 10K", "email": "race@thedrop10k.space" };
                 sendSmtpEmail.to = [{ "email": email }];
 
