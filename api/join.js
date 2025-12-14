@@ -59,14 +59,29 @@ module.exports = async (req, res) => {
         }
 
         // Save to Firestore
-        await waitlistRef.add({
-            email,
-            name: name || 'Unknown',
-            sex: sex || 'Unknown',
-            mmpGoal: mmpGoal || false,
-            date: new Date(),
-            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-        });
+        if (req.body.source === 'landing_vip') {
+            await usersRef.add({
+                email,
+                name: name || 'Unknown',
+                referral_code: req.body.referral_code || null,
+                role: req.body.role || 'vip_candidate',
+                source: req.body.source || 'landing_vip',
+                created_at: admin.firestore.FieldValue.serverTimestamp(),
+                date: new Date(), // Keep for compatibility
+                ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+            });
+            // Return early as the trigger handles the email
+            return res.status(201).json({ message: 'VIP Access Granted' });
+        } else {
+            await waitlistRef.add({
+                email,
+                name: name || 'Unknown',
+                sex: sex || 'Unknown',
+                mmpGoal: mmpGoal || false,
+                date: new Date(),
+                ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+            });
+        }
 
         // Send Email via Brevo
         const brevoKey = process.env.BREVO_API_KEY;

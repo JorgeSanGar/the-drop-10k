@@ -52,6 +52,11 @@ app.get('/legal', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'legal.html'));
 });
 
+// Route for the VIP registration page
+app.get('/registro-vip', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'registro-vip.html'));
+});
+
 // ------------------------------------------------
 // 1. FIREBASE SETUP
 // ------------------------------------------------

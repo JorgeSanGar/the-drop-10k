@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ACCESO VIP - THE DROP10K</title>
+    <meta name="description" content="Portal de validación de invitaciones para The Drop 10K. Acceso restringido.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://thedrop10k.space/registro-vip">
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://grainy-gradients.vercel.app; connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com;">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --color-bg: #F2F2F2;
+            --color-text: #111111;
+            --color-accent: #CCFF00;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* LOGO SLOPE EFFECT (Añadido para el 10K) */
+        .logo-slope {
+            transform: skewX(12deg);
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Utility Classes */
+        .btn-hype {
+            transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 4px 4px 0px #111;
+        }
+
+        .btn-hype:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #111;
+            background-color: #fff;
+            color: black;
+        }
+
+        .btn-hype:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        /* Glitch Text Small */
+        .glitch-text:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--color-accent);
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        /* Progress Bar Animation (Inverse for countdown feel) */
+        .progress-fill {
+            width: 100%;
+            animation: drainBar 10s linear forwards;
+            background-color: #000;
+        }
+
+        @keyframes drainBar {
+            to {
+                width: 10%;
+                background-color: #FF3333;
+            }
+        }
+
+        /* Wind Canvas Background */
+        #windCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="noise-overlay"></div>
+
+    <header class="fixed top-0 w-full z-50 py-6 flex justify-center pointer-events-none">
+        <div
+            class="bg-white/90 backdrop-blur-sm border border-black px-4 py-2 pointer-events-auto shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+            <span class="font-black tracking-tighter text-xl inline-block">THE DROP<span class="logo-slope">10K</span>™
+                <span class="text-xs bg-black text-[#CCFF00] px-1 ml-1 align-middle">VIP</span></span>
+        </div>
+    </header>
+
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-12 px-4 overflow-hidden">
+
+        <canvas id="windCanvas"></canvas>
+
+        <div class="relative z-10 max-w-3xl w-full mx-auto text-center">
+
+            <div
+                class="inline-flex items-center gap-2 border border-black bg-black text-white px-3 py-1 mb-6 rotate-1 shadow-[2px_2px_0px_#CCFF00]">
+                <i data-lucide="lock-open" class="w-3 h-3 text-[#CCFF00]"></i>
+                <span class="font-mono text-xs font-bold uppercase text-[#CCFF00]">Portal de Invitación</span>
+            </div>
+
+            <h1 class="text-4xl md:text-7xl font-black uppercase leading-[0.9] mb-6 tracking-tighter">
+                Has sido<br>
+                <span class="text-transparent" style="-webkit-text-stroke: 1px black;">Reclutado.</span>
+            </h1>
+
+            <p
+                class="font-mono text-sm md:text-lg text-gray-700 mb-8 max-w-xl mx-auto bg-white/50 p-2 backdrop-blur-sm border-l-4 border-black">
+                Has recibido una de las pocas invitaciones disponibles.
+                Un <span class="bg-black text-white px-1 font-bold">Agente Verificado</span> te ha seleccionado para
+                unirte a la línea de salida antes que nadie.
+            </p>
+
+            <div
+                class="bg-white border-2 border-black p-6 md:p-8 shadow-[8px_8px_0px_black] max-w-lg mx-auto relative group">
+
+                <div class="absolute -top-2 -right-2 w-4 h-4 bg-black"></div>
+                <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-[#CCFF00] border border-black"></div>
+
+                <h3 class="font-black text-xl uppercase mb-4 text-left flex items-center gap-2">
+                    <i data-lucide="key" class="w-5 h-5"></i>
+                    Validar Acceso
+                </h3>
+
+                <form id="vip-signup-form" onsubmit="event.preventDefault(); handleVipSignup();"
+                    class="flex flex-col gap-3">
+
+                    <div class="text-left">
+                        <label class="font-mono text-[10px] uppercase font-bold mb-1 block text-gray-500">Nombre del
+                            Agente (Tú)</label>
+                        <input type="text" id="nameHero" name="name" required placeholder="TU NOMBRE / AKA"
+                            class="w-full bg-[#F2F2F2] border-2 border-black p-3 font-mono text-sm focus:bg-[#CCFF00] outline-none transition-colors placeholder-gray-400">
+                    </div>
+
+                    <div class="text-left">
+                        <label class="font-mono text-[10px] uppercase font-bold mb-1 block text-gray-500">Email de
+                            Contacto</label>
+                        <input type="email" id="emailHero" name="email" required placeholder="CORREDOR@EMAIL.COM"
+                            class="w-full bg-[#F2F2F2] border-2 border-black p-3 font-mono text-sm focus:bg-[#CCFF00] outline-none transition-colors placeholder-gray-400">
+                    </div>
+
+                    <div class="text-left">
+                        <label
+                            class="font-mono text-[10px] uppercase font-bold mb-1 block text-[#CCFF00] bg-black inline-block px-1">Código
+                            de Invitación</label>
+                        <div class="relative">
+                            <input type="text" id="vipCode" name="referralCode" required placeholder="EJ: DROP-X91"
+                                class="w-full bg-black text-white border-2 border-black p-3 font-mono text-sm focus:border-[#CCFF00] outline-none transition-colors placeholder-gray-600 tracking-widest uppercase">
+                            <i id="vipIcon" data-lucide="shield-check"
+                                class="w-4 h-4 text-[#CCFF00] absolute right-3 top-3.5 transition-colors"></i>
+                        </div>
+                        <p id="vipCodeHelper" class="text-[9px] font-mono text-gray-500 mt-1">*Código sensible a
+                            mayúsculas.</p>
+                    </div>
+
+                    <button type="submit"
+                        class="btn-hype w-full bg-[#CCFF00] text-black font-black uppercase py-4 text-lg flex justify-between items-center px-4 mt-4">
+                        <span>ACTIVAR MI DORSAL</span>
+                        <i data-lucide="unlock" class="w-5 h-5"></i>
+                    </button>
+                </form>
+
+                <p class="font-mono text-[9px] text-gray-400 mt-4 text-center uppercase">
+                    Esta invitación es personal e intransferible. No compartir.
+                </p>
+            </div>
+
+            <div class="mt-8 flex justify-center items-center gap-4 font-mono text-xs">
+                <p class="opacity-60 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Sistema de Invitaciones: <span class="font-bold">ACTIVO</span>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+            <i data-lucide="arrow-down" class="w-6 h-6"></i>
+        </div>
+    </section>
+
+    <section class="py-16 px-4 bg-white border-y border-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-black uppercase mb-12 text-center">Tu ventaja táctica</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border border-black p-6 bg-[#F2F2F2]">
+                    <i data-lucide="award" class="w-8 h-8 mb-4 text-black"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Acceso Garantizado</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        Mientras otros esperan en la lista pública, tu código te asegura un sitio en la línea de salida.
+                        Sin sorteos.
+                    </p>
+                </div>
+
+                <div class="border border-black p-6 bg-[#F2F2F2]">
+                    <i data-lucide="users" class="w-8 h-8 mb-4 text-black"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Squad Status</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        Correrás junto a quien te invitó. Formad vuestra propia unidad y atacad el crono juntos.
+                    </p>
+                </div>
+
+                <div class="border border-black p-6 bg-[#F2F2F2]">
+                    <i data-lucide="zap" class="w-8 h-8 mb-4 text-black"></i>
+                    <h4 class="font-bold uppercase text-lg mb-2">Early Intel</h4>
+                    <p class="font-mono text-xs text-gray-600 leading-relaxed">
+                        Recibirás el mapa del recorrido y los detalles técnicos antes que el público general.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 text-center bg-black text-white">
+        <div class="max-w-xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black uppercase mb-6 text-[#CCFF00]">
+                El código caduca.
+            </h2>
+            <p class="font-mono text-sm mb-8 text-gray-400">
+                Las invitaciones tienen un tiempo de vida limitado. Si no la usas, el sistema la reasignará a otro
+                agente.
+            </p>
+
+            <div class="w-full h-4 bg-gray-800 border border-white mb-8 relative overflow-hidden">
+                <div class="h-full bg-white progress-fill"></div>
+                <div class="absolute top-0 right-0 h-full w-px bg-white"></div>
+            </div>
+
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'}); document.getElementById('vipCode').focus();"
+                class="btn-hype inline-flex bg-white text-black font-black uppercase py-4 px-8 text-lg items-center gap-3 hover:bg-[#CCFF00]">
+                <span>VALIDAR CÓDIGO AHORA</span>
+                <i data-lucide="key" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </section>
+
+    <footer class="py-8 text-center font-mono text-[10px] uppercase text-gray-400 border-t border-gray-300">
+        <p>© 2025 THE DROP 10K. SISTEMA DE INVITACIONES PRIVADO.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 1. AUTOFILL SCRIPT (NUEVA LÓGICA)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const refCode = params.get('ref');
+            const vipInput = document.getElementById('vipCode');
+            const vipIcon = document.getElementById('vipIcon');
+            const vipHelper = document.getElementById('vipCodeHelper');
+
+            if (refCode && vipInput) {
+                // Rellenar código
+                vipInput.value = refCode;
+                vipInput.readOnly = true;
+
+                // Estilo Visual "Bloqueado/Confirmado"
+                vipInput.style.borderColor = '#22c55e'; // Verde éxito
+                vipInput.style.color = '#22c55e';
+                vipInput.style.backgroundColor = '#1a1a1a'; // Fondo ligeramente más claro
+                vipInput.style.cursor = 'not-allowed';
+
+                // Cambiar icono
+                if (vipIcon) {
+                    vipIcon.classList.remove('text-[#CCFF00]');
+                    vipIcon.classList.add('text-green-500');
+                }
+
+                // Cambiar mensaje de ayuda
+                if (vipHelper) {
+                    vipHelper.innerText = "✓ CÓDIGO APLICADO AUTOMÁTICAMENTE";
+                    vipHelper.style.color = '#22c55e';
+                }
+            }
+        });
+
+        // SCRIPT DE VIENTO
+        const canvas = document.getElementById('windCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let windLines = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class WindLine {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width + width;
+                this.y = Math.random() * height;
+                this.speed = Math.random() * 10 + 5;
+                this.len = Math.random() * 80 + 40;
+            }
+            update() {
+                this.x -= this.speed;
+                if (this.x < -this.len) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                let grad = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y);
+                grad.addColorStop(0, "rgba(0,0,0,0.1)");
+                grad.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + this.len, this.y);
+                ctx.stroke();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) windLines.push(new WindLine());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            windLines.forEach(l => { l.update(); l.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // FORM HANDLE (REAL VIP SIGNUP)
+        async function handleVipSignup() {
+            const btn = document.querySelector('#vip-signup-form button');
+            const nameInput = document.getElementById('nameHero');
+            const emailInput = document.getElementById('emailHero');
+            const codeInput = document.getElementById('vipCode');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const referralCode = codeInput.value.trim();
+
+            // Validación básica
+            if (!name || !email || !referralCode) {
+                alert("Por favor, completa todos los campos requeridos.");
+                return;
+            }
+
+            // Estado Loading
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = "VERIFICANDO CÓDIGO...";
+            btn.classList.remove('bg-[#CCFF00]', 'text-black');
+            btn.classList.add('bg-black', 'text-white');
+
+            try {
+                const response = await fetch('/api/join', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        referral_code: referralCode,
+                        source: 'landing_vip',
+                        role: 'vip_candidate'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 201 || response.status === 200) {
+                    // ÉXITO
+                    btn.innerHTML = "DORSAL ACTIVADO ✓";
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('bg-green-500', 'text-black');
+
+                    alert("ACCESO CONCEDIDO. Bienvenido a la unidad. Revisa tu email.");
+
+                    // Limpiar formulario
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    if (!codeInput.readOnly) codeInput.value = '';
+
+                } else if (response.status === 409) {
+                    // DUPLICADO
+                    btn.innerHTML = "YA REGISTRADO";
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('bg-yellow-500', 'text-black');
+                    alert(data.error || "Este email ya está registrado.");
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.classList.remove('bg-yellow-500', 'text-black');
+                        btn.classList.add('bg-[#CCFF00]', 'text-black');
+                    }, 3000);
+
+                } else {
+                    throw new Error(data.error || 'Error desconocido');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                btn.innerHTML = "ERROR DE CONEXIÓN";
+                btn.classList.remove('bg-black', 'text-white');
+                btn.classList.add('bg-red-500', 'text-white');
+                alert("Error técnico. Por favor, inténtalo de nuevo.");
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('bg-red-500', 'text-white');
+                    btn.classList.add('bg-[#CCFF00]', 'text-black');
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+
+</html>
