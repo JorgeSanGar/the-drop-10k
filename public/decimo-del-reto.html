@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- SEO TÉCNICO & METADATA -->
+    <title>El Décimo del Reto | Tu Compromiso para The Drop 10K</title>
+    <meta name="description"
+        content="Genera tu Décimo del Reto para The Drop 10K. Olvida la lotería: sella tu compromiso deportivo, define tu objetivo de running y apuesta por tus piernas.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="https://www.thedrop10k.space/decimo-del-reto">
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="The Drop 10K">
+    <meta property="og:url" content="https://www.thedrop10k.space/decimo-del-reto">
+    <meta property="og:title" content="El Décimo del Reto | Tu esfuerzo, no tu suerte">
+    <meta property="og:description"
+        content="No es suerte. Es física. He firmado mi contrato con la gravedad. Genera tu objetivo ahora.">
+    <meta property="og:image" content="https://www.thedrop10k.space/assets/og_social.jpg">
+    <meta property="og:image:alt" content="The Drop 10K - El Décimo del Reto">
+
+    <!-- TWITTER CARDS -->
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- <meta name="twitter:site" content="@TheDrop10K"> (Descomentar si existe) -->
+    <meta name="twitter:title" content="El Décimo del Reto | The Drop 10K">
+    <meta name="twitter:description"
+        content="Define tu objetivo. Sella tu compromiso. La única lotería que depende de ti.">
+    <meta name="twitter:image" content="https://www.thedrop10k.space/assets/og_social.jpg">
+    <meta name="twitter:image:alt" content="The Drop 10K - El Décimo del Reto">
+
+    <!-- JSON-LD: Datos Estructurados -->
+    <script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "El Décimo del Reto",
+            "description": "Genera tu contrato de compromiso deportivo para The Drop 10K.",
+            "url": "https://www.thedrop10k.space/decimo-del-reto",
+            "inLanguage": "es"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.thedrop10k.space/"
+            },{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Décimo del Reto",
+                "item": "https://www.thedrop10k.space/decimo-del-reto"
+            }]
+        }
+    ]
+    </script>
+
+    <!-- FAVICON / APP ICONS (pendiente de implementar aquí por Antigravity) -->
+    <!-- <link rel="icon" href="/favicon.ico"> -->
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> -->
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- LIBS (Con defer para performance) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+    <style>
+        /* --- CORE CSS --- */
+        :root {
+            --bg-color: #050505;
+            --text-main: #FFFFFF;
+            --accent-neon: #CCFF00;
+            --bg-secondary: #111111;
+            --border-color: #333333;
+            --font-ui: 'Inter', sans-serif;
+            --font-data: 'Share Tech Mono', monospace;
+            --paper-cream: #F9F9F5;
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            perspective: 1500px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Typography: H1 y clase auxiliar para H2 que parecen H1 */
+        h1,
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-family: var(--font-data);
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        /* SEO copy block (discreto, sin romper diseño) */
+        .seo-copy {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .seo-copy p {
+            margin-bottom: 1rem;
+        }
+
+        .seo-copy p:last-child {
+            margin-bottom: 0;
+        }
+
+        .seo-copy strong {
+            color: #888;
+            font-weight: 700;
+        }
+
+        .seo-copy a {
+            color: #888;
+            text-decoration: none;
+            border-bottom: 1px solid #333;
+            transition: border-color 0.2s;
+        }
+
+        .seo-copy a:hover {
+            border-bottom-color: var(--accent-neon);
+            color: #aaa;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-family: var(--font-data);
+            font-size: 0.75rem;
+            color: var(--accent-neon);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        select {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 1rem;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 0;
+            outline: none;
+            appearance: none;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--accent-neon);
+            position: absolute;
+            right: 1rem;
+            top: 2.5rem;
+            pointer-events: none;
+        }
+
+        /* SPLIT TIME INPUTS */
+        .time-group-container {
+            display: flex;
+            gap: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .time-group-container:focus-within {
+            border-color: var(--accent-neon);
+        }
+
+        .time-field {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .time-field input {
+            border: none;
+            background: transparent;
+            text-align: center;
+            padding: 1rem 0;
+            width: 100%;
+            color: white;
+            font-family: var(--font-ui);
+            font-size: 1.2rem;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .time-field input:focus {
+            background: #1a1a1a;
+        }
+
+        .separator {
+            color: #666;
+            font-weight: bold;
+            align-self: center;
+            padding-bottom: 4px;
+        }
+
+        .time-label-small {
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.5rem;
+            color: #666;
+            font-family: var(--font-data);
+            pointer-events: none;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            background: var(--accent-neon);
+            color: #000;
+            border: none;
+            padding: 1.2rem;
+            font-family: var(--font-ui);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: transform 0.1s;
+            position: relative;
+            z-index: 20;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* View State */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s var(--ease-out-expo);
+            width: 100%;
+        }
+
+        .view-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- STATE 2: PHYSICS LOTTERY (CANVAS) --- */
+        #physicsContainer {
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        #lotteryCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* 3D FLIP CARD STYLES */
+        .ticket-scene {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1080 / 1600;
+            perspective: 2000px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            cursor: grab;
+        }
+
+        .ticket-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .ticket-card.is-flipped {
+            transform: rotateY(180deg) !important;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 40%);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+            mix-blend-mode: overlay;
+        }
+
+        .ticket-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .ticket-face--front {
+            background-color: var(--paper-cream);
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .ticket-face--front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ticket-face--back {
+            transform: rotateY(180deg);
+            background-color: var(--paper-cream);
+            color: #111;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 4px solid #111;
+            background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 2px, transparent 2px, transparent 8px);
+        }
+
+        .back-content h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+        }
+
+        .back-content p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 500;
+            max-width: 90%;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .signature-block {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-top: auto;
+        }
+
+        .flip-hint {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--accent-neon);
+            cursor: pointer;
+            animation: fadeInHint 2s ease-out 1s both;
+        }
+
+        .flip-hint span {
+            font-family: var(--font-data);
+            font-size: 0.75rem;
+            color: var(--accent-neon);
+            font-weight: bold;
+        }
+
+        .flip-icon {
+            color: var(--accent-neon);
+            animation: spinSlow 4s linear infinite;
+        }
+
+        @keyframes spinSlow {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInHint {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .download-link {
+            text-align: center;
+            display: block;
+            color: #666;
+            font-size: 0.8rem;
+            text-decoration: none;
+            margin: 1rem auto;
+            border-bottom: 1px solid #333;
+            width: fit-content;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(51, 51, 51, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(51, 51, 51, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <main class="app-container">
+
+        <!-- ESTADO 1: FORMULARIO (H1 Principal) -->
+        <section id="state-input" class="view-section active">
+            <header>
+                <h1>La suerte es<br><span style="color:var(--accent-neon)">para los débiles</span></h1>
+                <p class="subtitle">/> Introduce tu objetivo de rendimiento.</p>
+            </header>
+
+            <form id="contractForm" onsubmit="event.preventDefault(); transitionToSign();">
+                <div class="form-group select-wrapper">
+                    <label for="distance">Distancia</label>
+                    <select id="distance" name="distance">
+                        <option value="10K">10K // THE DROP10K</option>
+                        <option value="5K">5K // SPRINT</option>
+                        <option value="21K">21K // MEDIA MARATÓN</option>
+                        <option value="42K">42K // MARATÓN</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tiempo Objetivo</label>
+                    <div class="time-group-container">
+                        <div class="time-field"><span class="time-label-small">HH</span><input type="number"
+                                id="inputHH" placeholder="00" min="0" max="99" inputmode="numeric"
+                                oninput="handleTimeInput(this, 'inputMM')"></div>
+                        <div class="separator">:</div>
+                        <div class="time-field"><span class="time-label-small">MM</span><input type="number"
+                                id="inputMM" placeholder="00" min="0" max="59" inputmode="numeric"
+                                oninput="handleTimeInput(this, 'inputSS')"></div>
+                        <div class="separator">:</div>
+                        <div class="time-field"><span class="time-label-small">SS</span><input type="number"
+                                id="inputSS" placeholder="00" min="0" max="59" inputmode="numeric"
+                                oninput="handleTimeInput(this, null)"></div>
+                    </div>
+                </div>
+
+                <div class="form-group select-wrapper">
+                    <label for="sacrifice">Sacrificio Ofrecido</label>
+                    <select id="sacrifice" name="sacrifice">
+                        <option value="NoTiempo">LA EXCUSA DEL "NO TENGO TIEMPO"</option>
+                        <option value="Strava">LA OBSESIÓN POR STRAVA</option>
+                        <option value="Lento">VERGÜENZA POR CORRER LENTO</option>
+                        <option value="Cerveza">LA "CERVEZA RÁPIDA"</option>
+                        <option value="Pereza">MI PROPIA PEREZA</option>
+                        <option value="Dinero">300€ EN ZAPATILLAS</option>
+                        <option value="Rodillas">RODILLAS DE CRISTAL</option>
+                        <option value="Fiesta">LA FIESTA DEL SÁBADO</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">PREPARAR CONTRATO</button>
+            </form>
+
+            <div class="seo-copy" aria-label="Descripción de la experiencia">
+                <p><strong>El Décimo del Reto</strong> nace de una premisa fundamental en <strong>The Drop 10K</strong>:
+                    el rendimiento no se sortea, se construye. A diferencia de la lotería tradicional, donde depositas
+                    tu esperanza en el azar, aquí formalizas un contrato vinculante con tu propia disciplina. Esta
+                    herramienta digital te permite visualizar y materializar tu compromiso deportivo para la temporada.
+                </p>
+                <p>El proceso es sencillo pero simbólicamente potente. Primero, eliges tu <strong>distancia
+                        objetivo</strong> (5K, 10K, 21K o 42K), ajustando la meta a tu nivel actual y ambición. Segundo,
+                    estableces tu <strong>tiempo objetivo</strong>, esa marca cronométrica que define tu éxito. Tercero,
+                    y más importante, seleccionas tu <strong>sacrificio</strong>: aquello a lo que estás dispuesto a
+                    renunciar (pereza, excusas, malos hábitos) para alcanzar la gloria. No hay recompensa sin renuncia.
+                </p>
+                <p>Una vez configurado tu contrato, entra en acción nuestra simulación de físicas. Al mantener pulsado
+                    el botón, no activas un bombo aleatorio, sino que liberas la gravedad. Las bolas con tu tiempo caen
+                    y se asientan por su propio peso, representando que los resultados son la consecuencia inevitable
+                    del trabajo bien hecho. Al finalizar, obtienes tu <strong>Décimo del Reto</strong>, una imagen de
+                    alta resolución lista para descargar.</p>
+                <p>Este décimo no es un simple archivo; es un recordatorio constante. Compártelo en tus redes sociales
+                    para hacer pública tu promesa, o imprímelo y colócalo en un lugar visible. Cuando la motivación
+                    falte, mira tu décimo: tú definiste el tiempo, tú elegiste el sacrificio. Ahora solo queda cumplir.
+                    La suerte es para los que no entrenan; para nosotros, existe el trabajo duro.</p>
+            </div>
+        </section>
+
+        <!-- ESTADO 2: FÍSICA (H2 Visualmente idéntico a H1) -->
+        <section id="state-sign" class="view-section">
+            <header>
+                <h2 class="hero-title">Alinea tu<br><span style="color:var(--accent-neon)">Destino</span></h2>
+                <p class="subtitle">/> Mantén pulsado para activar la gravedad.</p>
+            </header>
+
+            <!-- CANVAS DE FÍSICA -->
+            <div id="physicsContainer">
+                <canvas id="lotteryCanvas"></canvas>
+            </div>
+
+            <button id="holdBtn" class="btn-primary" type="button" style="margin-top:0;">
+                MANTÉN PARA EXTRAER BOLA
+            </button>
+            <p style="text-align:center; font-size:0.7rem; color:#666; margin-top:1rem;">Las bolas deben asentarse en el
+                alambre para confirmar.</p>
+        </section>
+
+        <!-- ESTADO 3: RESULTADO (H2 Visualmente idéntico a H1) -->
+        <section id="state-result" class="view-section">
+            <header>
+                <h2 class="hero-title">Contrato<br><span style="color:var(--accent-neon)">Vinculante</span></h2>
+                <p class="subtitle">/> Tu palabra importa. Ahora, hazlo.</p>
+            </header>
+
+            <div class="ticket-scene" id="ticketScene">
+                <div class="flip-hint" onclick="toggleFlip()">
+                    <i data-lucide="refresh-cw" class="flip-icon w-4 h-4"></i><span>GIRAR</span>
+                </div>
+                <div class="ticket-card" id="ticketCard" onclick="toggleFlip()">
+                    <div class="card-glare"></div>
+                    <div class="ticket-face ticket-face--front">
+                        <img id="ticketFrontImg" src="" alt="Décimo The Drop Frente">
+                    </div>
+                    <div class="ticket-face ticket-face--back">
+                        <div class="back-content">
+                            <h3>THE DROP10K</h3>
+                            <p>Al marcarte este reto, ya te has separado de la mayoría. No dependes de la suerte,
+                                dependes de ti. Celebra cada kilómetro y cada gota de esfuerzo, porque la mayor fortuna
+                                es tener la vitalidad para disfrutar del camino.</p>
+                            <p style="font-weight: 900;">Tu mejor premio es tu superación.</p>
+                        </div>
+                        <div class="signature-block">THE DROP TEAM.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="downloadContract()">DESCARGAR MI DÉCIMO</button>
+            <a href="#" class="download-link" onclick="location.reload()">GENERAR NUEVO DÉCIMO</a>
+        </section>
+    </main>
+
+    <!-- HIDDEN QR GENERATOR -->
+    <div id="qrcode" style="display:none;"></div>
+
+    <script type="module">
+        // Inicializar lucide si está cargado
+        if (window.lucide) window.lucide.createIcons();
+
+        // --- GLOBAL STATE ---
+        const state = {
+            distance: '', time: '', sacrifice: '',
+            isHolding: false, holdProgress: 0
+        };
+
+        // --- DOM ELEMENTS ---
+        const els = {
+            inputSection: document.getElementById('state-input'),
+            signSection: document.getElementById('state-sign'),
+            resultSection: document.getElementById('state-result'),
+            holdBtn: document.getElementById('holdBtn'),
+            ticketFrontImg: document.getElementById('ticketFrontImg'),
+            inputHH: document.getElementById('inputHH'),
+            inputMM: document.getElementById('inputMM'),
+            inputSS: document.getElementById('inputSS'),
+            lotteryCanvas: document.getElementById('lotteryCanvas')
+        };
+
+        /* --- UTILS: EXPOSED GLOBAL FUNCTIONS --- */
+        window.switchSection = function (from, to, callback) {
+            from.classList.remove('active');
+            setTimeout(() => {
+                from.style.display = 'none';
+                to.style.display = 'block';
+                void to.offsetWidth;
+                to.classList.add('active');
+                if (callback) callback();
+            }, 500);
+        }
+
+        window.padTime = function (val) { return val.toString().padStart(2, '0'); }
+
+        window.handleTimeInput = function (input, nextInputId) {
+            if (input.value.length > 2) input.value = input.value.slice(0, 2);
+            if (input.value.length === 2 && nextInputId) document.getElementById(nextInputId).focus();
+        }
+
+        window.transitionToSign = function () {
+            state.distance = document.getElementById('distance').value;
+            state.sacrifice = document.getElementById('sacrifice').value;
+
+            let hh = els.inputHH.value || '00';
+            let mm = els.inputMM.value || '00';
+            let ss = els.inputSS.value || '00';
+
+            if (parseInt(mm) > 59) mm = "59";
+            if (parseInt(ss) > 59) ss = "59";
+
+            state.time = `${window.padTime(hh)}:${window.padTime(mm)}:${window.padTime(ss)}`;
+            if (state.time === "00:00:00") return alert("Introduce un tiempo válido.");
+
+            // FIX: Retraso para asegurar que la sección es visible y el canvas tiene tamaño
+            window.switchSection(els.inputSection, els.signSection, () => {
+                setTimeout(() => window.initPhysics(state.time), 50);
+            });
+        }
+
+        window.downloadContract = async function () {
+            if (!els.ticketFrontImg.src || els.ticketFrontImg.src === "") {
+                alert("Primero debes generar el contrato.");
+                return;
+            }
+
+            const btn = document.querySelector('button[onclick="downloadContract()"]');
+            const originalText = btn ? btn.innerText : "DESCARGAR";
+            if (btn) btn.innerText = "DESCARGANDO...";
+
+            try {
+                const response = await fetch(els.ticketFrontImg.src);
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = url;
+                link.download = `TheDrop-Contrato-${state.distance || '10K'}.png`;
+                document.body.appendChild(link);
+                link.click();
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    if (btn) btn.innerText = originalText;
+                }, 100);
+            } catch (err) {
+                console.error("Error descarga:", err);
+                alert("Error descargando. Mantén pulsado para guardar.");
+                if (btn) btn.innerText = originalText;
+            }
+        }
+
+        window.toggleFlip = function () {
+            const ticketCard = document.getElementById('ticketCard');
+            const cardGlare = document.querySelector('.card-glare');
+            ticketCard.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            ticketCard.classList.toggle('is-flipped');
+            if (ticketCard.classList.contains('is-flipped')) { ticketCard.style.transform = 'rotateY(180deg)'; cardGlare.style.opacity = 0; }
+            else { ticketCard.style.transform = 'perspective(2000px) rotateX(0deg) rotateY(0deg)'; }
+        }
+
+        /* --- PHYSICS ENGINE: MAGNETIC BALLS --- */
+        let physics = {
+            balls: [],
+            animationId: null,
+            active: false,
+            ctx: null, w: 0, h: 0, wireY: 0,
+            completed: false
+        };
+
+        class Ball {
+            constructor(x, y, label, targetX) {
+                this.x = x; this.y = y; this.label = label; this.targetX = targetX;
+                this.vx = (Math.random() - 0.5) * 4; this.vy = (Math.random() - 0.5) * 4;
+                this.radius = 20; this.angle = Math.random() * Math.PI * 2;
+            }
+
+            update(isMagnetic, wireY, width, height) {
+                if (isMagnetic) {
+                    const dx = this.targetX - this.x;
+                    const dy = wireY - this.radius - this.y;
+                    this.vx += dx * 0.08; this.vy += dy * 0.08; // Fuerza magnética
+                    this.vx *= 0.85; this.vy *= 0.85; // Fricción fuerte
+                } else {
+                    if (this.x + this.radius > width || this.x - this.radius < 0) this.vx *= -1;
+                    if (this.y + this.radius > height || this.y - this.radius < 0) this.vy *= -1;
+                    this.x += this.vx; this.y += this.vy;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+            }
+
+            draw(ctx) {
+                ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle);
+                const grad = ctx.createRadialGradient(-5, -5, 2, 0, 0, this.radius);
+                grad.addColorStop(0, "#FFFFFF"); grad.addColorStop(0.3, "#F9F9F5"); grad.addColorStop(1, "#D6D6C2");
+                ctx.beginPath(); ctx.arc(0, 0, this.radius, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+                ctx.lineWidth = 2; ctx.strokeStyle = "#CCFF00"; ctx.stroke();
+                ctx.fillStyle = "#111"; ctx.font = "bold 20px 'Inter', sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(this.label, 0, 0);
+                ctx.restore();
+            }
+
+            getDistanceToTarget(wireY) {
+                const tx = this.targetX; const ty = wireY - this.radius;
+                return Math.sqrt(Math.pow(tx - this.x, 2) + Math.pow(ty - this.y, 2));
+            }
+        }
+
+        window.initPhysics = function (timeString) {
+            const canvas = els.lotteryCanvas;
+            const w = canvas.parentElement.offsetWidth || 300; // Fallback width
+            const h = canvas.parentElement.offsetHeight || 300; // Fallback height
+
+            // Retry si tamaño es 0
+            if (w === 0 || h === 0) {
+                requestAnimationFrame(() => window.initPhysics(timeString));
+                return;
+            }
+
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+
+            physics.ctx = ctx; physics.w = w; physics.h = h; physics.wireY = h - 50;
+            physics.balls = []; physics.completed = false; physics.active = false;
+
+            const digits = timeString.replace(/:/g, '').split('');
+            const ballSpacing = 45;
+            const totalWidth = digits.length * ballSpacing;
+            const startX = (w - totalWidth) / 2 + (ballSpacing / 2);
+
+            digits.forEach((digit, i) => {
+                physics.balls.push(new Ball(Math.random() * w, Math.random() * (h / 2), digit, startX + (i * ballSpacing)));
+            });
+
+            if (physics.animationId) cancelAnimationFrame(physics.animationId);
+            animatePhysics();
+        }
+
+        function animatePhysics() {
+            const { ctx, w, h, balls, active, wireY } = physics;
+            ctx.clearRect(0, 0, w, h);
+
+            // Rack
+            ctx.save(); ctx.beginPath(); ctx.moveTo(20, wireY - 10); ctx.lineTo(w - 20, wireY - 10); ctx.lineWidth = 4; ctx.strokeStyle = "#333"; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(20, wireY); ctx.lineTo(w - 20, wireY); ctx.lineWidth = 2; ctx.strokeStyle = "#D4AF37"; ctx.stroke(); ctx.restore();
+
+            let allSettled = true;
+            balls.forEach(ball => {
+                ball.update(active, wireY, w, h); ball.draw(ctx);
+                if (active) { if (ball.getDistanceToTarget(wireY) > 5) allSettled = false; }
+                else { allSettled = false; }
+            });
+
+            if (active && allSettled && !physics.completed) {
+                physics.completed = true; setTimeout(completeSimulation, 400);
+            }
+            physics.animationId = requestAnimationFrame(animatePhysics);
+        }
+
+        // Logic for hold
+        function startHold(e) {
+            e.preventDefault(); if (physics.completed) return;
+            physics.active = true;
+            els.holdBtn.innerText = "ALINEANDO ESFERAS..."; els.holdBtn.style.color = "#CCFF00";
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        function endHold() {
+            if (physics.completed) return;
+            physics.active = false;
+            els.holdBtn.innerText = "MANTÉN PARA EXTRAER BOLA"; els.holdBtn.style.color = "var(--text-main)";
+        }
+
+        function completeSimulation() {
+            cancelAnimationFrame(physics.animationId);
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            generateCanvas();
+            window.switchSection(els.signSection, els.resultSection);
+        }
+
+        els.holdBtn.addEventListener('pointerdown', startHold);
+        els.holdBtn.addEventListener('pointerup', endHold);
+        els.holdBtn.addEventListener('pointerleave', endHold);
+        els.holdBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+
+        /* --- LOGIC: GENERATE CANVAS (WHITE EDITION V2) --- */
+        function generateCanvas() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const w = 1080; const h = 1600;
+            canvas.width = w; canvas.height = h;
+
+            const C_BG = "#F9F9F5"; const C_INK_LIGHT = "#E0E0E0";
+            const C_TEXT = "#111111"; const C_NEON = "#CCFF00";
+
+            // 1. Fondo Guilloche
+            ctx.fillStyle = C_BG; ctx.fillRect(0, 0, w, h);
+            ctx.lineWidth = 1; ctx.strokeStyle = C_INK_LIGHT;
+            ctx.beginPath();
+            for (let y = 0; y < h; y += 8) {
+                ctx.moveTo(0, y);
+                for (let x = 0; x < w; x += 10) { ctx.lineTo(x, y + Math.sin(x * 0.02) * 5 + Math.cos(x * 0.05) * 2); }
+            }
+            ctx.stroke();
+
+            // 2. Marcos
+            const m = 40;
+            ctx.strokeStyle = C_TEXT; ctx.lineWidth = 4; ctx.strokeRect(m, m, w - m * 2, h - m * 2);
+            ctx.strokeStyle = "#999"; ctx.lineWidth = 1; ctx.strokeRect(m + 15, m + 15, w - m * 2 - 30, h - m * 2 - 30);
+            ctx.fillStyle = C_TEXT;
+            const cornerSize = 40;
+            ctx.fillRect(m, m, cornerSize, cornerSize); ctx.fillRect(w - m - cornerSize, m, cornerSize, cornerSize);
+            ctx.fillRect(m, h - m - cornerSize, cornerSize, cornerSize); ctx.fillRect(w - m - cornerSize, h - m - cornerSize, cornerSize, cornerSize);
+
+            // 3. Cabecera (Personalizada según distancia)
+            ctx.textAlign = "center"; ctx.fillStyle = C_TEXT;
+            const tituloLinea1 = "MI LOTERÍA"; const tituloLinea2 = `EN ${state.distance}`;
+            ctx.font = "900 85px 'Inter', sans-serif"; ctx.fillText(tituloLinea1, w / 2, 200); ctx.fillText(tituloLinea2, w / 2, 290);
+            ctx.font = "bold 30px 'Inter', sans-serif"; ctx.fillStyle = "#666"; ctx.fillText("EL GORDO SE SUDA, NO TOCA", w / 2, 350);
+            ctx.strokeStyle = C_TEXT; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(m + 50, 380); ctx.lineTo(w - m - 50, 380); ctx.stroke();
+
+            // 4. Área Central
+            const boxY = 450; const boxH = 500;
+            ctx.strokeStyle = "#333"; ctx.lineWidth = 2; ctx.strokeRect(m + 40, boxY, w - (m * 2) - 80, boxH);
+            ctx.fillStyle = "#111"; ctx.fillRect(m + 42, boxY + 2, w - (m * 2) - 84, boxH - 4);
+            ctx.fillStyle = C_NEON; ctx.font = "bold 24px 'Inter', sans-serif"; ctx.fillText("NÚMERO JUGADO", w / 2, boxY + 60);
+            ctx.fillStyle = "#FFF"; ctx.font = "bold 180px 'Share Tech Mono', monospace"; ctx.shadowColor = C_NEON; ctx.shadowBlur = 30; ctx.fillText(state.time, w / 2, boxY + 300); ctx.shadowBlur = 0;
+            ctx.fillStyle = "#888"; ctx.font = "20px 'Share Tech Mono', monospace"; ctx.fillText("OBJETIVO OFICIAL A BATIR 2026", w / 2, boxY + 450);
+
+            // 5. Datos Laterales
+            const midY = 1050; const leftColX = w / 4 + 20; const rightColX = w - 160;
+            // Izquierda: Gráfico
+            ctx.strokeStyle = C_TEXT; ctx.lineWidth = 4; ctx.beginPath();
+            ctx.moveTo(leftColX - 80, midY); ctx.lineTo(leftColX + 80, midY + 160); ctx.lineTo(leftColX - 80, midY + 160); ctx.closePath(); ctx.stroke();
+            ctx.save(); ctx.clip(); ctx.lineWidth = 1; for (let i = -200; i < 200; i += 8) { ctx.beginPath(); ctx.moveTo(leftColX - 100, midY + i); ctx.lineTo(leftColX + 100, midY + i - 100); ctx.stroke(); } ctx.restore();
+            ctx.fillStyle = C_TEXT; ctx.font = "bold 20px 'Inter', sans-serif"; ctx.fillText("PATRONA DE LA", leftColX, midY + 200); ctx.fillText("VELOCIDAD", leftColX, midY + 230);
+            // Derecha: Stats
+            function drawStat(lbl, val, y) {
+                ctx.textAlign = "right"; ctx.fillStyle = "#666"; ctx.font = "bold 24px 'Inter', sans-serif"; ctx.fillText(lbl, rightColX, y);
+                let valFont = val.length > 10 ? "35px" : "45px"; ctx.fillStyle = C_TEXT; ctx.font = `bold ${valFont} 'Share Tech Mono', monospace`; ctx.fillText(val, rightColX, y + 45);
+            }
+            drawStat("SERIE", "CONSTANCIA", midY + 20); drawStat("FRACCIÓN", "SUDOR", midY + 130);
+            ctx.fillStyle = C_TEXT; ctx.font = "bold 30px 'Inter', sans-serif"; ctx.fillText("PRECIO", rightColX, midY + 240);
+            let sacFont = state.sacrifice.length > 12 ? "30px" : "40px"; ctx.fillStyle = C_TEXT; ctx.font = `bold ${sacFont} 'Share Tech Mono', monospace`; ctx.fillText(state.sacrifice.toUpperCase(), rightColX, midY + 285);
+
+            // 6. QR y Footer
+            const qrY = 1350;
+            const qrContainer = document.getElementById('qrcode'); qrContainer.innerHTML = '';
+            new QRCode(qrContainer, { text: `https://www.thedrop10k.space/contract?t=${state.time}&d=${state.distance}`, width: 180, height: 180, colorDark: "#000000", colorLight: "#FFFFFF" });
+
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img');
+                if (qrImg) { ctx.drawImage(qrImg, w / 2 - 90, qrY, 180, 180); }
+                ctx.textAlign = "center"; ctx.fillStyle = "#000"; const barY = h - 60;
+                for (let i = m + 20; i < w - m - 20; i += (Math.random() * 10 + 3)) { let bh = Math.random() * 20 + 10; ctx.fillRect(i, barY - bh, 2, bh); }
+                ctx.fillStyle = "#666"; ctx.font = "italic 14px 'Inter', sans-serif"; ctx.fillText("S.E.L.A.E. (Sociedad Estatal de Locos por el Asfalto y el Esfuerzo) - Sorteo Extraordinario", w / 2, h - 20);
+
+                els.ticketFrontImg.src = canvas.toDataURL('image/png');
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>

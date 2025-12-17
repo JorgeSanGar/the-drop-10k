@@ -57,6 +57,11 @@ app.get('/registro-vip', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registro-vip.html'));
 });
 
+// Route for the Decimo del Reto page
+app.get('/decimo-del-reto', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'decimo-del-reto.html'));
+});
+
 // ------------------------------------------------
 // 1. FIREBASE SETUP
 // ------------------------------------------------
