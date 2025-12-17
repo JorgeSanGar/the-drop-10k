@@ -928,7 +928,7 @@
             // 6. QR y Footer
             const qrY = 1350;
             const qrContainer = document.getElementById('qrcode'); qrContainer.innerHTML = '';
-            new QRCode(qrContainer, { text: `https://www.thedrop10k.space/contract?t=${state.time}&d=${state.distance}`, width: 180, height: 180, colorDark: "#000000", colorLight: "#FFFFFF" });
+            new QRCode(qrContainer, { text: `https://www.thedrop10k.space/decimo-del-reto?t=${state.time}&d=${state.distance}`, width: 180, height: 180, colorDark: "#000000", colorLight: "#FFFFFF" });
 
             setTimeout(() => {
                 const qrImg = qrContainer.querySelector('img');
