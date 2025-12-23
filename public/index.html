@@ -2603,7 +2603,20 @@
         });
 
         // Toggle Open/Close Terminal
-        window.toggleTerminal = () => {
+        window.toggleTerminal = async () => {
+            // Si vamos a abrir el terminal, verificamos sesión primero
+            if (!terminal.classList.contains('open')) {
+                try {
+                    const res = await fetch('/api/me');
+                    if (res.ok) {
+                        window.location.href = 'profile.html';
+                        return;
+                    }
+                } catch (e) {
+                    console.log("Session check failed", e);
+                }
+            }
+
             terminal.classList.toggle('open');
             // Bloquear scroll del body cuando está abierto
             if (terminal.classList.contains('open')) {
