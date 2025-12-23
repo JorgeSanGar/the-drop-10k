@@ -10,7 +10,7 @@
     <meta name="description"
         content="La carrera de 10K más rápida de Ávila. 110m de desnivel negativo diseñados para romper tu marca personal. Únete a THE DROP 10K: velocidad y gravedad.">
 
-    
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://thedrop10k.com/">
     <meta property="og:title" content="THE DROP 10K | Gravity Optimized Running">
@@ -24,7 +24,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    
+
     <script type="importmap">
       {
         "imports": {
@@ -625,7 +625,7 @@
             }
         }
 
-        
+
         .text-yellow {
             color: var(--color-accent);
         }
@@ -724,7 +724,7 @@
             }
         }
 
-        
+
         #route-v2 {
             position: relative;
             background: white;
@@ -745,7 +745,7 @@
             overflow: hidden;
         }
 
-        
+
         .velocity-grid {
             position: absolute;
             inset: 0;
@@ -759,7 +759,7 @@
             transform-origin: center 80%;
         }
 
-        
+
         .hud-element {
             position: absolute;
             z-index: 20;
@@ -794,7 +794,7 @@
             text-align: right;
         }
 
-        
+
         .svg-container {
             position: relative;
             width: 100%;
@@ -884,7 +884,7 @@
             opacity: 1;
         }
 
-        
+
         .glitch-text {
             animation: glitch-skew 1s infinite linear alternate-reverse;
         }
@@ -915,7 +915,7 @@
             }
         }
 
-        
+
         @media (max-width: 768px) {
             .station-label {
                 font-size: 1.5rem;
@@ -955,7 +955,7 @@
             }
         }
 
-        
+
         #system-alert-popup {
             position: fixed;
             inset: 0;
@@ -1105,7 +1105,7 @@
 
     <div id="accessTerminal" class="terminal-overlay">
 
-        
+
         <div class="absolute top-4 right-4 md:top-8 md:right-8 z-50">
             <button onclick="toggleTerminal()"
                 class="text-white hover:text-[#CCFF00] transition-transform hover:rotate-90 duration-300">
@@ -1113,18 +1113,18 @@
             </button>
         </div>
 
-        
+
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
             <div class="text-[80vh] font-black text-white leading-none overflow-hidden select-none">
                 //
             </div>
         </div>
 
-        
+
         <div
             class="relative z-10 flex-1 flex flex-col items-center justify-center p-6 md:p-12 w-full max-w-4xl mx-auto">
 
-            
+
             <div class="w-full mb-12 flex items-end justify-between border-b border-[#333] pb-4">
                 <div>
                     <h2 class="text-[#CCFF00] font-mono text-xs uppercase tracking-[0.3em] mb-2">ACCESO AL SISTEMA</h2>
@@ -1137,7 +1137,7 @@
                 </div>
             </div>
 
-            
+
             <div id="registerView" class="w-full max-w-lg fade-in-up">
 
                 <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
@@ -1148,21 +1148,21 @@
 
                 <form id="registrationForm" onsubmit="handleRegistration(event)" class="flex flex-col gap-6">
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">NOMBRE</label>
                         <input type="text" name="firstName" placeholder="EJ. ALEX" required class="input-brutal">
                     </div>
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">APELLIDOS</label>
                         <input type="text" name="lastName" placeholder="EJ. RUNNER" required class="input-brutal">
                     </div>
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
@@ -1170,7 +1170,7 @@
                         <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
@@ -1178,7 +1178,7 @@
                         <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
                     </div>
 
-                    
+
                     <div class="grid grid-cols-2 gap-6">
                         <div class="group">
                             <label
@@ -1212,7 +1212,7 @@
                 </form>
             </div>
 
-            
+
             <div id="loginView" class="hidden w-full max-w-lg fade-in-up">
 
                 <div class="flex gap-8 mb-8 font-mono text-sm uppercase">
@@ -1223,7 +1223,7 @@
 
                 <form id="loginForm" onsubmit="handleLogin(event)" class="flex flex-col gap-6">
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CANAL
@@ -1231,7 +1231,7 @@
                         <input type="email" name="email" placeholder="TU@EMAIL.COM" required class="input-brutal">
                     </div>
 
-                    
+
                     <div class="group">
                         <label
                             class="font-mono text-[10px] text-gray-500 uppercase group-focus-within:text-[#CCFF00]">CLAVE
@@ -1239,7 +1239,7 @@
                         <input type="password" name="password" placeholder="••••••••" required class="input-brutal">
                     </div>
 
-                    
+
                     <button type="submit" class="btn-action mt-4 group">
                         <span>ACCEDER AL SISTEMA</span>
                         <i data-lucide="log-in" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
@@ -1247,12 +1247,12 @@
                 </form>
             </div>
 
-            
+
             <div id="profileView" class="hidden w-full fade-in-up">
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
 
-                    
+
                     <div class="md:col-span-5">
                         <div class="bib-container p-6 relative aspect-[3/4] flex flex-col justify-between">
                             <!-- Agujeros del dorsal -->
@@ -1289,7 +1289,7 @@
                         </button>
                     </div>
 
-                    
+
                     <div class="md:col-span-7 flex flex-col justify-center h-full">
                         <div class="mb-8">
                             <h3 class="text-[#CCFF00] font-mono text-xs uppercase mb-2">ESTADO DE REGISTRO</h3>
@@ -1333,13 +1333,13 @@
         </div>
     </div>
 
-    
+
     <div id="emailExistsModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4">
-        
+
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300"
             onclick="closeModal('emailExistsModal')"></div>
 
-        
+
         <div
             class="relative bg-[#0a0a0a] w-full max-w-md shadow-[0_0_40px_rgba(255,255,255,0.05)] modal-enter-duplicate border border-[#333] overflow-hidden">
             <!-- Barra Superior de Estado -->
@@ -1428,12 +1428,12 @@
     </nav>
 
     <!-- HERO SECTION -->
-    
+
     <header
         class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center items-center pt-20 border-b border-black overflow-hidden"
         id="hero">
 
-        
+
         <canvas id="windCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
         <div class="z-10 text-center px-2 relative w-full max-w-7xl mx-auto flex flex-col items-center">
@@ -1442,7 +1442,7 @@
                 Ávila, Spain — Date: [REDACTED]
             </div>
 
-            
+
             <div class="flex flex-col items-center">
                 <h1
                     class="display-text font-black uppercase flex flex-col items-center relative mix-blend-multiply leading-none">
@@ -1485,7 +1485,7 @@
         </div>
     </header>
 
-    
+
     <section id="manifesto" class="py-20 md:py-24 px-4 md:px-8 border-b border-black">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
             <div class="md:col-span-4 font-mono text-xs text-gray-500 uppercase md:sticky md:top-24 h-fit mb-4 md:mb-0">
@@ -2609,13 +2609,6 @@
             if (terminal.classList.contains('open')) {
                 document.body.style.overflow = 'hidden';
                 if (typeof lucide !== 'undefined') lucide.createIcons();
-
-                // Check if user is logged in
-                const savedUser = localStorage.getItem('drop_user');
-                if (savedUser) {
-                    // Redirect to profile page if logged in
-                    window.location.href = 'profile.html';
-                }
             } else {
                 document.body.style.overflow = 'auto';
             }
@@ -2632,26 +2625,14 @@
             } else if (view === 'login') {
                 loginView.classList.remove('hidden');
             } else if (view === 'profile') {
-                profileView.classList.remove('hidden');
+                // Redirect to actual profile page instead of inline view
+                window.location.href = 'profile.html';
             }
         };
 
         // --- AUTH LOGIC (REAL) ---
         function updateProfileView(user) {
-            // Populate Profile Data
-            const name = user.firstName || user.name || 'RUNNER';
-            bibName.innerText = name.split(' ')[0].toUpperCase();
-
-            // Generate a consistent "Bib Number" based on name length or random if not present
-            bibNumber.innerText = user.bib || Math.floor(Math.random() * 900) + 100;
-
-            profileEmail.innerText = user.email;
-            profileTarget.innerText = user.target || "--:--";
-
-            const gender = user.gender || user.sex;
-            if (gender === 'F') bibCategory.innerText = "CAT: MUJER";
-            else if (gender === 'M') bibCategory.innerText = "CAT: HOMBRE";
-            else bibCategory.innerText = "CAT: OPEN";
+            // Legacy function, kept to avoid errors if called, but unused now
         }
 
         window.handleRegistration = async (e) => {
@@ -2681,8 +2662,7 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    // Success
-                    localStorage.setItem('drop_user', JSON.stringify(result.user));
+                    // Success - Redirect to profile
                     window.location.href = 'profile.html';
                 } else if (response.status === 409) {
                     // Duplicate Email -> Show Custom Modal (Persist = true)
@@ -2728,12 +2708,12 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    // Success
-                    localStorage.setItem('drop_user', JSON.stringify(result.user));
+                    // Success - Redirect to profile
                     window.location.href = 'profile.html';
                 } else if (response.status === 404) {
                     // User Not Found -> Show Custom Modal
-                    openModal('noAccountModal', true);
+                    // Assuming noAccountModal exists or alert
+                    alert('Usuario no encontrado');
                 } else {
                     alert(result.error || 'ACCESO DENEGADO');
                 }
@@ -2747,7 +2727,8 @@
             }
         };
 
-        window.logout = () => {
+        window.logout = async () => {
+            await fetch('/api/logout', { method: 'POST' });
             localStorage.removeItem('drop_user');
             switchView('login');
             // Reset forms

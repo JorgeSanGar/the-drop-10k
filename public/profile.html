@@ -425,16 +425,23 @@
 
     let currentUser = null;
 
-    function initSystem() {
-      const savedUser = localStorage.getItem('drop_user');
-      if (!savedUser) {
-        window.location.href = 'index.html';
-        return;
+    async function initSystem() {
+      try {
+        const res = await fetch('/api/me');
+        if (res.status === 401) {
+          window.location.href = 'index.html';
+          return;
+        }
+        if (!res.ok) throw new Error('Error loading profile');
+
+        currentUser = await res.json();
+        updateUI(currentUser);
+        // Inicializamos iconos al cargar
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      } catch (e) {
+        console.error("Auth check failed:", e);
+        // Optional: show error or redirect
       }
-      currentUser = JSON.parse(savedUser);
-      updateUI(currentUser);
-      // Inicializamos iconos al cargar
-      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     function updateUI(data) {
@@ -541,6 +548,10 @@
 
     window.saveProfile = async () => {
       if (!currentUser) return;
+
+      const currentPassword = prompt("Introduce tu contraseña actual para guardar cambios:");
+      if (!currentPassword) return;
+
       const btn = document.querySelector('button[onclick="saveProfile()"]');
       const originalText = btn.innerHTML;
       btn.innerHTML = 'GUARDANDO...';
@@ -549,6 +560,7 @@
 
       const updatedData = {
         email: currentUser.email,
+        currentPassword: currentPassword,
         firstName: els.inputName.value.toUpperCase(),
         lastName: els.inputSurname.value.toUpperCase(),
         tShirtSize: els.inputTshirt.value,
@@ -571,9 +583,10 @@
           throw new Error(result.error || 'Error al actualizar perfil');
         }
 
-        // Éxito: Actualizar local storage con los datos devueltos (o los enviados)
+        // Éxito: Actualizar local
+        // Remove sensitive data before merging
+        delete updatedData.currentPassword;
         const mergedUser = { ...currentUser, ...updatedData };
-        localStorage.setItem('drop_user', JSON.stringify(mergedUser));
         currentUser = mergedUser;
         updateUI(currentUser);
 
@@ -607,7 +620,8 @@
       return "WAVE 6 (FINISHER)";
     }
 
-    window.logout = () => {
+    window.logout = async () => {
+      await fetch('/api/logout', { method: 'POST' });
       localStorage.removeItem('drop_user');
       window.location.href = 'index.html';
     };

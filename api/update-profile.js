@@ -1,5 +1,6 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
+const bcrypt = require('bcryptjs');
 
 // Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
@@ -16,15 +17,25 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
+const ALLOWED_ORIGINS = [
+    'https://thedrop10k.space',
+    'https://www.thedrop10k.space',
+    'http://localhost:3000'
+];
+
+const ALLOW_LIST = [
+    "firstName", "lastName", "tShirtSize", "targetPace", "wave"
+];
+
 module.exports = async (req, res) => {
-    // CORS Headers
+    const origin = req.headers.origin;
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Vary', 'Origin');
+    }
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    );
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
         res.status(200).end();
@@ -35,37 +46,73 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { email, ...updates } = req.body;
+    const { email, currentPassword, ...updates } = req.body;
 
-    if (!email) {
-        return res.status(400).json({ error: 'Missing email identifier' });
+    if (!email || !currentPassword) {
+        return res.status(400).json({ error: 'Email and password are required' });
     }
 
     try {
         const usersRef = db.collection('users');
-        const snapshot = await usersRef.where('email', '==', email).get();
+        const snapshot = await usersRef.where('email', '==', email).limit(1).get();
 
         if (snapshot.empty) {
-            return res.status(404).json({ error: 'User not found' });
+            // Generic error for security
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Assuming email is unique, get the first doc
         const userDoc = snapshot.docs[0];
+        const userData = userDoc.data();
 
-        // Update the document
-        await userDoc.ref.update(updates);
+        if (!userData.password) {
+            console.error(`User ${email} has no password hash.`);
+            return res.status(500).json({ error: 'Server misconfigured' });
+        }
 
-        // Get updated data
-        const updatedSnapshot = await userDoc.ref.get();
-        const updatedUser = updatedSnapshot.data();
+        const isMatch = await bcrypt.compare(currentPassword, userData.password);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
 
-        // Remove password before sending back
-        const { password: _, ...userWithoutPassword } = updatedUser;
+        const cleanUpdates = {};
+        cleanUpdates.updatedAt = admin.firestore.FieldValue.serverTimestamp();
+
+        // Strict Allowlist & Validation
+        for (const key of Object.keys(updates)) {
+            if (!ALLOW_LIST.includes(key)) {
+                return res.status(400).json({ error: `Invalid field: ${key}` });
+            }
+
+            const value = updates[key];
+
+            // Basic Validation
+            if (typeof value === 'string') {
+                if (value.length > 100) {
+                    return res.status(400).json({ error: `Field ${key} too long` });
+                }
+                cleanUpdates[key] = value;
+            } else if (typeof value === 'number') {
+                cleanUpdates[key] = value;
+            } else {
+                return res.status(400).json({ error: `Invalid type for ${key}` });
+            }
+        }
+
+        if (Object.keys(cleanUpdates).length <= 1) { // Only updatedAt
+            return res.status(400).json({ error: 'No valid fields to update' });
+        }
+
+        await userDoc.ref.update(cleanUpdates);
+
+        // Return updated user (without password)
+        const updatedDoc = await userDoc.ref.get();
+        const updatedData = updatedDoc.data();
+        const { password: _, ...userWithoutPassword } = updatedData;
 
         res.status(200).json({ message: 'Profile updated', user: userWithoutPassword });
 
     } catch (error) {
         console.error('Error in /api/update-profile:', error);
-        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };

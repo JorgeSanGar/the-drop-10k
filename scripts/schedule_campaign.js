@@ -4,18 +4,45 @@ require('dotenv').config();
 const apiInstance = new brevo.TransactionalEmailsApi();
 apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
-const sendTestEmail = async () => {
-  const sendSmtpEmail = new brevo.SendSmtpEmail();
+const recipients = [
+    "adrianaramoscalvo@hotmail.com",
+    "alfchulin@hotmail.com",
+    "alsago13@gmail.com",
+    "ana.blanco1993@gmail.com",
+    "borja15@hotmail.com", // Corrected typo from .vom
+    "crisavila10@hotmail.com",
+    "cvj_24@hotmail.com",
+    "davort1087@gmail.com",
+    "dedompablosanchez@gmail.com",
+    "dfg1204@gmail.com",
+    "dubyperaza@gmail.com",
+    "dunajimenezgarcia@gmail.com",
+    "franquesmun@gmail.com",
+    "garbyxd@gmail.com",
+    "hervijas@yahoo.es",
+    "javilucho17@hotmail.com",
+    "jdelgadobeotas@gmail.com",
+    "jesusgoes@gmail.com",
+    "jorgesanchez.js876@gmail.com",
+    "juanluat@yahoo.es",
+    "lucialojo96@gmail.com",
+    "mariahm97@me.com",
+    "mariajimenezamo89@hotmail.com",
+    "neumaticossangar.sl@gmail.com",
+    "olguijueli82@hotmail.com",
+    "pablo25dr@gmail.com",
+    "pedroencinar@gmail.com",
+    "ramongtc@hotmail.com",
+    "rebeca0912@gmail.com",
+    "ruben.ravila@gmail.com",
+    "samipprieto@gmail.com"
+];
 
-  // Añadimos un timestamp al asunto para evitar que Gmail agrupe los hilos
-  const timestamp = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+// Fecha de envío: Jueves 18 de Diciembre de 2025 a las 09:00 AM hora española (CET/UTC+1)
+// En UTC es 08:00 AM
+const scheduledTime = new Date("2025-12-18T08:00:00.000Z");
 
-  sendSmtpEmail.subject = `Tu Décimo de Navidad: no esperes a la suerte [${timestamp}]`;
-  sendSmtpEmail.sender = { "name": "The Drop10K", "email": "race@thedrop10k.space" };
-  sendSmtpEmail.to = [{ "email": "jorgesanchez.js876@gmail.com" }];
-  sendSmtpEmail.tags = ["TEST"];
-
-  sendSmtpEmail.htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -83,7 +110,7 @@ const sendTestEmail = async () => {
 
   <!-- PREHEADER -->
   <div style="display:none; max-height:0px; overflow:hidden; color:#050505;">
-    ⚠️ SYSTEM ALERT: Probabilidad de éxito actualizada al 100%. Genera tu décimo ahora.
+    🎄 VISUALIZA TU PREMIO: Probabilidad de éxito actualizada al 100%. Genera tu décimo ahora.
     &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
   </div>
 
@@ -309,12 +336,38 @@ const sendTestEmail = async () => {
 </body>
 </html>`;
 
-  try {
-    await apiInstance.sendTransacEmail(sendSmtpEmail);
-    console.log('✅ Email enviado correctamente a jorgesanchez.js876@gmail.com');
-  } catch (error) {
-    console.error('❌ Error enviando email:', error);
-  }
+const scheduleCampaign = async () => {
+    console.log(`🚀 Iniciando programación de campaña para ${recipients.length} destinatarios...`);
+    console.log(`📅 Fecha programada: ${scheduledTime.toISOString()} (UTC) / 09:00 AM (España)`);
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const email of recipients) {
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
+        sendSmtpEmail.subject = "Tu Décimo de Navidad: no esperes a la suerte";
+        sendSmtpEmail.sender = { "name": "The Drop10K", "email": "race@thedrop10k.space" };
+        sendSmtpEmail.to = [{ "email": email }];
+        sendSmtpEmail.htmlContent = htmlContent;
+        sendSmtpEmail.scheduledAt = scheduledTime;
+        sendSmtpEmail.tags = ["CAMPAIGN_DECIMO"];
+
+        try {
+            await apiInstance.sendTransacEmail(sendSmtpEmail);
+            console.log(`✅ Programado para: ${email}`);
+            successCount++;
+        } catch (error) {
+            console.error(`❌ Error programando para ${email}:`, error.body || error.message);
+            errorCount++;
+        }
+
+        // Pequeña pausa para no saturar la API (rate limiting preventivo)
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    console.log('\n📊 Resumen de programación:');
+    console.log(`✅ Exitosos: ${successCount}`);
+    console.log(`❌ Fallidos: ${errorCount}`);
 };
 
-sendTestEmail();
+scheduleCampaign();

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const admin = require('firebase-admin');
 const bcrypt = require('bcryptjs');
+const { signSession } = require('./_lib/session');
 
 // Initialize Firebase (if not already initialized)
 if (!admin.apps.length) {
@@ -17,15 +18,21 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
+const ALLOWED_ORIGINS = [
+    'https://thedrop10k.space',
+    'https://www.thedrop10k.space',
+    'http://localhost:3000'
+];
+
 module.exports = async (req, res) => {
-    // CORS Headers
+    const origin = req.headers.origin;
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Vary', 'Origin');
+    }
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    );
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
         res.status(200).end();
@@ -44,29 +51,53 @@ module.exports = async (req, res) => {
 
     try {
         const usersRef = db.collection('users');
-
-        // Query user by email
         const snapshot = await usersRef.where('email', '==', email).get();
 
         if (snapshot.empty) {
-            return res.status(404).json({ error: 'User not found' });
+            // Generic error for security
+            return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         const userDoc = snapshot.docs[0];
         const userData = userDoc.data();
 
-        // Verify Password (Hash check)
         const isMatch = await bcrypt.compare(password, userData.password);
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Return user data (excluding password)
-        const { password: _, ...userWithoutPassword } = userData;
-        res.status(200).json({ message: 'Login successful', user: userWithoutPassword });
+        // Create Session
+        const payload = {
+            sub: userDoc.id,
+            email: userData.email,
+            role: userData.role || 'user'
+        };
+
+        const token = signSession(payload);
+        const isProd = process.env.NODE_ENV === 'production';
+
+        // Set Cookie
+        const cookieOptions = [
+            `drop_session=${token}`,
+            'HttpOnly',
+            'Path=/',
+            'Max-Age=604800', // 7 days
+            'SameSite=Lax'
+        ];
+
+        if (isProd) {
+            cookieOptions.push('Secure');
+        }
+
+        res.setHeader('Set-Cookie', cookieOptions.join('; '));
+
+        res.status(200).json({ ok: true });
 
     } catch (error) {
         console.error('Error in /api/login:', error);
+        if (error.message.includes('JWT_SECRET')) {
+            return res.status(500).json({ error: 'Server misconfigured' });
+        }
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
